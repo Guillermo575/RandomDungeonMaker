@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head> 
+		<script src="Construct2/RandomDungeonMaker/common.js"> </script>
+		<script src="scripts/Interface.js"> </script>			
+	</head>
+	<body>
+	
+		<table>
+			<tr>
+				<td> Width: <input type="text" id="width" value="30" style='width:60px;'> </td>
+				<td> Height: <input type="text" id="height" value="30" style='width:60px;'> </td>
+				<td> Blocks: <input type="text" id="blocks" value="400" style='width:60px;'> </td>
+				<td>
+					<button type="button" onclick="testDungeon();" style='visibility:hidden'>TEST</button>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Shape: 
+					<select id="GameMode">
+						<option value="LABYRINTH">LABYRINTH</option>					
+						<option value="CASTLE">CASTLE</option>
+						<option value="TOWER">TOWER</option>
+					</select>	
+				</td>
+				<td>
+					Start X:
+					<select id="PointX">
+						<option value="0">CENTER</option>					
+						<option value="-1">LEFT</option>
+						<option value="1">RIGHT</option>
+					</select>	
+				</td>
+				<td>
+					Start Y:
+					<select id="PointY">
+						<option value="LABYRINTH">CENTER</option>					
+						<option value="-1">TOP</option>
+						<option value="1">BOTTOM</option>
+					</select>	
+				</td>
+				<td>
+					<button type="button" onclick="createDungeon();">GENERATE</button>
+				</td>					
+			</tr>	
+		</table>
+		<form onsubmit="download(this['name'].value, this['text'].value)">
+			<input type="text" name="name" value="example.json">
+			<input type="submit" value="Download">
+			<br/>
+			<textarea name="text" id="jsondata" style="display:none;"></textarea>
+			<br/>
+		</form>
+		
+		<div id="minimap"></div>
+		
+
+		<script type="text/javascript">
+			createDungeon();							   
+			function createDungeon()
+			{
+				var GameDungeon = DungeonBasicConfiguration(document.getElementById('width').value,
+															document.getElementById('height').value,
+															document.getElementById('blocks').value);
+			    GameDungeon.DungeonMode = document.getElementById('GameMode').value;
+				GameDungeon.StartPointX = document.getElementById('PointX').value;
+				GameDungeon.StartPointY = document.getElementById('PointY').value;
+				GameDungeon = makeDungeon(GameDungeon);
+				GraphiqueDungeon(GameDungeon);			
+			}
+			function testDungeon()
+			{
+				testAlgorithm(100000);
+				alert("Terminado");
+			}
+			function download(filename, text) 
+			{
+				var element = document.createElement('a');
+				element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+				element.setAttribute('download', filename);
+
+				element.style.display = 'none';
+				document.body.appendChild(element);
+
+				element.click();
+
+				document.body.removeChild(element);
+			}
+		</script>
+	  
+	</body>
+</html>
