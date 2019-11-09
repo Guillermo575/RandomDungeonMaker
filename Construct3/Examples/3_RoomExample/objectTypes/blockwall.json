@@ -1,0 +1,59 @@
+{
+	"name": "BlockWall",
+	"plugin-id": "Sprite",
+	"sid": 312861249295870,
+	"isGlobal": false,
+	"instanceVariables": [],
+	"behaviorTypes": [
+		{
+			"behaviorId": "Pin",
+			"name": "Pin",
+			"sid": 663265336290917
+		},
+		{
+			"behaviorId": "solid",
+			"name": "Solid",
+			"sid": 283306846293188
+		}
+	],
+	"effectTypes": [],
+	"animations": {
+		"items": [
+			{
+				"frames": [
+					{
+						"width": 250,
+						"height": 250,
+						"originX": 0.5,
+						"originY": 0.5,
+						"originalSource": "",
+						"exportFormat": "png",
+						"exportQuality": 0.8,
+						"imageSpriteId": 3,
+						"collisionPoly": {
+							"points": [
+								0,
+								0,
+								1,
+								0,
+								1,
+								0.12,
+								0,
+								0.12000000000000005
+							]
+						},
+						"duration": 1
+					}
+				],
+				"sid": 280663951326725,
+				"name": "Default",
+				"isLooping": false,
+				"isPingPong": false,
+				"repeatCount": 1,
+				"repeatTo": 0,
+				"speed": 5
+			}
+		],
+		"subfolders": []
+	}
+}

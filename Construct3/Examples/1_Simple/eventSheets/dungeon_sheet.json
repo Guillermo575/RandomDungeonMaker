@@ -1,0 +1,599 @@
+{
+	"name": "Dungeon_Sheet",
+	"events": [
+		{
+			"eventType": "variable",
+			"name": "BlockSize",
+			"type": "number",
+			"initialValue": "100",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 562086407062536
+		},
+		{
+			"eventType": "variable",
+			"name": "BlockStart",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 729037320080040
+		},
+		{
+			"eventType": "variable",
+			"name": "BlockEnd",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 385802529230863
+		},
+		{
+			"eventType": "variable",
+			"name": "BlockActual",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 625116843367959
+		},
+		{
+			"eventType": "variable",
+			"name": "Started",
+			"type": "boolean",
+			"initialValue": "false",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 641057398760444
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-start-of-layout",
+					"objectClass": "System",
+					"sid": 502765122963993
+				}
+			],
+			"actions": [
+				{
+					"id": "set-boolean-eventvar",
+					"objectClass": "System",
+					"sid": 454884623113904,
+					"parameters": {
+						"variable": "Started",
+						"value": "false"
+					}
+				},
+				{
+					"id": "set-eventvar-value",
+					"objectClass": "System",
+					"sid": 748759341250721,
+					"parameters": {
+						"variable": "BlockStart",
+						"value": "0"
+					}
+				},
+				{
+					"id": "set-eventvar-value",
+					"objectClass": "System",
+					"sid": 539455096932091,
+					"parameters": {
+						"variable": "BlockEnd",
+						"value": "0"
+					}
+				},
+				{
+					"id": "set-eventvar-value",
+					"objectClass": "System",
+					"sid": 881952855948748,
+					"parameters": {
+						"variable": "BlockActual",
+						"value": "0"
+					}
+				},
+				{
+					"id": "Create_Dungeon_Simple",
+					"objectClass": "RandomDungeonMaker",
+					"sid": 504350996837762,
+					"parameters": {
+						"Width": "15",
+						"Height": "15",
+						"Blocks": "100"
+					}
+				}
+			],
+			"sid": 583758449981392
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on_Dungeon_Created",
+					"objectClass": "RandomDungeonMaker",
+					"sid": 366880736507876
+				},
+				{
+					"id": "compare-boolean-eventvar",
+					"objectClass": "System",
+					"sid": 670442096423687,
+					"parameters": {
+						"variable": "Started"
+					},
+					"isInverted": true
+				}
+			],
+			"actions": [
+				{
+					"id": "set-boolean-eventvar",
+					"objectClass": "System",
+					"sid": 598385294409885,
+					"parameters": {
+						"variable": "Started",
+						"value": "true"
+					}
+				}
+			],
+			"sid": 913139391172203,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for",
+							"objectClass": "System",
+							"sid": 187067234173374,
+							"parameters": {
+								"name": "\"LoopTest\"",
+								"start-index": "1",
+								"end-index": "RandomDungeonMaker.DungeonHeight*RandomDungeonMaker.DungeonWidth"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "Set_Current_Block_Next",
+							"objectClass": "RandomDungeonMaker",
+							"sid": 739078431828159
+						}
+					],
+					"sid": 251193618114681,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "compare-two-values",
+									"objectClass": "System",
+									"sid": 473217300907001,
+									"parameters": {
+										"first-value": "RandomDungeonMaker.BlockCurrentID",
+										"comparison": 4,
+										"second-value": "0"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "create-object",
+									"objectClass": "System",
+									"sid": 898869911269048,
+									"parameters": {
+										"object-to-create": "BlockDungeon",
+										"layer": "0",
+										"x": "(RandomDungeonMaker.BlockCurrentX*BlockSize) + Container.X",
+										"y": "(RandomDungeonMaker.BlockCurrentY*BlockSize) + Container.Y"
+									}
+								},
+								{
+									"id": "set-instvar-value",
+									"objectClass": "BlockDungeon",
+									"sid": 436099228761258,
+									"parameters": {
+										"instance-variable": "Id",
+										"value": "RandomDungeonMaker.BlockCurrentId"
+									}
+								},
+								{
+									"id": "pin-to-object",
+									"objectClass": "BlockDungeon",
+									"sid": 492345965614947,
+									"behaviorType": "Pin",
+									"parameters": {
+										"pin-to": "Container",
+										"mode": "position-angle"
+									}
+								},
+								{
+									"id": "set-size",
+									"objectClass": "BlockDungeon",
+									"sid": 320612431861754,
+									"parameters": {
+										"width": "BlockSize",
+										"height": "BlockSize"
+									}
+								}
+							],
+							"sid": 589884281247958,
+							"children": [
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "compare-eventvar",
+											"objectClass": "System",
+											"sid": 834632381960958,
+											"parameters": {
+												"variable": "BlockStart",
+												"comparison": 0,
+												"value": "0"
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 790615362735307,
+											"parameters": {
+												"variable": "BlockStart",
+												"value": "BlockDungeon.Id"
+											}
+										},
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 637328074260553,
+											"parameters": {
+												"variable": "BlockActual",
+												"value": "BlockDungeon.Id"
+											}
+										},
+										{
+											"id": "set-position",
+											"objectClass": "BlockStart",
+											"sid": 150627948020158,
+											"parameters": {
+												"x": "BlockDungeon.X",
+												"y": "BlockDungeon.Y"
+											}
+										},
+										{
+											"id": "set-size",
+											"objectClass": "BlockStart",
+											"sid": 710854088297529,
+											"parameters": {
+												"width": "BlockSize",
+												"height": "BlockSize"
+											}
+										},
+										{
+											"id": "pin-to-object",
+											"objectClass": "BlockStart",
+											"sid": 201602992132087,
+											"behaviorType": "Pin",
+											"parameters": {
+												"pin-to": "BlockDungeon",
+												"mode": "position-angle"
+											}
+										},
+										{
+											"id": "set-position-to-another-object",
+											"objectClass": "Cursor",
+											"sid": 325877846218574,
+											"parameters": {
+												"object": "BlockStart",
+												"image-point-optional": "1"
+											}
+										}
+									],
+									"sid": 102493606604670
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "else",
+											"objectClass": "System",
+											"sid": 471335345961050
+										}
+									],
+									"actions": [
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 471987294570424,
+											"parameters": {
+												"variable": "BlockEnd",
+												"value": "BlockDungeon.Id"
+											}
+										},
+										{
+											"id": "set-position",
+											"objectClass": "BlockEnd",
+											"sid": 716203977500001,
+											"parameters": {
+												"x": "BlockDungeon.X",
+												"y": "BlockDungeon.Y"
+											}
+										},
+										{
+											"id": "pin-to-object",
+											"objectClass": "BlockEnd",
+											"sid": 829576071464062,
+											"behaviorType": "Pin",
+											"parameters": {
+												"pin-to": "BlockDungeon",
+												"mode": "position-angle"
+											}
+										},
+										{
+											"id": "set-size",
+											"objectClass": "BlockEnd",
+											"sid": 979256750189716,
+											"parameters": {
+												"width": "BlockSize",
+												"height": "BlockSize"
+											}
+										}
+									],
+									"sid": 663140429944114
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "compare-two-values",
+											"objectClass": "System",
+											"sid": 307457448066203,
+											"parameters": {
+												"first-value": "RandomDungeonMaker.WallTop(RandomDungeonMaker.BlockCurrentID)",
+												"comparison": 1,
+												"second-value": "\"NONE\""
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "spawn-another-object",
+											"objectClass": "BlockDungeon",
+											"sid": 204909377274815,
+											"parameters": {
+												"object": "BlockWall",
+												"layer": "1",
+												"image-point": "1"
+											}
+										},
+										{
+											"id": "rotate-clockwise",
+											"objectClass": "BlockWall",
+											"sid": 540697158560848,
+											"parameters": {
+												"degrees": "0"
+											}
+										},
+										{
+											"id": "pin-to-object",
+											"objectClass": "BlockWall",
+											"sid": 405375995905287,
+											"behaviorType": "Pin",
+											"parameters": {
+												"pin-to": "BlockDungeon",
+												"mode": "position-angle"
+											}
+										},
+										{
+											"id": "set-size",
+											"objectClass": "BlockWall",
+											"sid": 340922768308877,
+											"parameters": {
+												"width": "BlockSize*1.1",
+												"height": "BlockSize*1.1"
+											}
+										}
+									],
+									"sid": 752890940754830
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "compare-two-values",
+											"objectClass": "System",
+											"sid": 128041785224792,
+											"parameters": {
+												"first-value": "RandomDungeonMaker.WallRight(RandomDungeonMaker.BlockCurrentID)",
+												"comparison": 1,
+												"second-value": "\"NONE\""
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "spawn-another-object",
+											"objectClass": "BlockDungeon",
+											"sid": 953103009739053,
+											"parameters": {
+												"object": "BlockWall",
+												"layer": "1",
+												"image-point": "1"
+											}
+										},
+										{
+											"id": "rotate-clockwise",
+											"objectClass": "BlockWall",
+											"sid": 615438195455177,
+											"parameters": {
+												"degrees": "90"
+											}
+										},
+										{
+											"id": "pin-to-object",
+											"objectClass": "BlockWall",
+											"sid": 332891525166007,
+											"behaviorType": "Pin",
+											"parameters": {
+												"pin-to": "BlockDungeon",
+												"mode": "position-angle"
+											}
+										},
+										{
+											"id": "set-size",
+											"objectClass": "BlockWall",
+											"sid": 433093001045462,
+											"parameters": {
+												"width": "BlockSize*1.1",
+												"height": "BlockSize*1.1"
+											}
+										}
+									],
+									"sid": 774136809113650
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "compare-two-values",
+											"objectClass": "System",
+											"sid": 913009447003435,
+											"parameters": {
+												"first-value": "RandomDungeonMaker.WallBottom(RandomDungeonMaker.BlockCurrentID)",
+												"comparison": 1,
+												"second-value": "\"NONE\""
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "spawn-another-object",
+											"objectClass": "BlockDungeon",
+											"sid": 553899953820336,
+											"parameters": {
+												"object": "BlockWall",
+												"layer": "1",
+												"image-point": "1"
+											}
+										},
+										{
+											"id": "rotate-clockwise",
+											"objectClass": "BlockWall",
+											"sid": 522258645872742,
+											"parameters": {
+												"degrees": "180"
+											}
+										},
+										{
+											"id": "pin-to-object",
+											"objectClass": "BlockWall",
+											"sid": 392158762692674,
+											"behaviorType": "Pin",
+											"parameters": {
+												"pin-to": "BlockDungeon",
+												"mode": "position-angle"
+											}
+										},
+										{
+											"id": "set-size",
+											"objectClass": "BlockWall",
+											"sid": 641287055748591,
+											"parameters": {
+												"width": "BlockSize*1.1",
+												"height": "BlockSize*1.1"
+											}
+										}
+									],
+									"sid": 237899283157696
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "compare-two-values",
+											"objectClass": "System",
+											"sid": 397659155032154,
+											"parameters": {
+												"first-value": "RandomDungeonMaker.WallLeft(RandomDungeonMaker.BlockCurrentID)",
+												"comparison": 1,
+												"second-value": "\"NONE\""
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "spawn-another-object",
+											"objectClass": "BlockDungeon",
+											"sid": 959565020826557,
+											"parameters": {
+												"object": "BlockWall",
+												"layer": "1",
+												"image-point": "1"
+											}
+										},
+										{
+											"id": "rotate-clockwise",
+											"objectClass": "BlockWall",
+											"sid": 351061338867167,
+											"parameters": {
+												"degrees": "270"
+											}
+										},
+										{
+											"id": "pin-to-object",
+											"objectClass": "BlockWall",
+											"sid": 664997921492172,
+											"behaviorType": "Pin",
+											"parameters": {
+												"pin-to": "BlockDungeon",
+												"mode": "position-angle"
+											}
+										},
+										{
+											"id": "set-size",
+											"objectClass": "BlockWall",
+											"sid": 173720406286909,
+											"parameters": {
+												"width": "BlockSize*1.1",
+												"height": "BlockSize*1.1"
+											}
+										}
+									],
+									"sid": 269801911043032
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "is-overlapping-another-object",
+					"objectClass": "Cursor",
+					"sid": 360265233561175,
+					"parameters": {
+						"object": "BlockEnd"
+					}
+				}
+			],
+			"actions": [
+				{
+					"id": "go-to-layout",
+					"objectClass": "System",
+					"sid": 722492794028659,
+					"parameters": {
+						"layout": "Dungeon"
+					}
+				}
+			],
+			"sid": 809777934713293
+		}
+	],
+	"sid": 846114772061408
+}

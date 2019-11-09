@@ -1,0 +1,52 @@
+{
+	"name": "Cursor",
+	"plugin-id": "Sprite",
+	"sid": 216642107522698,
+	"isGlobal": false,
+	"instanceVariables": [],
+	"behaviorTypes": [
+		{
+			"behaviorId": "scrollto",
+			"name": "ScrollTo",
+			"sid": 141587298624256
+		},
+		{
+			"behaviorId": "Pin",
+			"name": "Pin",
+			"sid": 801826419352622
+		},
+		{
+			"behaviorId": "Platform",
+			"name": "Platform",
+			"sid": 725063758240438
+		}
+	],
+	"effectTypes": [],
+	"animations": {
+		"items": [
+			{
+				"frames": [
+					{
+						"width": 150,
+						"height": 250,
+						"originX": 0.5,
+						"originY": 0.5,
+						"originalSource": "",
+						"exportFormat": "png",
+						"exportQuality": 0.8,
+						"imageSpriteId": 5,
+						"duration": 1
+					}
+				],
+				"sid": 110196035294703,
+				"name": "Default",
+				"isLooping": false,
+				"isPingPong": false,
+				"repeatCount": 1,
+				"repeatTo": 0,
+				"speed": 5
+			}
+		],
+		"subfolders": []
+	}
+}

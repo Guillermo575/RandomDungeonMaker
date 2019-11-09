@@ -1,0 +1,43 @@
+{
+	"name": "ElementBlue",
+	"plugin-id": "Sprite",
+	"sid": 485252623113106,
+	"isGlobal": false,
+	"instanceVariables": [
+		{
+			"name": "EID",
+			"type": "number",
+			"desc": "",
+			"sid": 386845080539403
+		}
+	],
+	"behaviorTypes": [],
+	"effectTypes": [],
+	"animations": {
+		"items": [
+			{
+				"frames": [
+					{
+						"width": 250,
+						"height": 250,
+						"originX": 0.5,
+						"originY": 0.5,
+						"originalSource": "",
+						"exportFormat": "png",
+						"exportQuality": 0.8,
+						"imageSpriteId": 10,
+						"duration": 1
+					}
+				],
+				"sid": 387465138963600,
+				"name": "Default",
+				"isLooping": false,
+				"isPingPong": false,
+				"repeatCount": 1,
+				"repeatTo": 0,
+				"speed": 5
+			}
+		],
+		"subfolders": []
+	}
+}

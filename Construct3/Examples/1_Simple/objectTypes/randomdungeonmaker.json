@@ -1,0 +1,10 @@
+{
+	"name": "RandomDungeonMaker",
+	"plugin-id": "random_dungeon_maker",
+	"sid": 968789971116102,
+	"singleglobal-inst": {
+		"type": "RandomDungeonMaker",
+		"properties": {},
+		"uid": 7
+	}
+}

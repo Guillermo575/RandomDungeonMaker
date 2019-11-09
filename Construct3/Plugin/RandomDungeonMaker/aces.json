@@ -1,0 +1,486 @@
+{
+    "custom": {
+		"conditions": [
+				{
+					"id": "on_Dungeon_Created",
+					"scriptName": "onDungeonCreated"
+				}
+			],
+        "actions": [
+            {
+                "id": "Create_Dungeon_Simple",
+                "scriptName": "CreateDungeonSimple",
+                "params": [
+                    { "id": "Width", "type": "number", "initialValue": "10" },
+					{ "id": "Height", "type": "number", "initialValue": "10" },
+					{ "id": "Blocks", "type": "number", "initialValue": "60" }
+                ]
+            },
+			{
+                "id": "Create_Dungeon_Extra",
+                "scriptName": "CreateDungeonExtra",
+                "params": [
+                    { "id": "Width", "type": "number", "initialValue": "10" },
+					{ "id": "Height", "type": "number", "initialValue": "10" },
+					{ "id": "Blocks", "type": "number", "initialValue": "60" },
+					{ "id": "MinRoom", "type": "number", "initialValue": "2" },
+					{ "id": "MaxRoom", "type": "number", "initialValue": "5" },
+					{ 
+						"id": "LabyrinthInn", 
+						"type": "combo", 
+						"initialValue": "YES",
+						"items":["YES","NO"]
+					}
+                ]
+            },
+			{
+                "id": "Load_Dungeon_JSON",
+                "scriptName": "LoadDungeonJSON",
+                "params": [
+                    { "id": "JSON", "type": "string" }
+                ]
+            },
+			{
+                "id": "Set_Current_Block_Next",
+                "scriptName": "SetCurrentBlockNext"
+            },
+			{
+                "id": "Set_Current_Room",
+                "scriptName": "SetCurrentRoom",
+                "params": [
+                    { "id": "Id", "type": "number" }
+                ]
+            },
+			{
+                "id": "Set_Current_Room_Block_Next",
+                "scriptName": "SetCurrentRoomBlockNext"
+            },
+			{
+                "id": "Set_Current_Block_Reset",
+                "scriptName": "SetCurrentBlockReset"
+            },
+			{
+                "id": "New_Dungeon_Element",
+                "scriptName": "NewDungeonElement",
+                "params": [
+                    { "id": "Name", "type": "string", "initialValue": "" },
+					{ "id": "Total", "type": "number", "initialValue": "10" },
+					{ "id": "OcuppedTolerance", "type": "number", "initialValue": "0" },
+					{ 
+						"id": "NotIndoor", 
+						"type": "combo", 
+						"initialValue": "NO",
+						"items":["NO","YES"]
+					},
+					{ 
+						"id": "ObligatoryBottomWall", 
+						"type": "combo", 
+						"initialValue": "NO",
+						"items":["NO","YES","NONE"]
+					},
+					{ 
+						"id": "ObligatoryTopWall", 
+						"type": "combo", 
+						"initialValue": "NO",
+						"items":["NO","YES","NONE"]
+					},
+					{ 
+						"id": "ObligatoryLeftWall", 
+						"type": "combo", 
+						"initialValue": "NO",
+						"items":["NO","YES","NONE"]
+					},
+					{ 
+						"id": "ObligatoryRightWall", 
+						"type": "combo", 
+						"initialValue": "NO",
+						"items":["NO","YES","NONE"]
+					}
+                ]
+            },
+			{
+                "id": "Reset_Dungeon_Elements",
+                "scriptName": "ResetDungeonElements"
+            },
+			{
+                "id": "Remove_Dungeon_Element",
+                "scriptName": "RemoveDungeonElement",
+                "params": [
+                    { "id": "ElementId", "type": "number" }
+                ]
+            },
+			{
+                "id": "Create_Dungeon_Advanced",
+                "scriptName": "CreateDungeonAdvanced",
+                "params": [
+                    { "id": "Width", "type": "number", "initialValue": "10" },
+					{ "id": "Height", "type": "number", "initialValue": "10" },
+					{ "id": "Blocks", "type": "number", "initialValue": "60" },
+					{ "id": "MinRoom", "type": "number", "initialValue": "2" },
+					{ "id": "MaxRoom", "type": "number", "initialValue": "5" },
+					{ 
+						"id": "Mode", 
+						"type": "combo", 
+						"initialValue": "LABYRINTH",
+						"items":["LABYRINTH","CASTLE","TOWER"]
+					},
+					{ 
+						"id": "StartX", 
+						"type": "combo", 
+						"initialValue": "CENTER",
+						"items":["CENTER","LEFT","RIGHT"]
+					},
+					{ 
+						"id": "StartY", 
+						"type": "combo", 
+						"initialValue": "CENTER",
+						"items":["CENTER","TOP","BOTTOM"]
+					},
+					{ 
+						"id": "LabyrinthInn", 
+						"type": "combo", 
+						"initialValue": "YES",
+						"items":["YES","NO"]
+					},
+					{ 
+						"id": "OpenWorld", 
+						"type": "combo", 
+						"initialValue": "NO",
+						"items":["NO","YES"]
+					}
+                ]
+            }			
+        ],
+        "expressions": [
+			{
+                "id": "Dungeon_Width",
+                "expressionName": "DungeonWidth",
+                "scriptName": "DungeonWidth",
+                "highlight": false,
+                "returnType": "number"
+            },
+			{
+                "id": "Dungeon_Height",
+                "expressionName": "DungeonHeight",
+                "scriptName": "DungeonHeight",
+                "highlight": false,
+                "returnType": "number"
+            },
+			{
+                "id": "Dungeon_Blocks",
+                "expressionName": "DungeonBlocks",
+                "scriptName": "DungeonBlocks",
+                "highlight": false,
+                "returnType": "number"
+            },
+			{
+                "id": "Dungeon_Data_JSON",
+                "expressionName": "DungeonDataJSON",
+                "scriptName": "DungeonDataJSON",
+                "highlight": false,
+                "returnType": "number"
+            },
+			{
+                "id": "Block_Current_ID",
+                "expressionName": "BlockCurrentID",
+                "scriptName": "BlockCurrentID",
+                "highlight": false,
+                "returnType": "number"
+            },
+			{
+                "id": "Block_Current_X",
+                "expressionName": "BlockCurrentX",
+                "scriptName": "BlockCurrentX",
+                "highlight": false,
+                "returnType": "number"
+            },
+			{
+                "id": "Block_Current_Y",
+                "expressionName": "BlockCurrentY",
+                "scriptName": "BlockCurrentY",
+                "highlight": false,
+                "returnType": "number"
+            },
+			{
+                "id": "Block_Current_Room",
+                "expressionName": "BlockCurrentRoom",
+                "scriptName": "BlockCurrentRoom",
+                "highlight": false,
+                "returnType": "number"
+            },
+			{
+                "id": "Block_ID",
+                "expressionName": "BlockID",
+                "scriptName": "BlockID",
+                "highlight": false,
+                "returnType": "number",
+				"params": [
+                    { "id": "X", "type": "number" },
+					{ "id": "Y", "type": "number" }
+				]
+            },
+			{
+                "id": "Block_X",
+                "expressionName": "BlockX",
+                "scriptName": "BlockX",
+                "highlight": false,
+                "returnType": "number",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Block_Y",
+                "expressionName": "BlockY",
+                "scriptName": "BlockY",
+                "highlight": false,
+                "returnType": "number",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Block_Room",
+                "expressionName": "BlockRoom",
+                "scriptName": "BlockRoom",
+                "highlight": false,
+                "returnType": "number",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Block_Info",
+                "expressionName": "BlockInfo",
+                "scriptName": "BlockInfo",
+                "highlight": false,
+                "returnType": "string",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Wall_Top",
+                "expressionName": "WallTop",
+                "scriptName": "WallTop",
+                "highlight": false,
+                "returnType": "string",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Wall_Left",
+                "expressionName": "WallLeft",
+                "scriptName": "WallLeft",
+                "highlight": false,
+                "returnType": "string",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },	
+			{
+                "id": "Wall_Right",
+                "expressionName": "WallRight",
+                "scriptName": "WallRight",
+                "highlight": false,
+                "returnType": "string",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },	
+			{
+                "id": "Wall_Bottom",
+                "expressionName": "WallBottom",
+                "scriptName": "WallBottom",
+                "highlight": false,
+                "returnType": "string",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Platform_Top",
+                "expressionName": "PlatformTop",
+                "scriptName": "PlatformTop",
+                "highlight": false,
+                "returnType": "string",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Platform_Center",
+                "expressionName": "PlatformCenter",
+                "scriptName": "PlatformCenter",
+                "highlight": false,
+                "returnType": "string",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Platform_Bottom",
+                "expressionName": "PlatformBottom",
+                "scriptName": "PlatformBottom",
+                "highlight": false,
+                "returnType": "string",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Room_Connect_Top",
+                "expressionName": "RoomConnectTop",
+                "scriptName": "RoomConnectTop",
+                "highlight": false,
+                "returnType": "number",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Room_Connect_Left",
+                "expressionName": "RoomConnectLeft",
+                "scriptName": "RoomConnectLeft",
+                "highlight": false,
+                "returnType": "number",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },	
+			{
+                "id": "Room_Connect_Right",
+                "expressionName": "RoomConnectRight",
+                "scriptName": "RoomConnectRight",
+                "highlight": false,
+                "returnType": "number",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },	
+			{
+                "id": "Room_Connect_Bottom",
+                "expressionName": "RoomConnectBottom",
+                "scriptName": "RoomConnectBottom",
+                "highlight": false,
+                "returnType": "number",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Room_Current_ID",
+                "expressionName": "RoomCurrentID",
+                "scriptName": "RoomCurrentID",
+                "highlight": false,
+                "returnType": "number"
+            },
+			{
+                "id": "Room_Width",
+                "expressionName": "RoomWidth",
+                "scriptName": "RoomWidth",
+                "highlight": false,
+                "returnType": "number",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Room_Height",
+                "expressionName": "RoomHeight",
+                "scriptName": "RoomHeight",
+                "highlight": false,
+                "returnType": "number",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Room_Block_Current_X",
+                "expressionName": "RoomBlockCurrentX",
+                "scriptName": "RoomBlockCurrentX",
+                "highlight": false,
+                "returnType": "number"
+            },
+			{
+                "id": "Room_Block_Current_Y",
+                "expressionName": "RoomBlockCurrentY",
+                "scriptName": "RoomBlockCurrentY",
+                "highlight": false,
+                "returnType": "number"
+            },
+			{
+                "id": "Room_Block_ID",
+                "expressionName": "RoomBlockID",
+                "scriptName": "RoomBlockID",
+                "highlight": false,
+                "returnType": "number",
+				"params":  [
+                    { "id": "X", "type": "number" },
+					{ "id": "Y", "type": "number" }
+				]
+            },
+			{
+                "id": "Block_Elements_NameTag",
+                "expressionName": "BlockElementsNameTag",
+                "scriptName": "BlockElementsNameTag",
+                "highlight": false,
+                "returnType": "string",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Block_Elements_EID",
+                "expressionName": "BlockElementsEID",
+                "scriptName": "BlockElementsEID",
+                "highlight": false,
+                "returnType": "string",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Adjacent_Block_Top",
+                "expressionName": "AdjacentBlockTop",
+                "scriptName": "AdjacentBlockTop",
+                "highlight": false,
+                "returnType": "number",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Adjacent_Block_Left",
+                "expressionName": "AdjacentBlockLeft",
+                "scriptName": "AdjacentBlockLeft",
+                "highlight": false,
+                "returnType": "number",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },	
+			{
+                "id": "Adjacent_Block_Right",
+                "expressionName": "AdjacentBlockRight",
+                "scriptName": "AdjacentBlockRight",
+                "highlight": false,
+                "returnType": "number",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            },	
+			{
+                "id": "Adjacent_Block_Bottom",
+                "expressionName": "AdjacentBlockBottom",
+                "scriptName": "AdjacentBlockBottom",
+                "highlight": false,
+                "returnType": "number",
+				"params": [
+                    { "id": "Id", "type": "number" }
+				]
+            }
+		]
+    }
+}

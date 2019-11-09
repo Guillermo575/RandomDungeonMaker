@@ -1,0 +1,307 @@
+{
+	"name": "NewGame_Sheet",
+	"events": [
+		{
+			"eventType": "variable",
+			"name": "BlockSize",
+			"type": "number",
+			"initialValue": "100",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 201951911643433
+		},
+		{
+			"eventType": "variable",
+			"name": "BlockStart",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 100679584571866
+		},
+		{
+			"eventType": "variable",
+			"name": "BlockEnd",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 277352448683384
+		},
+		{
+			"eventType": "variable",
+			"name": "BlockActual",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 696227733765421
+		},
+		{
+			"eventType": "variable",
+			"name": "Started",
+			"type": "boolean",
+			"initialValue": "false",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 698135574382282
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-start-of-layout",
+					"objectClass": "System",
+					"sid": 829042467734648
+				}
+			],
+			"actions": [
+				{
+					"id": "set-boolean-eventvar",
+					"objectClass": "System",
+					"sid": 130317557186628,
+					"parameters": {
+						"variable": "Started",
+						"value": "false"
+					}
+				},
+				{
+					"id": "set-eventvar-value",
+					"objectClass": "System",
+					"sid": 201442886821412,
+					"parameters": {
+						"variable": "BlockStart",
+						"value": "0"
+					}
+				},
+				{
+					"id": "set-eventvar-value",
+					"objectClass": "System",
+					"sid": 982973585149944,
+					"parameters": {
+						"variable": "BlockEnd",
+						"value": "0"
+					}
+				},
+				{
+					"id": "set-eventvar-value",
+					"objectClass": "System",
+					"sid": 738120014169548,
+					"parameters": {
+						"variable": "BlockActual",
+						"value": "0"
+					}
+				},
+				{
+					"id": "Reset_Dungeon_Elements",
+					"objectClass": "RandomDungeonMaker",
+					"sid": 453429327410830
+				},
+				{
+					"id": "New_Dungeon_Element",
+					"objectClass": "RandomDungeonMaker",
+					"sid": 791861915610094,
+					"parameters": {
+						"Name": "\"X\"",
+						"Total": "10",
+						"OcuppedTolerance": "0",
+						"NotIndoor": "YES",
+						"ObligatoryBottomWall": "NO",
+						"ObligatoryTopWall": "NO",
+						"ObligatoryLeftWall": "NO",
+						"ObligatoryRightWall": "NO"
+					}
+				},
+				{
+					"id": "New_Dungeon_Element",
+					"objectClass": "RandomDungeonMaker",
+					"sid": 602252367821017,
+					"parameters": {
+						"Name": "\"Y\"",
+						"Total": "10",
+						"OcuppedTolerance": "0",
+						"NotIndoor": "YES",
+						"ObligatoryBottomWall": "NO",
+						"ObligatoryTopWall": "NO",
+						"ObligatoryLeftWall": "NO",
+						"ObligatoryRightWall": "NO"
+					}
+				},
+				{
+					"id": "Create_Dungeon_Extra",
+					"objectClass": "RandomDungeonMaker",
+					"sid": 580352297141176,
+					"parameters": {
+						"Width": "15",
+						"Height": "15",
+						"Blocks": "100",
+						"MinRoom": "3",
+						"MaxRoom": "6"
+					}
+				}
+			],
+			"sid": 427040721281119
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on_Dungeon_Created",
+					"objectClass": "RandomDungeonMaker",
+					"sid": 784240279276938
+				},
+				{
+					"id": "compare-boolean-eventvar",
+					"objectClass": "System",
+					"sid": 104847411783600,
+					"parameters": {
+						"variable": "Started"
+					},
+					"isInverted": true
+				}
+			],
+			"actions": [
+				{
+					"id": "set-boolean-eventvar",
+					"objectClass": "System",
+					"sid": 444435664894266,
+					"parameters": {
+						"variable": "Started",
+						"value": "true"
+					}
+				}
+			],
+			"sid": 370022808562214,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "for",
+							"objectClass": "System",
+							"sid": 780139033989081,
+							"parameters": {
+								"name": "\"LoopTest\"",
+								"start-index": "1",
+								"end-index": "RandomDungeonMaker.DungeonHeight*RandomDungeonMaker.DungeonWidth"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "Set_Current_Block_Next",
+							"objectClass": "RandomDungeonMaker",
+							"sid": 213080482641338
+						}
+					],
+					"sid": 381799095749667,
+					"children": [
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "compare-two-values",
+									"objectClass": "System",
+									"sid": 982586544376003,
+									"parameters": {
+										"first-value": "RandomDungeonMaker.BlockCurrentID",
+										"comparison": 4,
+										"second-value": "0"
+									}
+								}
+							],
+							"actions": [],
+							"sid": 665824549114455,
+							"children": [
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "compare-eventvar",
+											"objectClass": "System",
+											"sid": 636121995115876,
+											"parameters": {
+												"variable": "BlockStart",
+												"comparison": 0,
+												"value": "0"
+											}
+										}
+									],
+									"actions": [
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 213875422940112,
+											"parameters": {
+												"variable": "BlockStart",
+												"value": "RandomDungeonMaker.BlockCurrentId"
+											}
+										},
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 314650027648216,
+											"parameters": {
+												"variable": "BlockActual",
+												"value": "RandomDungeonMaker.BlockCurrentId"
+											}
+										}
+									],
+									"sid": 610444590369396
+								},
+								{
+									"eventType": "block",
+									"conditions": [
+										{
+											"id": "else",
+											"objectClass": "System",
+											"sid": 177835494376215
+										}
+									],
+									"actions": [
+										{
+											"id": "set-eventvar-value",
+											"objectClass": "System",
+											"sid": 273836578781427,
+											"parameters": {
+												"variable": "BlockEnd",
+												"value": "RandomDungeonMaker.BlockCurrentId"
+											}
+										}
+									],
+									"sid": 271257555713300
+								}
+							]
+						}
+					]
+				},
+				{
+					"eventType": "block",
+					"conditions": [],
+					"actions": [
+						{
+							"id": "Set_Current_Block_Reset",
+							"objectClass": "RandomDungeonMaker",
+							"sid": 544176840955327
+						},
+						{
+							"id": "go-to-layout",
+							"objectClass": "System",
+							"sid": 295190752307084,
+							"parameters": {
+								"layout": "Dungeon"
+							}
+						}
+					],
+					"sid": 533550684712846
+				}
+			]
+		}
+	],
+	"sid": 364407021836850
+}

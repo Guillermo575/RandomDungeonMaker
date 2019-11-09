@@ -1,0 +1,43 @@
+{
+	"name": "ElementOrange",
+	"plugin-id": "Sprite",
+	"sid": 453018065825021,
+	"isGlobal": false,
+	"instanceVariables": [
+		{
+			"name": "EID",
+			"type": "number",
+			"desc": "",
+			"sid": 738811469600312
+		}
+	],
+	"behaviorTypes": [],
+	"effectTypes": [],
+	"animations": {
+		"items": [
+			{
+				"frames": [
+					{
+						"width": 250,
+						"height": 250,
+						"originX": 0.5,
+						"originY": 0.5,
+						"originalSource": "",
+						"exportFormat": "png",
+						"exportQuality": 0.8,
+						"imageSpriteId": 9,
+						"duration": 1
+					}
+				],
+				"sid": 928270351045177,
+				"name": "Default",
+				"isLooping": false,
+				"isPingPong": false,
+				"repeatCount": 1,
+				"repeatTo": 0,
+				"speed": 5
+			}
+		],
+		"subfolders": []
+	}
+}

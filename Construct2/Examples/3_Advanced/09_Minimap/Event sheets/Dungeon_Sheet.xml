@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Dungeon_Sheet</name>
+    <events>
+        <variable constant="0" name="BlockSize" sid="715069902852783" static="0" type="number">100</variable>
+        <variable constant="0" name="BlockStart" sid="663532061147953" static="0" type="number">0</variable>
+        <variable constant="0" name="BlockEnd" sid="236413481299743" static="0" type="number">0</variable>
+        <variable constant="0" name="BlockActual" sid="756398274476332" static="0" type="number">0</variable>
+        <comment>In this example, we gonna make a simple dungeon with a minimap feature. Check the minimap objects to see his properties, the global property avoid load the same minimap again</comment>
+        <event-block sid="173547054950929">
+            <conditions>
+                <condition id="-2" name="On start of layout" sid="658814735800248" type="System" />
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="197246456580139" type="System">
+                    <param id="0" name="Variable">BlockActual</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="-9" name="Set value" sid="585463572371845" type="System">
+                    <param id="0" name="Variable">BlockEnd</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="-9" name="Set value" sid="979139507188207" type="System">
+                    <param id="0" name="Variable">BlockStart</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="0" name="Create dungeon" sid="999083270942164" type="RandomDungeonMaker">
+                    <param id="0" name="Width">15</param>
+                    <param id="1" name="Height">15</param>
+                    <param id="2" name="Blocks">100</param>
+                </action>
+                <action id="-9" name="Destroy" sid="231159741799581" type="MiniMap_Cursor" />
+                <action id="-3" name="Create object" sid="897119233950193" type="System">
+                    <param id="0" name="Object to create">MiniMap_Cursor</param>
+                    <param id="1" name="Layer">3</param>
+                    <param id="2" name="X">0</param>
+                    <param id="3" name="Y">0</param>
+                </action>
+            </actions>
+        </event-block>
+        <event-block sid="229687594349275">
+            <conditions>
+                <condition id="0" name="Dungeon Maked" sid="683279289375716" type="RandomDungeonMaker" />
+            </conditions>
+            <actions>
+                <action id="1" name="Set size" sid="571141253957451" type="Array_MiniMap">
+                    <param id="0" name="Width">RandomDungeonMaker.DungeonBlocks+1</param>
+                    <param id="1" name="Height">1</param>
+                    <param id="2" name="Depth">1</param>
+                </action>
+            </actions>
+            <sub-events>
+                <event-block sid="959101329906779">
+                    <conditions>
+                        <condition id="-11" name="For Each" sid="444817024563878" type="System">
+                            <param id="0" name="Object">MiniMap_Background</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Destroy" sid="288885059489906" type="MiniMap_Background" />
+                    </actions>
+                </event-block>
+                <event-block sid="988078457544459">
+                    <conditions>
+                        <condition id="-10" name="For" sid="884738220834735" type="System">
+                            <param id="0" name="Name">&quot;LoopTest&quot;</param>
+                            <param id="1" name="Start index">1</param>
+                            <param id="2" name="End index">RandomDungeonMaker.DungeonHeight*RandomDungeonMaker.DungeonWidth</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="3" name="Set next block" sid="694049905923563" type="RandomDungeonMaker" />
+                    </actions>
+                    <sub-events>
+                        <event-block sid="796941195747640">
+                            <conditions>
+                                <condition id="-8" name="Compare two values" sid="954855528681756" type="System">
+                                    <param id="0" name="First value">RandomDungeonMaker.BlockCurrentID</param>
+                                    <param id="1" name="Comparison">4</param>
+                                    <param id="2" name="Second value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-3" name="Create object" sid="983540282837082" type="System">
+                                    <param id="0" name="Object to create">BlockDungeon</param>
+                                    <param id="1" name="Layer">0</param>
+                                    <param id="2" name="X">(RandomDungeonMaker.BlockCurrentX*BlockSize) + Container.X</param>
+                                    <param id="3" name="Y">(RandomDungeonMaker.BlockCurrentY*BlockSize) + Container.Y</param>
+                                </action>
+                                <action id="-10" name="Set value" sid="345755688444406" type="BlockDungeon">
+                                    <param id="0" name="Instance variable">Id</param>
+                                    <param id="1" name="Value">RandomDungeonMaker.BlockCurrentId</param>
+                                </action>
+                                <action behavior="Pin" id="0" name="Pin to object" sid="142507213788153" type="BlockDungeon">
+                                    <param id="0" name="Pin to">Container</param>
+                                    <param id="1" name="Mode">0</param>
+                                </action>
+                                <action id="-7" name="Set size" sid="226643524551784" type="BlockDungeon">
+                                    <param id="0" name="Width">BlockSize</param>
+                                    <param id="1" name="Height">BlockSize</param>
+                                </action>
+                            </actions>
+                            <sub-events>
+                                <event-block sid="691365190627102">
+                                    <conditions>
+                                        <condition id="-14" name="Compare variable" sid="160863197831432" type="System">
+                                            <param id="0" name="Variable">BlockStart</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">0</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="311670965479074" type="System">
+                                            <param id="0" name="Variable">BlockStart</param>
+                                            <param id="1" name="Value">BlockDungeon.Id</param>
+                                        </action>
+                                        <action id="-9" name="Set value" sid="901015704998487" type="System">
+                                            <param id="0" name="Variable">BlockActual</param>
+                                            <param id="1" name="Value">BlockDungeon.Id</param>
+                                        </action>
+                                        <action id="-3" name="Set position" sid="815152945806362" type="BlockStart">
+                                            <param id="0" name="X">BlockDungeon.X</param>
+                                            <param id="1" name="Y">BlockDungeon.Y</param>
+                                        </action>
+                                        <action id="-7" name="Set size" sid="248368979854506" type="BlockStart">
+                                            <param id="0" name="Width">BlockSize</param>
+                                            <param id="1" name="Height">BlockSize</param>
+                                        </action>
+                                        <action behavior="Pin" id="0" name="Pin to object" sid="744584885295775" type="BlockStart">
+                                            <param id="0" name="Pin to">BlockDungeon</param>
+                                            <param id="1" name="Mode">0</param>
+                                        </action>
+                                        <action id="-4" name="Set position to another object" sid="374065909526539" type="Cursor">
+                                            <param id="0" name="Object">BlockStart</param>
+                                            <param id="1" name="Image point (optional)">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="205732713314817">
+                                    <conditions>
+                                        <condition id="-22" name="Else" sid="893002739984960" type="System" />
+                                    </conditions>
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="911949854256436" type="System">
+                                            <param id="0" name="Variable">BlockEnd</param>
+                                            <param id="1" name="Value">BlockDungeon.Id</param>
+                                        </action>
+                                        <action id="-3" name="Set position" sid="343403059357429" type="BlockEnd">
+                                            <param id="0" name="X">BlockDungeon.X + (BlockSize/2)</param>
+                                            <param id="1" name="Y">BlockDungeon.Y + (BlockSize/2)</param>
+                                        </action>
+                                        <action id="-7" name="Set size" sid="809436982748089" type="BlockEnd">
+                                            <param id="0" name="Width">BlockSize/2</param>
+                                            <param id="1" name="Height">BlockSize/2</param>
+                                        </action>
+                                        <action id="-3" name="Set position" sid="374786392478896" type="BlockEnd">
+                                            <param id="0" name="X">BlockEnd.X - (BlockEnd.Width/2)</param>
+                                            <param id="1" name="Y">BlockEnd.Y - (BlockEnd.Height/2)</param>
+                                        </action>
+                                        <action behavior="Pin" id="0" name="Pin to object" sid="115195236201068" type="BlockEnd">
+                                            <param id="0" name="Pin to">BlockDungeon</param>
+                                            <param id="1" name="Mode">0</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="296049946919039">
+                                    <conditions>
+                                        <condition id="-8" name="Compare two values" sid="935068894147850" type="System">
+                                            <param id="0" name="First value">RandomDungeonMaker.WallTop(RandomDungeonMaker.BlockCurrentID)</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Second value">&quot;NONE&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="0" name="Spawn another object" sid="927470701450902" type="BlockDungeon">
+                                            <param id="0" name="Object">BlockWall</param>
+                                            <param id="1" name="Layer">2</param>
+                                            <param id="2" name="Image point">1</param>
+                                        </action>
+                                        <action id="-18" name="Rotate clockwise" sid="762585528444360" type="BlockWall">
+                                            <param id="0" name="Degrees">0</param>
+                                        </action>
+                                        <action behavior="Pin" id="0" name="Pin to object" sid="654961447803940" type="BlockWall">
+                                            <param id="0" name="Pin to">BlockDungeon</param>
+                                            <param id="1" name="Mode">0</param>
+                                        </action>
+                                        <action id="-7" name="Set size" sid="680236309023993" type="BlockWall">
+                                            <param id="0" name="Width">BlockSize*1.1</param>
+                                            <param id="1" name="Height">BlockSize*1.1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="361117846785730">
+                                    <conditions>
+                                        <condition id="-8" name="Compare two values" sid="130668565353594" type="System">
+                                            <param id="0" name="First value">RandomDungeonMaker.WallRight(RandomDungeonMaker.BlockCurrentID)</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Second value">&quot;NONE&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="0" name="Spawn another object" sid="631212664627734" type="BlockDungeon">
+                                            <param id="0" name="Object">BlockWall</param>
+                                            <param id="1" name="Layer">2</param>
+                                            <param id="2" name="Image point">1</param>
+                                        </action>
+                                        <action id="-18" name="Rotate clockwise" sid="754161576278854" type="BlockWall">
+                                            <param id="0" name="Degrees">90</param>
+                                        </action>
+                                        <action behavior="Pin" id="0" name="Pin to object" sid="119534761897909" type="BlockWall">
+                                            <param id="0" name="Pin to">BlockDungeon</param>
+                                            <param id="1" name="Mode">0</param>
+                                        </action>
+                                        <action id="-7" name="Set size" sid="141955139780536" type="BlockWall">
+                                            <param id="0" name="Width">BlockSize*1.1</param>
+                                            <param id="1" name="Height">BlockSize*1.1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="641274683316050">
+                                    <conditions>
+                                        <condition id="-8" name="Compare two values" sid="414811180225245" type="System">
+                                            <param id="0" name="First value">RandomDungeonMaker.WallBottom(RandomDungeonMaker.BlockCurrentID)</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Second value">&quot;NONE&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="0" name="Spawn another object" sid="521796786227795" type="BlockDungeon">
+                                            <param id="0" name="Object">BlockWall</param>
+                                            <param id="1" name="Layer">2</param>
+                                            <param id="2" name="Image point">1</param>
+                                        </action>
+                                        <action id="-18" name="Rotate clockwise" sid="970772183856936" type="BlockWall">
+                                            <param id="0" name="Degrees">180</param>
+                                        </action>
+                                        <action behavior="Pin" id="0" name="Pin to object" sid="809649942084750" type="BlockWall">
+                                            <param id="0" name="Pin to">BlockDungeon</param>
+                                            <param id="1" name="Mode">0</param>
+                                        </action>
+                                        <action id="-7" name="Set size" sid="703235354285138" type="BlockWall">
+                                            <param id="0" name="Width">BlockSize*1.1</param>
+                                            <param id="1" name="Height">BlockSize*1.1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="742187675054290">
+                                    <conditions>
+                                        <condition id="-8" name="Compare two values" sid="796486913321830" type="System">
+                                            <param id="0" name="First value">RandomDungeonMaker.WallLeft(RandomDungeonMaker.BlockCurrentID)</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Second value">&quot;NONE&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="0" name="Spawn another object" sid="999166484713075" type="BlockDungeon">
+                                            <param id="0" name="Object">BlockWall</param>
+                                            <param id="1" name="Layer">2</param>
+                                            <param id="2" name="Image point">1</param>
+                                        </action>
+                                        <action id="-18" name="Rotate clockwise" sid="130142837652074" type="BlockWall">
+                                            <param id="0" name="Degrees">270</param>
+                                        </action>
+                                        <action behavior="Pin" id="0" name="Pin to object" sid="387338911364123" type="BlockWall">
+                                            <param id="0" name="Pin to">BlockDungeon</param>
+                                            <param id="1" name="Mode">0</param>
+                                        </action>
+                                        <action id="-7" name="Set size" sid="214955611143458" type="BlockWall">
+                                            <param id="0" name="Width">BlockSize*1.1</param>
+                                            <param id="1" name="Height">BlockSize*1.1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <comment>This conditional make the minimap object, the object has many animations and is determined by the total walls has the cell, you can comment the invisible action to make visible all the minimap</comment>
+                                <variable constant="0" name="WallPattern" sid="360792362970152" static="0" type="text">block_</variable>
+                                <event-block sid="118132410818931">
+                                    <conditions />
+                                    <actions>
+                                        <action id="-3" name="Create object" sid="716880214339501" type="System">
+                                            <param id="0" name="Object to create">MiniMap_Background</param>
+                                            <param id="1" name="Layer">3</param>
+                                            <param id="2" name="X">(RandomDungeonMaker.BlockCurrentX*MiniMap_Background.Width) + 10</param>
+                                            <param id="3" name="Y">(RandomDungeonMaker.BlockCurrentY*MiniMap_Background.Height) + 10</param>
+                                        </action>
+                                        <action id="2" name="Set at X" sid="575115101419789" type="Array_MiniMap">
+                                            <param id="0" name="X">RandomDungeonMaker.BlockCurrentID</param>
+                                            <param id="1" name="Value">MiniMap_Background.UID</param>
+                                        </action>
+                                        <action id="-9" name="Set value" sid="744907361824980" type="System">
+                                            <param id="0" name="Variable">WallPattern</param>
+                                            <param id="1" name="Value">WallPattern&amp;(RandomDungeonMaker.WallTop(RandomDungeonMaker.BlockCurrentID) &lt;&gt; &quot;NONE&quot; ? 1 : 0)&amp;&quot;_&quot;</param>
+                                        </action>
+                                        <action id="-9" name="Set value" sid="499708373104750" type="System">
+                                            <param id="0" name="Variable">WallPattern</param>
+                                            <param id="1" name="Value">WallPattern&amp;(RandomDungeonMaker.WallRight(RandomDungeonMaker.BlockCurrentID) &lt;&gt; &quot;NONE&quot; ? 1 : 0)&amp;&quot;_&quot;</param>
+                                        </action>
+                                        <action id="-9" name="Set value" sid="352028876507462" type="System">
+                                            <param id="0" name="Variable">WallPattern</param>
+                                            <param id="1" name="Value">WallPattern&amp;(RandomDungeonMaker.WallBottom(RandomDungeonMaker.BlockCurrentID) &lt;&gt; &quot;NONE&quot; ? 1 : 0)&amp;&quot;_&quot;</param>
+                                        </action>
+                                        <action id="-9" name="Set value" sid="841688298203471" type="System">
+                                            <param id="0" name="Variable">WallPattern</param>
+                                            <param id="1" name="Value">WallPattern&amp;(RandomDungeonMaker.WallLeft(RandomDungeonMaker.BlockCurrentID) &lt;&gt; &quot;NONE&quot; ? 1 : 0)</param>
+                                        </action>
+                                        <action id="4" name="Set animation" sid="608465011097853" type="MiniMap_Background">
+                                            <param id="0" name="Animation">WallPattern</param>
+                                            <param id="1" name="From">1</param>
+                                        </action>
+                                        <action id="-15" name="Set visible" sid="940205175365812" type="MiniMap_Background">
+                                            <param id="0" name="Visibility">0</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <event-block sid="443534810912761">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="644231385029600" type="Cursor">
+                    <param id="0" name="Object">BlockEnd</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-2" name="Go to layout" sid="547154930321251" type="System">
+                    <param id="0" name="Layout">Dungeon</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>If you touch a dungeon cell, the corresponding minimap cell is revealed</comment>
+        <event-block sid="837908312310237">
+            <conditions>
+                <condition id="0" name="On collision with another object" sid="479581538925803" type="Cursor">
+                    <param id="0" name="Object">BlockDungeon</param>
+                </condition>
+                <condition id="-14" name="Pick by unique ID" sid="423367333729500" type="MiniMap_Background">
+                    <param id="0" name="Unique ID">Array_MiniMap.At(BlockDungeon.Id)</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-4" name="Set position to another object" sid="991647573452215" type="MiniMap_Cursor">
+                    <param id="0" name="Object">MiniMap_Background</param>
+                    <param id="1" name="Image point (optional)">1</param>
+                </action>
+                <action id="-15" name="Set visible" sid="174528777626727" type="MiniMap_Background">
+                    <param id="0" name="Visibility">1</param>
+                </action>
+            </actions>
+        </event-block>
+    </events>
+</c2eventsheet>

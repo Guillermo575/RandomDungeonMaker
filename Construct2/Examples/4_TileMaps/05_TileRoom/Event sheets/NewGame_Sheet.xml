@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>NewGame_Sheet</name>
+    <events>
+        <variable constant="0" name="BlockSize" sid="715069902852783" static="0" type="number">128</variable>
+        <variable constant="0" name="TilesXBlock" sid="162268622140364" static="0" type="number">4</variable>
+        <variable constant="0" name="BlockActual" sid="756398274476332" static="0" type="number">0</variable>
+        <variable constant="0" name="BlockEnd" sid="236413481299743" static="0" type="number">0</variable>
+        <variable constant="0" name="BlockStart" sid="663532061147953" static="0" type="number">0</variable>
+        <comment>For this example, we need 2 layouts. One makes that makes the new dungeon and other that build the current room</comment>
+        <event-block sid="736963234680669">
+            <conditions>
+                <condition id="-2" name="On start of layout" sid="788355666542946" type="System" />
+            </conditions>
+            <actions>
+                <action id="-9" name="Set value" sid="405621159349964" type="System">
+                    <param id="0" name="Variable">BlockActual</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="-9" name="Set value" sid="110427015154468" type="System">
+                    <param id="0" name="Variable">BlockEnd</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="-9" name="Set value" sid="143341997596787" type="System">
+                    <param id="0" name="Variable">BlockStart</param>
+                    <param id="1" name="Value">0</param>
+                </action>
+                <action id="1" name="Create Dungeon (Extra)" sid="463628325062015" type="RandomDungeonMaker">
+                    <param id="0" name="Width">15</param>
+                    <param id="1" name="Height">15</param>
+                    <param id="2" name="Blocks">100</param>
+                    <param id="3" name="MinRoom">3</param>
+                    <param id="4" name="MaxRoom">6</param>
+                    <param id="5" name="LabyrinthInn">0</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>After the dungeon was created, we gonna make the variables who contains the ID for the blockend and blockstart</comment>
+        <event-block sid="663110946882714">
+            <conditions>
+                <condition id="0" name="Dungeon Maked" sid="679377580530657" type="RandomDungeonMaker" />
+            </conditions>
+            <actions />
+            <sub-events>
+                <event-block sid="780027786269437">
+                    <conditions>
+                        <condition id="-10" name="For" sid="308344831575155" type="System">
+                            <param id="0" name="Name">&quot;LoopTest&quot;</param>
+                            <param id="1" name="Start index">1</param>
+                            <param id="2" name="End index">RandomDungeonMaker.DungeonHeight*RandomDungeonMaker.DungeonWidth</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="3" name="Set next block" sid="708468742220909" type="RandomDungeonMaker" />
+                    </actions>
+                    <sub-events>
+                        <event-block sid="732257932657284">
+                            <conditions>
+                                <condition id="-8" name="Compare two values" sid="546940345158692" type="System">
+                                    <param id="0" name="First value">RandomDungeonMaker.BlockCurrentID</param>
+                                    <param id="1" name="Comparison">4</param>
+                                    <param id="2" name="Second value">0</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="693232793811023">
+                                    <conditions>
+                                        <condition id="-14" name="Compare variable" sid="989700419120145" type="System">
+                                            <param id="0" name="Variable">BlockStart</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">0</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="213335715903128" type="System">
+                                            <param id="0" name="Variable">BlockStart</param>
+                                            <param id="1" name="Value">RandomDungeonMaker.BlockCurrentID</param>
+                                        </action>
+                                        <action id="-9" name="Set value" sid="522895853596365" type="System">
+                                            <param id="0" name="Variable">BlockActual</param>
+                                            <param id="1" name="Value">RandomDungeonMaker.BlockCurrentID</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <event-block sid="910244842923638">
+                                    <conditions>
+                                        <condition id="-22" name="Else" sid="134925091144379" type="System" />
+                                    </conditions>
+                                    <actions>
+                                        <action id="-9" name="Set value" sid="936887828685379" type="System">
+                                            <param id="0" name="Variable">BlockEnd</param>
+                                            <param id="1" name="Value">RandomDungeonMaker.BlockCurrentID</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <comment>Now, we transport to the layout dungeon</comment>
+                <event-block sid="738170321675669">
+                    <conditions />
+                    <actions>
+                        <action id="6" name="Reset next block" sid="674716148067018" type="RandomDungeonMaker" />
+                        <action id="-2" name="Go to layout" sid="841785118142129" type="System">
+                            <param id="0" name="Layout">Dungeon</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+    </events>
+</c2eventsheet>

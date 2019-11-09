@@ -1,0 +1,436 @@
+{
+    "languageTag": "en-US",
+    "fileDescription": "Strings for random_dungeon_maker",
+    "text": {
+        "plugins": {
+            "random_dungeon_maker": {
+                "name": "Random Dungeon Maker",
+                "description": "Allow to generate aleatory labyrinths",
+                "help-url": "",
+                "properties": { },
+                "aceCategories": 
+				{ 
+					"custom": "Custom" 
+				},
+				"conditions": 
+				{
+					"on_Dungeon_Created":{
+                        "list-name": "The dungeon is created",
+                        "display-text": "The dungeon is created",
+                        "description": "The dungeon is created"					
+					}
+				},
+                "actions": 
+				{
+                    "Create_Dungeon_Simple": {
+                        "list-name": "Create dungeon",
+                        "display-text": "Create a dungeon with the basic parameters ({0},{1},{2})",
+                        "description": "Create a dungeon with the basic parameters",
+                        "params": {
+                            "Width": { "name": "Width", "desc": "Set the dungeon width" },
+							"Height": { "name": "Height", "desc": "Set the dungeon height" },
+							"Blocks": { "name": "Blocks", "desc": "Set the dungeon blocks" }
+                        }
+                    },
+					"Create_Dungeon_Extra": {
+                        "list-name": "Create dungeon (Extra)",
+                        "display-text": "Create a dungeon with the basic parameters and room size configuration ({0},{1},{2},{3},{4},{5})",
+                        "description": "Create a dungeon with the basic parameters and room size configuration",
+                        "params": {
+                            "Width": { "name": "Width", "desc": "Set the dungeon width" },
+							"Height": { "name": "Height", "desc": "Set the dungeon height" },
+							"Blocks": { "name": "Blocks", "desc": "Set the dungeon blocks" },
+							"MinRoom": { "name": "MinRoom", "desc": "Set the dungeon minimum room size" },
+							"MaxRoom": { "name": "MaxRoom", "desc": "Set the dungeon maximum room size" },
+							"LabyrinthInn": { 
+								"name": "LabyrinthInn", 
+								"desc": "Walls around the cells for a labyrinth design",
+								"items":{
+										  "YES": "YES",
+										  "NO": "NO"
+										}
+							}
+                        }
+                    },
+					"Load_Dungeon_JSON": {
+                        "list-name": "Load Dungeon",
+                        "display-text": "Create a dungeon using a string with JSON format({0})",
+                        "description": "Create a dungeon using a string with JSON format",
+                        "params": {
+                            "JSON": { "name": "JSON", "desc": "Set the JSON to load" }
+                        }
+                    },
+					"Set_Current_Block_Next": {
+                        "list-name": "Set next block",
+                        "display-text": "Set the dungeon block current cursor (horizontally)",
+                        "description": "Set the dungeon block current cursor (horizontally)"
+                    },
+					"Set_Current_Room": {
+                        "list-name": "Set current room",
+                        "display-text": "Set the current room using his ID ({0})",
+                        "description": "Set the current room using his ID  (and reset the room´s current block)",
+                        "params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Set_Current_Room_Block_Next": {
+                        "list-name": "Set next room block",
+                        "display-text": "Set the Current cursor in the current Room  (horizontally)",
+                        "description": "Set the current cursor in the current Room (horizontally)"
+                    },
+					"Set_Current_Block_Reset": {
+                        "list-name": "Reset next block",
+                        "display-text": "Reset the current cursor",
+                        "description": "Reset the Current cursor (pos 0,0)"
+                    },
+					"New_Dungeon_Element": {
+                        "list-name": "New dungeon element",
+                        "display-text": "New dungeon element ({0},{1},{2},{3},{4},{5},{6},{7})",
+                        "description": "New dungeon element",
+                        "params": {
+                            "Name": { "name": "Name", "desc": "Name Tag" },
+							"Total": { "name": "Total", "desc": "Total elements spawned (this length can be auto readjusted if this parameter is too long)" },
+							"OcuppedTolerance": { "name": "OcuppedTolerance", "desc": "Can spawn in blocks ocupped for other elements (Recommended 0,1 or 2)" },
+							"NotIndoor": { 
+								"name": "NotIndoor", 
+								"desc": "Can´t spawn next to a door ('YES' activate this option)",
+								"items":{
+										  "NO": "NO",
+										  "YES": "YES"
+										}
+							},
+							"ObligatoryBottomWall": { 
+								"name": "ObligatoryBottomWall", 
+								"desc": "Only spawn in cells who has Bottom Wall",
+								"items":{
+										  "NO": "NO",
+										  "YES": "YES",
+										  "NONE": "NONE"
+										}
+							},
+							"ObligatoryTopWall": { 
+								"name": "ObligatoryTopWall", 
+								"desc": "Only spawn in cells who has Top Wall",
+								"items":{
+										  "NO": "NO",
+										  "YES": "YES",
+										  "NONE": "NONE"
+										}
+							},
+							"ObligatoryLeftWall": { 
+								"name": "ObligatoryLeftWall", 
+								"desc": "Only spawn in cells who has Left Wall",
+								"items":{
+										  "NO": "NO",
+										  "YES": "YES",
+										  "NONE": "NONE"
+										}
+							},
+							"ObligatoryRightWall": { 
+								"name": "ObligatoryRightWall", 
+								"desc": "Only spawn in cells who has Right Wall",
+								"items":{
+										  "NO": "NO",
+										  "YES": "YES",
+										  "NONE": "NONE"
+										}
+							}
+                        }
+                    },
+					"Reset_Dungeon_Elements": {
+                        "list-name": "Reset dungeon elements",
+                        "display-text": "Reset dungeon elements",
+                        "description": "Reset dungeon elements list"
+                    },
+					"Remove_Dungeon_Element": {
+                        "list-name": "Remove dungeon element",
+                        "display-text": "Remove dungeon element ({0})",
+                        "description": "Remove dungeon individual element (still exists but has a deleted tag status for element querys)",
+                        "params": {
+                            "ElementId": { "name": "ElementId", "desc": "Set the Element ID" }
+                        }
+                    },
+					"Create_Dungeon_Advanced": {
+                        "list-name": "Create dungeon (Advanced)",
+                        "display-text": "Create a dungeon with the advanced configuration. ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9})",
+                        "description": "Create a dungeon with the advanced configuration.",
+                        "params": {
+                            "Width": { "name": "Width", "desc": "Set the dungeon width" },
+							"Height": { "name": "Height", "desc": "Set the dungeon height" },
+							"Blocks": { "name": "Blocks", "desc": "Set the dungeon blocks" },
+							"MinRoom": { "name": "MinRoom", "desc": "Set the dungeon minimum room size" },
+							"MaxRoom": { "name": "MaxRoom", "desc": "Set the dungeon maximum room size" },
+							"Mode": { 
+								"name": "Mode", 
+								"desc": "Dungeon Shape Mode",
+								"items":{
+										  "LABYRINTH": "LABYRINTH",
+										  "CASTLE": "CASTLE",
+										  "TOWER": "TOWER"
+										}
+							},
+							"StartX": { 
+								"name": "StartX", 
+								"desc": "Start Point X",
+								"items":{
+										  "CENTER": "CENTER",
+										  "LEFT": "LEFT",
+										  "RIGHT": "RIGHT"
+										}
+							},
+							"StartY": { 
+								"name": "StartY", 
+								"desc": "Start Point Y",
+								"items":{
+										  "CENTER": "CENTER",
+										  "TOP": "TOP",
+										  "BOTTOM": "BOTTOM"
+										}
+							},
+							"LabyrinthInn": { 
+								"name": "LabyrinthInn", 
+								"desc": "Walls around the cells for a labyrinth design",
+								"items":{
+										  "YES": "YES",
+										  "NO": "NO"
+										}
+							},
+							"OpenWorld": { 
+								"name": "OpenWorld", 
+								"desc": "Post-creation process that removes most walls for a open world sensation",
+								"items":{
+										  "NO": "NO",
+										  "YES": "YES"
+										}
+							}
+                        }
+                    }
+                },
+                "expressions": 
+				{
+                    "Dungeon_Width": {
+                        "description": "Return dungeon width",
+                        "translated-name": "DungeonWidth"
+                    },
+					"Dungeon_Height": {
+                        "description": "Return dungeon height",
+                        "translated-name": "DungeonHeight"
+                    },
+					"Dungeon_Blocks": {
+                        "description": "Return dungeon total blocks",
+                        "translated-name": "DungeonBlocks"
+                    },
+					"Dungeon_Data_JSON": {
+                        "description": "Get dungeon data by a JSON",
+                        "translated-name": "Get dungeon data by a JSON"
+                    },
+					"Block_Current_ID": {
+                        "description": "Return current block ID",
+                        "translated-name": "Current block ID"
+                    },
+					"Block_Current_X": {
+                        "description": "Return current block position X",
+                        "translated-name": "Current block X"
+                    },
+					"Block_Current_Y": {
+                        "description": "Return current block position Y",
+                        "translated-name": "Current block Y"
+                    },
+					"Block_Current_Room": {
+                        "description": "Return current block room Id",
+                        "translated-name": "Current block room"
+                    },
+					"Block_ID": {
+                        "description": "Return block ID",
+                        "translated-name": "Block ID",
+						"params": {
+                            "X": { "name": "X", "desc": "Set the X" },
+							"Y": { "name": "Y", "desc": "Set the Y" }
+                        }
+                    },
+					"Block_X": {
+                        "description": "Return block position X",
+                        "translated-name": "Block X",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Block_Y": {
+                        "description": "Return block position Y",
+                        "translated-name": "Block Y",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Block_Room": {
+                        "description": "Return block room ID",
+                        "translated-name": "Block room ID",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Block_Info": {
+                        "description": "Return block position and room in a string 'X,Y,Room'",
+                        "translated-name": "Block information",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Wall_Top": {
+                        "description": "Return block wall top type (ROOM, BORDER, NONE)",
+                        "translated-name": "Block Wall Top",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Wall_Left": {
+                        "description": "Return block wall left type (ROOM, BORDER, NONE)",
+                        "translated-name": "Block Wall Left",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Wall_Right": {
+                        "description": "Return block wall right type (ROOM, BORDER, NONE)",
+                        "translated-name": "Block Wall Right",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Wall_Bottom": {
+                        "description": "Return block wall bottom type (ROOM, BORDER, NONE)",
+                        "translated-name": "Block Wall Bottom",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Platform_Top": {
+                        "description": "Return block top platform type (LEFT,CENTER,RIGHT)",
+                        "translated-name": "Platform Top",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Platform_Center": {
+                        "description": "Return block center platform type (LEFT,CENTER,RIGHT)",
+                        "translated-name": "Platform center",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Platform_Bottom": {
+                        "description": "Return block bottom platform type (LEFT,CENTER,RIGHT)",
+                        "translated-name": "Platform bottom",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Room_Connect_Top": {
+                        "description": "Show the adjacent block ID (top) if both blocks found in different rooms",
+                        "translated-name": "Room connect Top",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Room_Connect_Left": {
+                        "description": "Show the adjacent block ID (left) if both blocks found in different rooms",
+                        "translated-name": "Room connect Left",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Room_Connect_Right": {
+                        "description": "Show the adjacent block ID (right) if both blocks found in different rooms",
+                        "translated-name": "Room connect Right",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Room_Connect_Bottom": {
+                        "description": "Show the adjacent block ID (bottom) if both blocks found in different rooms",
+                        "translated-name": "Room connect Bottom",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Room_Current_ID": {
+                        "description": "Return current room ID",
+                        "translated-name": "Current room ID"
+                    },
+					"Room_Width": {
+                        "description": "Return room width",
+                        "translated-name": "Room width",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Room_Height": {
+                        "description": "Return room height",
+                        "translated-name": "Room height",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Room_Block_Current_X": {
+                        "description": "Current room block, position X",
+                        "translated-name": "Room Current block X"
+                    },
+					"Room_Block_Current_Y": {
+                        "description": "Current room block, position Y",
+                        "translated-name": "Room Current block Y"
+                    },
+					"Room_Block_ID": {
+                        "description": "Return current room block ID using room coordinates",
+                        "translated-name": "Block ID (using room coordinates)",
+						"params": {
+                            "X": { "name": "X", "desc": "Set the X" },
+							"Y": { "name": "Y", "desc": "Set the Y" }
+                        }
+                    },
+					"Block_Elements_NameTag": {
+                        "description": "Return block elements NameTag",
+                        "translated-name": "Block Elements NameTag",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Block_Elements_EID": {
+                        "description": "Return block elements (Dungeon Element ID)",
+                        "translated-name": "Block Elements (EID)",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Adjacent_Block_Top": {
+                        "description": "Show the adjacent block ID (top) of the selected block",
+                        "translated-name": "Adjacent Block Top",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Adjacent_Block_Left": {
+                        "description": "Show the adjacent block ID (left) of the selected block",
+                        "translated-name": "Adjacent Block Left",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Adjacent_Block_Right": {
+                        "description": "Show the adjacent block ID (right) of the selected block",
+                        "translated-name": "Adjacent Block Right",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Adjacent_Block_Bottom": {
+                        "description": "Show the adjacent block ID (bottom) of the selected block",
+                        "translated-name": "Adjacent Block Bottom",
+						"params": {
+                            "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "is-c3-addon": true,
+    "type": "plugin",
+    "name": "Random Dungeon Maker",
+    "id": "random_dungeon_maker",
+    "version": "1.1",
+    "author": "El_Guille",
+    "website": " ",
+    "documentation": " ",
+    "description": "Allow you to make aleatory labyrinths",
+    "editor-scripts": [
+						"plugin.js",
+						"type.js",
+						"instance.js"
+					]
+}
