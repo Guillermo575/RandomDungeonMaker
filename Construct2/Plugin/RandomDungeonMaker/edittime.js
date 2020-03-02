@@ -2,7 +2,7 @@
     return {
         "name": "Random Dungeon Maker",				// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
         "id": "random_dungeon_maker",				// this is used to identify this plugin and is saved to the project; never change it
-        "version": "1.2",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+        "version": "1.2.1",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
         "description": "Addon that allow you make random labyrinths",
         "author": "Medina_Team",
         "help url": "",
@@ -30,6 +30,7 @@ AddNumberParam("MinRoom", "Set the dungeon minimum room size","2");
 AddNumberParam("MaxRoom", "Set the dungeon maximum room size","5");
 AddComboParamOption("YES");
 AddComboParamOption("NO");
+AddComboParamOption("RANDOM");
 AddComboParam("LabyrinthInn", "Walls around the cells for a labyrinth design");
 AddAction(1, af_none, "Create Dungeon (Extra)", "Actions", "Create a dungeon with the basic parameters and room size configuration. (Width: {0}, Height: {1}, Blocks: {2}, MinRoom: {3}, MaxRoom: {4}, LabyrinthInn: {5})", "Create a dungeon with the basic parameters and room size configuration.", "CreateDungeonExtra");
 
@@ -82,20 +83,25 @@ AddNumberParam("MaxRoom", "Set the dungeon maximum room size","5");
 AddComboParamOption("LABYRINTH");
 AddComboParamOption("CASTLE");
 AddComboParamOption("TOWER");
+AddComboParamOption("RANDOM");
 AddComboParam("Mode", "Dungeon Shape Mode");
 AddComboParamOption("CENTER");
 AddComboParamOption("LEFT");
 AddComboParamOption("RIGHT");
+AddComboParamOption("RANDOM");
 AddComboParam("StartX", "Start Point X");
 AddComboParamOption("CENTER");
 AddComboParamOption("TOP");
 AddComboParamOption("BOTTOM");
+AddComboParamOption("RANDOM");
 AddComboParam("StartY", "Start Point Y");
 AddComboParamOption("YES");
 AddComboParamOption("NO");
+AddComboParamOption("RANDOM");
 AddComboParam("LabyrinthInn", "Walls around the cells for a labyrinth design");
 AddComboParamOption("NO");
 AddComboParamOption("YES");
+AddComboParamOption("RANDOM");
 AddComboParam("OpenWorld", "Post-creation process that removes most walls for a open world sensation");
 AddAction(10, af_none, "Create Dungeon (Advanced)", "Actions", 
 					   "Create a dungeon with the advanced configuration. (Width: {0}, Height: {1}, Blocks: {2}, MinRoom: {3}, MaxRoom: {4}, Mode: {5}, StartX: {6}, StartY: {7}, LabyrinthInn: {8}, OpenWorld: {9})", 

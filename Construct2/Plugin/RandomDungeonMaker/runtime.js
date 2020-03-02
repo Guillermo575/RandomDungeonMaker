@@ -252,6 +252,11 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 		switch (LabyrinthInn) {
 			case 0: LabyrinthInnCombo = "YES"; break;
 			case 1: LabyrinthInnCombo = "NO"; break;
+			case 2: switch (Math.round(Math.random() * 1))
+					{
+						case 0: LabyrinthInnCombo = "YES"; break;
+						case 1: LabyrinthInnCombo = "NO"; break;
+					} break;
 		}
 		var LabInn = LabyrinthInnCombo == "NO" ? 0 : 1;
 		
@@ -274,6 +279,12 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			case 0: ModeCombo = "LABYRINTH"; break;
 			case 1: ModeCombo = "CASTLE"; break;
 			case 2: ModeCombo = "TOWER"; break;
+			case 3: switch (Math.round(Math.random() * 2))
+					{
+						case 0: ModeCombo = "LABYRINTH"; break;
+						case 1: ModeCombo = "CASTLE"; break;
+						case 2: ModeCombo = "TOWER"; break;
+					} break;
 		}
 
 		var StartXCombo = "CENTER";
@@ -281,6 +292,12 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			case 0: StartXCombo = "CENTER"; break;
 			case 1: StartXCombo = "LEFT"; break;
 			case 2: StartXCombo = "RIGHT"; break;
+			case 3: switch (Math.round(Math.random() * 2))
+					{
+						case 0: StartXCombo = "CENTER"; break;
+						case 1: StartXCombo = "LEFT"; break;
+						case 2: StartXCombo = "RIGHT"; break;
+					} break;
 		}		
 		var PointX = 0;
 		PointX = StartXCombo == "LEFT" ? -1: PointX;
@@ -291,6 +308,12 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			case 0: StartYCombo = "CENTER"; break;
 			case 1: StartYCombo = "TOP"; break;
 			case 2: StartYCombo = "BOTTOM"; break;
+			case 3: switch (Math.round(Math.random() * 2))
+					{
+						case 0: StartYCombo = "CENTER"; break;
+						case 1: StartYCombo = "TOP"; break;
+						case 2: StartYCombo = "BOTTOM"; break;
+					} break;
 		}				
 		var PointY = 0;
 		PointY = StartYCombo == "TOP" ? -1: PointY;
@@ -300,6 +323,11 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 		switch (LabyrinthInn) {
 			case 0: LabyrinthInnCombo = "YES"; break;
 			case 1: LabyrinthInnCombo = "NO"; break;
+			case 2: switch (Math.round(Math.random() * 1))
+					{
+						case 0: LabyrinthInnCombo = "YES"; break;
+						case 1: LabyrinthInnCombo = "NO"; break;
+					} break;
 		}
 		var LabInn = LabyrinthInnCombo == "NO" ? 0 : 1;
 
@@ -307,6 +335,11 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 		switch (OpenWorld) {
 			case 0: OpenWorldCombo = "NO"; break;
 			case 1: OpenWorldCombo = "YES"; break;
+			case 2: switch (Math.round(Math.random() * 1))
+					{
+						case 0: OpenWorldCombo = "NO"; break;
+						case 1: OpenWorldCombo = "YES"; break;
+					} break;
 		}
 		var OpWorld = OpenWorldCombo == "YES" ? 1 : 0;
 		
