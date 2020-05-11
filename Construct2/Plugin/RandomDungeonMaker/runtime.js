@@ -210,10 +210,13 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			LabyrinthInn: 1,
 			OpenWorld: 0,
 			SupportPlatforms: 1,
+			ShowSupportPlatforms: 0,
 			StartPointX: 0,
 			StartPointY: 0,
 			Status: "NOT",
 			Elements: [],
+			SubBlockWidth: 4,
+			SubBlockHeight: 4,
 		} 
 	}
 	
@@ -464,6 +467,8 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			ObligatoryLeftWall: ObligatoryLeftWallCombo,
 			ObligatoryRightWall: ObligatoryRightWallCombo,
 			Objetos: [],
+			Width: 1,
+			Height: 1,
 		};
 		if(this.ConfigElements === undefined)
 		{

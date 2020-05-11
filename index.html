@@ -2,48 +2,74 @@
 <html>
 	<head> 
 		<script src="Construct2/Plugin/RandomDungeonMaker/common.js"> </script>
-		<script src="scripts/Interface.js"> </script>			
+		<script src="scripts/Interface.js"> </script>
 	</head>
 	<body>
 	
-		<table>
+		<table style='width:800px;'>
 			<tr>
-				<td> Width: <input type="text" id="width" value="30" style='width:60px;'> </td>
-				<td> Height: <input type="text" id="height" value="30" style='width:60px;'> </td>
-				<td> Blocks: <input type="text" id="blocks" value="400" style='width:60px;'> </td>
+				<td> Width: </td>
+				<td> <input type="text" id="width" value="30" style='width:60px;'> </td>
+				<td> Height: </td>
+				<td> <input type="text" id="height" value="30" style='width:60px;'> </td>
+				<td> Blocks: </td>
+				<td> <input type="text" id="blocks" value="400" style='width:60px;'> </td>
 				<td>
 					<button type="button" onclick="testDungeon();" style='visibility:hidden'>TEST</button>
 				</td>
 			</tr>
 			<tr>
+				<td> Labyrinth Inn: </td>
 				<td>
-					Shape: 
+					<select id="LabyrinthInn">
+						<option value="1">YES</option>
+						<option value="0">NO</option>
+					</select>
+				</td>
+				<td> Open World: </td>
+				<td>
+					<select id="OpenWorld">
+						<option value="0">NO</option>
+						<option value="1">YES</option>
+					</select>
+				</td>
+				<td> Platforms: </td>
+				<td>
+					<select id="SupportPlatforms">
+						<option value="0">NO</option>
+						<option value="1">YES</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td> Shape: </td>
+				<td>
 					<select id="GameMode">
-						<option value="LABYRINTH">LABYRINTH</option>					
+						<option value="LABYRINTH">LABYRINTH</option>
 						<option value="CASTLE">CASTLE</option>
 						<option value="TOWER">TOWER</option>
 					</select>	
 				</td>
+				<td> Start X: </td>
 				<td>
-					Start X:
 					<select id="PointX">
-						<option value="0">CENTER</option>					
+						<option value="0">CENTER</option>
 						<option value="-1">LEFT</option>
 						<option value="1">RIGHT</option>
 					</select>	
 				</td>
+				<td> Start Y: </td>
 				<td>
-					Start Y:
 					<select id="PointY">
-						<option value="LABYRINTH">CENTER</option>					
+						<option value="LABYRINTH">CENTER</option>
 						<option value="-1">TOP</option>
 						<option value="1">BOTTOM</option>
 					</select>	
 				</td>
 				<td>
 					<button type="button" onclick="createDungeon();">GENERATE</button>
-				</td>					
-			</tr>	
+				</td>
+			</tr>
 		</table>
 		<form onsubmit="download(this['name'].value, this['text'].value)">
 			<input type="text" name="name" value="example.json">
@@ -57,7 +83,7 @@
 		
 
 		<script type="text/javascript">
-			createDungeon();							   
+			createDungeon();
 			function createDungeon()
 			{
 				var GameDungeon = DungeonBasicConfiguration(document.getElementById('width').value,
@@ -66,8 +92,13 @@
 			    GameDungeon.DungeonMode = document.getElementById('GameMode').value;
 				GameDungeon.StartPointX = document.getElementById('PointX').value;
 				GameDungeon.StartPointY = document.getElementById('PointY').value;
+				GameDungeon.LabyrinthInn = document.getElementById('LabyrinthInn').value;
+				GameDungeon.OpenWorld = document.getElementById('OpenWorld').value;
+				GameDungeon.SupportPlatforms = document.getElementById('SupportPlatforms').value;
+				//AddElement(GameDungeon, 'X', 20, 0, 'NO', 'NO', 'NO', 'NO', 'NO');
 				GameDungeon = makeDungeon(GameDungeon);
-				GraphiqueDungeon(GameDungeon);			
+				document.getElementById("minimap").innerHTML = GraphiqueDungeon(GameDungeon);
+				document.getElementById("jsondata").innerHTML += JSON2.stringify(GameDungeon);
 			}
 			function testDungeon()
 			{

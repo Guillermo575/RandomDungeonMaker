@@ -65,42 +65,44 @@ function MakeDungeonShape(GameDungeon)
 			}
 			CuadrosDisponibles.splice(randomNumber,1);	
 		}
-		if(GameDungeon.DungeonMode == "TOWER")
+		switch(GameDungeon.DungeonMode)
 		{
-			if((CuadroSeleccionadoX - 1) >= 0 && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX - 1].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX - 1]);
-			}
-			if((CuadroSeleccionadoX + 1) < GameDungeon.DungeonWidth && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX + 1].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX + 1]);
-			}
-			if((CuadroSeleccionadoY - 1) >= 0 && DungeonArray[CuadroSeleccionadoY - 1][CuadroSeleccionadoX].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY - 1, CuadroSeleccionadoX]);
-			}
-			if((CuadroSeleccionadoY + 1) < GameDungeon.DungeonHeight && DungeonArray[CuadroSeleccionadoY + 1][CuadroSeleccionadoX].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY + 1, CuadroSeleccionadoX]);
-			}			
-		}else
-		{
-			if((CuadroSeleccionadoY - 1) >= 0 && DungeonArray[CuadroSeleccionadoY - 1][CuadroSeleccionadoX].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY - 1, CuadroSeleccionadoX]);
-			}
-			if((CuadroSeleccionadoY + 1) < GameDungeon.DungeonHeight && DungeonArray[CuadroSeleccionadoY + 1][CuadroSeleccionadoX].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY + 1, CuadroSeleccionadoX]);
-			}				
-			if((CuadroSeleccionadoX - 1) >= 0 && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX - 1].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX - 1]);
-			}
-			if((CuadroSeleccionadoX + 1) < GameDungeon.DungeonWidth && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX + 1].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX + 1]);
-			}
+			case "TOWER":
+				if((CuadroSeleccionadoX - 1) >= 0 && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX - 1].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX - 1]);
+				}
+				if((CuadroSeleccionadoX + 1) < GameDungeon.DungeonWidth && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX + 1].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX + 1]);
+				}
+				if((CuadroSeleccionadoY - 1) >= 0 && DungeonArray[CuadroSeleccionadoY - 1][CuadroSeleccionadoX].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY - 1, CuadroSeleccionadoX]);
+				}
+				if((CuadroSeleccionadoY + 1) < GameDungeon.DungeonHeight && DungeonArray[CuadroSeleccionadoY + 1][CuadroSeleccionadoX].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY + 1, CuadroSeleccionadoX]);
+				}
+			break;
+			default:
+				if((CuadroSeleccionadoY - 1) >= 0 && DungeonArray[CuadroSeleccionadoY - 1][CuadroSeleccionadoX].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY - 1, CuadroSeleccionadoX]);
+				}
+				if((CuadroSeleccionadoY + 1) < GameDungeon.DungeonHeight && DungeonArray[CuadroSeleccionadoY + 1][CuadroSeleccionadoX].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY + 1, CuadroSeleccionadoX]);
+				}
+				if((CuadroSeleccionadoX - 1) >= 0 && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX - 1].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX - 1]);
+				}
+				if((CuadroSeleccionadoX + 1) < GameDungeon.DungeonWidth && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX + 1].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX + 1]);
+				}
+			break;
 		}
 	}
 	for(var l = 0; l < GameDungeon.DungeonHeight; l++)
@@ -868,6 +870,8 @@ function DistributeDungeonElements(GameDungeon)
 				ElementId: ElementIdC,
 				Status: 1,
 				OtherData: "",
+				PositionX: 0,
+				PositionY: 0,
 			};
 			itemElement.Objetos[itemElement.Objetos.length] = NewElement;
 			BlockSeleccionado.Elements[BlockSeleccionado.Elements.length] = NewElement; 
@@ -918,7 +922,7 @@ function GraphiqueDungeon(GameDungeon)
 	minimap += "<table>";
 	minimap += "<tr style='vertical-align:top'> <td>";
 	
-		minimap += "<table style = 'text-align:center; border-spacing:0px; " + ( "width:" + GameDungeon.DungeonWidth*20 +"px;") + ( "height:" + GameDungeon.DungeonHeight*20 +"px;") + "' >\n";
+		minimap += "<table style = 'text-align:center; border-spacing:0px; " + ( "width:" + GameDungeon.DungeonWidth * 20 +"px;") + ( "height:" + GameDungeon.DungeonHeight * 20 +"px;") + "' >\n";
 		for(l = 0; l < GameDungeon.DungeonHeight; l++)
 		{
 			minimap += "<tr>\n";
@@ -952,6 +956,64 @@ function GraphiqueDungeon(GameDungeon)
 					border += (BloqueSeleccionado.ConnectBottom != "")? "border-bottom: dotted 1px #FFF;" : "";
 					border += (BloqueSeleccionado.ConnectLeft != "")? "border-left: dotted 1px #FFF;" : "";
 					minimap += "<td style='width:" + perSize + ";height:" + perSize + ";font-size: 10px;padding: 0px;"+ backgroundcolor + border+"'>";
+					if(GameDungeon.ShowSupportPlatforms = 1)
+					{
+						if(BloqueSeleccionado.SupportPlatformTop != "NONE")
+						{
+							if(BloqueSeleccionado.SupportPlatformCenter == "LEFT")
+							{
+								minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 0%; left: 0%; position: relative;'></div>";
+							}
+							if(BloqueSeleccionado.SupportPlatformCenter == "CENTER")
+							{
+								minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 0%; left: 30%; position: relative;'></div>";
+							}
+							if(BloqueSeleccionado.SupportPlatformCenter == "RIGHT")
+							{
+								minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 0%; left: 60%; position: relative;'></div>";
+							}
+						}else
+						{
+							minimap += "<div style='rgba(0,0,0,0); width: 40%; height: 10%; top: 0%; left: 30%; position: relative;'></div>";
+						}
+						if(BloqueSeleccionado.SupportPlatformCenter != "NONE")
+						{
+							if(BloqueSeleccionado.SupportPlatformCenter == "LEFT")
+							{
+								minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 35%; left: 0%; position: relative;'></div>";
+							}
+							if(BloqueSeleccionado.SupportPlatformCenter == "CENTER")
+							{
+								minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 35%; left: 30%; position: relative;'></div>";
+							}
+							if(BloqueSeleccionado.SupportPlatformCenter == "RIGHT")
+							{
+								minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 35%; left: 60%; position: relative;'></div>";
+							}
+						}else
+						{
+							minimap += "<div style='rgba(0,0,0,0); width: 40%; height: 10%; top: 35%; left: 30%; position: relative;'></div>";
+						}
+						//BloqueSeleccionado.SupportPlatformBottom = "NONE";
+						if(BloqueSeleccionado.SupportPlatformBottom != "NONE")
+						{
+							if(BloqueSeleccionado.SupportPlatformBottom == "LEFT")
+							{
+								minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 75%; left: 0%; position: relative;'></div>";
+							}
+							if(BloqueSeleccionado.SupportPlatformBottom == "CENTER")
+							{
+								minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 75%; left: 30%; position: relative;'></div>";
+							}
+							if(BloqueSeleccionado.SupportPlatformBottom == "RIGHT")
+							{
+								minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 75%; left: 60%; position: relative;'></div>";
+							}
+						}else
+						{
+							minimap += "<div style='rgba(0,0,0,0); width: 40%; height: 10%; top: 75%; left: 30%; position: relative;'/></div>";
+						}
+					}
 				}else
 				{
 					border = "border-style:solid;border-width:1px;border-color:#EEE";
