@@ -1,6 +1,6 @@
 function DungeonBasicConfiguration(Width,Height,Blocks)
 {
-	var GameDungeon = 	
+	var GameDungeon =
 	{
 		DungeonBlocks: [],
 		DungeonRooms: [],
@@ -26,7 +26,6 @@ function DungeonBasicConfiguration(Width,Height,Blocks)
 	};
 	return GameDungeon;
 }
-
 function testAlgorithm(ciclos)
 {
 	for(xxx = 0; xxx < ciclos; xxx++)
@@ -38,7 +37,6 @@ function testAlgorithm(ciclos)
 	}
 	return 0;
 }
-
 function AddElement(GameDungeon, Name,Total,OcuppedTolerance,NotIndoor,
 					ObligatoryBottomWall,ObligatoryTopWall,ObligatoryLeftWall,ObligatoryRightWall)
 {
