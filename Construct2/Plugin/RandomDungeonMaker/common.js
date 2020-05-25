@@ -919,6 +919,7 @@ function GraphiqueDungeon(GameDungeon)
 	minimap += "<style> .RDM_Block { width:100%; height:100% } .RDM_Block:active { background-color:#AAA; } </style>";
 	minimap += "<style> .RDM_Table { text-align:center; width:100%; font-size: 15px; } .RDM_Table td{text-align:center;} .RDM_Table th{ border-bottom:solid 1px; font-weight: bold;} </style>";
 	minimap += "<style> .RDM_MAP {text-align:center; border-spacing:0px; " + ( "width:" + GameDungeon.DungeonWidth * 20 +"px;") + ( "height:" + GameDungeon.DungeonHeight * 20 +"px;") + " } .RDM_MAP td{ width:" + perSize + "; height:" + perSize + "; font-size: 10px; padding: 0px; } </style>";
+	minimap += "<style> .RDM_Platforms { width: 40%; height: 10%; position: relative; } </style>";
 	
 	minimap += "<table>";
 	minimap += "<tr style='vertical-align:top'> <td>";
@@ -967,45 +968,41 @@ function GraphiqueDungeon(GameDungeon)
 					border += (BloqueSeleccionado.ConnectRight != "")? "border-right: dotted 1px #FFF;" : "";
 					border += (BloqueSeleccionado.ConnectBottom != "")? "border-bottom: dotted 1px #FFF;" : "";
 					border += (BloqueSeleccionado.ConnectLeft != "")? "border-left: dotted 1px #FFF;" : "";
+
 					minimap += "<td style='" + backgroundcolor + border + "'>";
-					if(GameDungeon.ShowSupportPlatforms = 1)
-					{
-						switch(BloqueSeleccionado.SupportPlatformTop)
+						var OnClickEvent = "OnClick='document.getElementById(\"blockinfo\").innerHTML= \" " + BlockInfoResume(JSON2.stringify(BloqueSeleccionado)) + " \" '";
+						minimap += "<div " + OnClickEvent + " title='ID: "+BloqueSeleccionado.Id+" (" + BloqueSeleccionado.X + "," + BloqueSeleccionado.Y + ")' " + " class='RDM_Block'>";
+						if(GameDungeon.ShowSupportPlatforms = 1)
 						{
-							case "LEFT": minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 0%; left: 0%; position: relative;'></div>"; break;
-							case "CENTER": minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 0%; left: 30%; position: relative;'></div>"; break;
-							case "RIGHT": minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 0%; left: 60%; position: relative;'></div>"; break;
-							default: minimap += "<div style='rgba(0,0,0,0); width: 40%; height: 10%; top: 0%; left: 30%; position: relative;'></div>";
+							switch(BloqueSeleccionado.SupportPlatformTop)
+							{
+								case "LEFT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 10%; left: 0%;'></div>"; break;
+								case "CENTER": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 10%; left: 30%;'></div>"; break;
+								case "RIGHT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 10%; left: 60%;'></div>"; break;
+								default: minimap += "<div class='RDM_Platforms' style='background-color: rgba(0,0,0,0); top: 10%; left: 30%;'></div>";
+							}
+							switch(BloqueSeleccionado.SupportPlatformCenter)
+							{
+								case "LEFT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 50%; left: 0%;'></div>"; break;
+								case "CENTER": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 50%; left: 30%;'></div>"; break;
+								case "RIGHT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 50%; left: 60%;'></div>"; break;
+								default: minimap += "<div class='RDM_Platforms' style='background-color: rgba(0,0,0,0); top: 50%; left: 30%;'></div>";
+							}
+							switch(BloqueSeleccionado.SupportPlatformBottom)
+							{
+								case "LEFT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 80%; left: 0%;'></div>"; break;
+								case "CENTER": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 80%; left: 30%;'></div>"; break;
+								case "RIGHT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 80%; left: 60%;'></div>"; break;
+								default: minimap += "<div class='RDM_Platforms' style='background-color: rgba(0,0,0,0); top: 80%; left: 30%;'></div>";
+							}
 						}
-						switch(BloqueSeleccionado.SupportPlatformCenter)
-						{
-							case "LEFT": minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 50%; left: 0%; position: relative;'></div>"; break;
-							case "CENTER": minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 50%; left: 30%; position: relative;'></div>"; break;
-							case "RIGHT": minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 50%; left: 60%; position: relative;'></div>"; break;
-							default: minimap += "<div style='rgba(0,0,0,0); width: 40%; height: 10%; top: 50%; left: 30%; position: relative;'></div>";
-						}
-						switch(BloqueSeleccionado.SupportPlatformBottom)
-						{
-							case "LEFT": minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 100%; left: 0%; position: relative;'></div>"; break;
-							case "CENTER": minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 100%; left: 30%; position: relative;'></div>"; break;
-							case "RIGHT": minimap += "<div style='background-color: #000; width: 40%; height: 10%; top: 100%; left: 60%; position: relative;'></div>"; break;
-							default: minimap += "<div style='rgba(0,0,0,0); width: 40%; height: 10%; top: 100%; left: 30%; position: relative;'></div>";
-						}
-					}
-					var BlockResume = BlockInfoResume(JSON2.stringify(BloqueSeleccionado));
-					var OnClickEvent = "OnClick='document.getElementById(\"blockinfo\").innerHTML= \" " + BlockResume + " \" '";
-					minimap += "<div " + OnClickEvent + " title='ID: "+BloqueSeleccionado.Id+" (" + BloqueSeleccionado.X + "," + BloqueSeleccionado.Y + ")' " + " class='RDM_Block'>";
-					/*for(y = 0; y < BloqueSeleccionado.Elements.length; y++)
-					{
-						minimap += BloqueSeleccionado.Elements[y].NameTag;
-					}*/
-					minimap += "</div>";
+						minimap += "</div>";
 					minimap += "</td>\n";
 				}else
 				{
 					border = "border-style:solid;border-width:1px;border-color:#EEE";
 					minimap += "<td class='RDM_blank'>";
-					minimap += "<div title='ID: "+BloqueSeleccionado.Id+" (" + BloqueSeleccionado.X + "," + BloqueSeleccionado.Y + ")' " + "> &nbsp </div>";
+					minimap += "<div title='ID: " + BloqueSeleccionado.Id + " (" + BloqueSeleccionado.X + "," + BloqueSeleccionado.Y + ")' " + "> &nbsp </div>";
 					minimap += "</td>\n";
 				}
 			}
