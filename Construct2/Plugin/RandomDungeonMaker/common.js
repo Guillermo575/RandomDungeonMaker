@@ -801,7 +801,7 @@ function MakeDungeonSupportPlatform(GameDungeon)
 						}
 						if(BloqueSeleccionado.ConnectTop!= "")
 						{
-							BloqueSeleccionado.SupportPlatformTop = "CENTER";
+							//BloqueSeleccionado.SupportPlatformTop = "CENTER";
 						}
 					}
 				}
@@ -900,18 +900,36 @@ function GetRndColor()
 	var redColor = Math.floor(Math.random()*(170)+40).toString(16);
 	var GreenColor = Math.floor(Math.random()*(170)+40).toString(16);
 	var BlueColor = Math.floor(Math.random()*(170)+40).toString(16);
-	rndColor = "#" + redColor + "" + GreenColor + "" + BlueColor;
-	return rndColor;
+	rndColor = redColor + "" + GreenColor + "" + BlueColor;
+	return "#" + rndColor;
+}
+
+function GetRndColor2(maxLength, index)
+{
+	maxLength = maxLength + 1;
+	index = index + 1;
+	var rndColor = ('000000' + Math.floor((16777215/maxLength) * index).toString(16)).slice(-6);
+	return "#" + rndColor;
 }
 
 function GraphiqueDungeon(GameDungeon)
 {
+	GameDungeon = GameDungeon == null ? JSON2.parse(localStorage.getItem("objMapGraphic")) : GameDungeon;
+	localStorage.setItem("objMapGraphic", JSON2.stringify(GameDungeon));
+	if(localStorage.getItem("ShowSupportPlatforms") == null)
+	{
+		localStorage.setItem("ShowSupportPlatforms", 0);
+	}
+	if(localStorage.getItem("ShowColorRooms") == null)
+	{
+		localStorage.setItem("ShowColorRooms", 0);
+	}
 	var DungeonArray = GameDungeon.DungeonBlocks;
 	var DungeonRooms = GameDungeon.DungeonRooms;
 	var ArrayRndmColorBgn = [];
 	for(r = 0; r < DungeonRooms.length; r++)
 	{
-		ArrayRndmColorBgn[ArrayRndmColorBgn.length] = GetRndColor();
+		ArrayRndmColorBgn[ArrayRndmColorBgn.length] = GetRndColor2(DungeonRooms.length, r);
 	}
 	var perSize = "15px";
 	var minimap = "";
@@ -922,96 +940,119 @@ function GraphiqueDungeon(GameDungeon)
 	minimap += "<style> .RDM_Platforms { width: 40%; height: 10%; position: relative; } </style>";
 	
 	minimap += "<table>";
-	minimap += "<tr style='vertical-align:top'> <td>";
-	
-		minimap += "<table class='RDM_MAP'>\n";
-		minimap += "<tr>";
-		minimap += "<td>X</td>";
-		for(m = 0; m < GameDungeon.DungeonWidth; m++)
-		{
-			minimap += "<td>" + m + "</td>";
-		}
-		minimap += "</tr>";
-		for(l = 0; l < GameDungeon.DungeonHeight; l++)
-		{
-			minimap += "<tr>";
-			for(m = 0; m < GameDungeon.DungeonWidth; m++)
-			{
-				if(m == 0)
+		minimap += "<tr style='vertical-align:top'>";
+			minimap += "<td rowspan='2'>";
+				minimap += "<table class='RDM_MAP'>\n";
+				minimap += "<tr>";
+				minimap += "<td>X</td>";
+				for(m = 0; m < GameDungeon.DungeonWidth; m++)
 				{
-					minimap += "<td>" + l + "</td>";
+					minimap += "<td>" + m + "</td>";
 				}
-				var BloqueSeleccionado = DungeonArray[l][m];
-				var border = "border-style:solid;border-width:0px;";
-				if(BloqueSeleccionado.Id > 0)
+				minimap += "</tr>";
+				for(l = 0; l < GameDungeon.DungeonHeight; l++)
 				{
-					var RndmColorBackground = ArrayRndmColorBgn[BloqueSeleccionado.Room - 1];
-					RndmColorBackground = "#FFD700";			
-					var backgroundcolor = "background-color:" + ((BloqueSeleccionado.Status =="OK") ? RndmColorBackground : "#000") + ";";
-					if(BloqueSeleccionado.WallTop > 0 || BloqueSeleccionado.RoomWallTop > 0)
+					minimap += "<tr>";
+					for(m = 0; m < GameDungeon.DungeonWidth; m++)
 					{
-						border += "border-top: solid " + (l > 0 && DungeonArray[l - 1][m] != null && DungeonArray[l - 1][m].Id == 0 ? "2" :(DungeonArray[l - 1] == null) ? "2" : "1") + "px;";
-					}
-					if(BloqueSeleccionado.WallRight > 0 || BloqueSeleccionado.RoomWallRight > 0)
-					{
-						border += "border-right: solid " + ((m <= GameDungeon.DungeonWidth - 1) && DungeonArray[l][m + 1] != null && DungeonArray[l][m + 1].Id == 0 ? "2" : DungeonArray[l][m + 1] == null ? "2" : "1") + "px;";					
-					}
-					if(BloqueSeleccionado.WallBottom > 0 || BloqueSeleccionado.RoomWallBottom > 0)
-					{
-						border += "border-bottom: solid " + ((l < GameDungeon.DungeonHeight - 1) && DungeonArray[l + 1][m] != null && DungeonArray[l + 1][m].Id == 0 ? "2" : (DungeonArray[l + 1] == null) ? "2" : "1") + "px;"
-					}
-					if(BloqueSeleccionado.WallLeft > 0 || BloqueSeleccionado.RoomWallLeft > 0)
-					{
-						border += "border-left: solid " + (m >= 0 && DungeonArray[l][m - 1] != null && DungeonArray[l][m - 1].Id == 0 ? "2" : DungeonArray[l][m - 1] == null ? "2" : "1") + "px;";
-					}
-					border += (BloqueSeleccionado.ConnectTop != "")? "border-top: dotted 1px #FFF;" : "";
-					border += (BloqueSeleccionado.ConnectRight != "")? "border-right: dotted 1px #FFF;" : "";
-					border += (BloqueSeleccionado.ConnectBottom != "")? "border-bottom: dotted 1px #FFF;" : "";
-					border += (BloqueSeleccionado.ConnectLeft != "")? "border-left: dotted 1px #FFF;" : "";
-
-					minimap += "<td style='" + backgroundcolor + border + "'>";
-						var OnClickEvent = "OnClick='document.getElementById(\"blockinfo\").innerHTML= \" " + BlockInfoResume(JSON2.stringify(BloqueSeleccionado)) + " \" '";
-						minimap += "<div " + OnClickEvent + " title='ID: "+BloqueSeleccionado.Id+" (" + BloqueSeleccionado.X + "," + BloqueSeleccionado.Y + ")' " + " class='RDM_Block'>";
-						if(GameDungeon.ShowSupportPlatforms = 1)
+						minimap += m == 0 ? "<td>" + l + "</td>" : "";
+						var BloqueSeleccionado = DungeonArray[l][m];
+						var border = "border-style:solid;border-width:0px;";
+						if(BloqueSeleccionado.Id > 0)
 						{
-							switch(BloqueSeleccionado.SupportPlatformTop)
+							var RndmColorBackground = ArrayRndmColorBgn[BloqueSeleccionado.Room - 1];
+							RndmColorBackground = localStorage.getItem("ShowColorRooms") == 1 ? RndmColorBackground : "#FFD700";
+							var backgroundcolor = "background-color:" + ((BloqueSeleccionado.Status == "OK") ? RndmColorBackground : "#000") + ";";
+							if(BloqueSeleccionado.WallTop > 0 || BloqueSeleccionado.RoomWallTop > 0)
 							{
-								case "LEFT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 10%; left: 0%;'></div>"; break;
-								case "CENTER": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 10%; left: 30%;'></div>"; break;
-								case "RIGHT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 10%; left: 60%;'></div>"; break;
-								default: minimap += "<div class='RDM_Platforms' style='background-color: rgba(0,0,0,0); top: 10%; left: 30%;'></div>";
+								border += "border-top: solid " + (l > 0 && DungeonArray[l - 1][m] != null && DungeonArray[l - 1][m].Id == 0 ? "2" :(DungeonArray[l - 1] == null) ? "2" : "1") + "px;";
 							}
-							switch(BloqueSeleccionado.SupportPlatformCenter)
+							if(BloqueSeleccionado.WallRight > 0 || BloqueSeleccionado.RoomWallRight > 0)
 							{
-								case "LEFT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 50%; left: 0%;'></div>"; break;
-								case "CENTER": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 50%; left: 30%;'></div>"; break;
-								case "RIGHT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 50%; left: 60%;'></div>"; break;
-								default: minimap += "<div class='RDM_Platforms' style='background-color: rgba(0,0,0,0); top: 50%; left: 30%;'></div>";
+								border += "border-right: solid " + ((m <= GameDungeon.DungeonWidth - 1) && DungeonArray[l][m + 1] != null && DungeonArray[l][m + 1].Id == 0 ? "2" : DungeonArray[l][m + 1] == null ? "2" : "1") + "px;";					
 							}
-							switch(BloqueSeleccionado.SupportPlatformBottom)
+							if(BloqueSeleccionado.WallBottom > 0 || BloqueSeleccionado.RoomWallBottom > 0)
 							{
-								case "LEFT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 80%; left: 0%;'></div>"; break;
-								case "CENTER": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 80%; left: 30%;'></div>"; break;
-								case "RIGHT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 80%; left: 60%;'></div>"; break;
-								default: minimap += "<div class='RDM_Platforms' style='background-color: rgba(0,0,0,0); top: 80%; left: 30%;'></div>";
+								border += "border-bottom: solid " + ((l < GameDungeon.DungeonHeight - 1) && DungeonArray[l + 1][m] != null && DungeonArray[l + 1][m].Id == 0 ? "2" : (DungeonArray[l + 1] == null) ? "2" : "1") + "px;"
 							}
+							if(BloqueSeleccionado.WallLeft > 0 || BloqueSeleccionado.RoomWallLeft > 0)
+							{
+								border += "border-left: solid " + (m >= 0 && DungeonArray[l][m - 1] != null && DungeonArray[l][m - 1].Id == 0 ? "2" : DungeonArray[l][m - 1] == null ? "2" : "1") + "px;";
+							}
+							border += (BloqueSeleccionado.ConnectTop != "")? "border-top: dotted 1px #FFF;" : "";
+							border += (BloqueSeleccionado.ConnectRight != "")? "border-right: dotted 1px #FFF;" : "";
+							border += (BloqueSeleccionado.ConnectBottom != "")? "border-bottom: dotted 1px #FFF;" : "";
+							border += (BloqueSeleccionado.ConnectLeft != "")? "border-left: dotted 1px #FFF;" : "";
+							minimap += "<td style='" + backgroundcolor + border + "'>";
+								var OnClickEvent = "OnClick='document.getElementById(\"blockinfo\").innerHTML= \" " + BlockInfoResume(JSON2.stringify(BloqueSeleccionado)) + " \" '";
+								minimap += "<div " + OnClickEvent + " title='ID: "+BloqueSeleccionado.Id+" (" + BloqueSeleccionado.X + "," + BloqueSeleccionado.Y + ")' " + " class='RDM_Block'>";
+								if(localStorage.getItem("ShowSupportPlatforms") == 1)
+								{
+									switch(BloqueSeleccionado.SupportPlatformTop)
+									{
+										case "LEFT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 10%; left: 0%;'></div>"; break;
+										case "CENTER": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 10%; left: 30%;'></div>"; break;
+										case "RIGHT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 10%; left: 60%;'></div>"; break;
+										default: minimap += "<div class='RDM_Platforms' style='background-color: rgba(0,0,0,0); top: 10%; left: 30%;'></div>";
+									}
+									switch(BloqueSeleccionado.SupportPlatformCenter)
+									{
+										case "LEFT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 50%; left: 0%;'></div>"; break;
+										case "CENTER": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 50%; left: 30%;'></div>"; break;
+										case "RIGHT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 50%; left: 60%;'></div>"; break;
+										default: minimap += "<div class='RDM_Platforms' style='background-color: rgba(0,0,0,0); top: 50%; left: 30%;'></div>";
+									}
+									switch(BloqueSeleccionado.SupportPlatformBottom)
+									{
+										case "LEFT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 80%; left: 0%;'></div>"; break;
+										case "CENTER": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 80%; left: 30%;'></div>"; break;
+										case "RIGHT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 80%; left: 60%;'></div>"; break;
+										default: minimap += "<div class='RDM_Platforms' style='background-color: rgba(0,0,0,0); top: 80%; left: 30%;'></div>";
+									}
+								}
+								minimap += "</div>";
+							minimap += "</td>";
+						}else
+						{
+							border = "border-style:solid;border-width:1px;border-color:#EEE";
+							minimap += "<td class='RDM_blank'>";
+							minimap += "<div title='ID: " + BloqueSeleccionado.Id + " (" + BloqueSeleccionado.X + "," + BloqueSeleccionado.Y + ")' " + "> &nbsp </div>";
+							minimap += "</td>";
 						}
-						minimap += "</div>";
-					minimap += "</td>\n";
-				}else
-				{
-					border = "border-style:solid;border-width:1px;border-color:#EEE";
-					minimap += "<td class='RDM_blank'>";
-					minimap += "<div title='ID: " + BloqueSeleccionado.Id + " (" + BloqueSeleccionado.X + "," + BloqueSeleccionado.Y + ")' " + "> &nbsp </div>";
-					minimap += "</td>\n";
+					}
+					minimap += "</tr>";
 				}
-			}
-			minimap += "</tr>\n";
-		}
-		minimap += "</table>";
-	minimap += "<td style='vertical-align:middle;'><div id='blockinfo' style='width:300px;'></div></td></tr>";
+				minimap += "</table>";
+			minimap += "</td>";
+			minimap += "<td>";
+				minimap += MapOptionsTable();
+			minimap += "</td>";
+		minimap += "</tr>";
+		minimap += "<tr>";
+			minimap += "<td style='vertical-align:middle;'><div id='blockinfo' style='width:300px;'></div></td>";
+		minimap += "</tr>";
 	minimap += "</table>";
 	return minimap;
+}
+
+function MapOptionsTable()
+{
+	var GraphiqueFunction = "document.getElementById(\"minimap\").innerHTML = GraphiqueDungeon();";
+	var chkShowSupportPlatforms = "localStorage.setItem(\"ShowSupportPlatforms\", document.getElementById(\"chkShowSupportPlatforms\").checked ? 1 : 0);";
+	var chkShowColorRooms = "localStorage.setItem(\"ShowColorRooms\", document.getElementById(\"chkShowColorRooms\").checked ? 1 : 0);";
+	var stringtable = "<table>";
+	stringtable += "<tr>";
+		stringtable += "<td>";
+			stringtable += "<input type='checkbox' onclick='" + chkShowSupportPlatforms + GraphiqueFunction + "' id='chkShowSupportPlatforms' " + (localStorage.getItem("ShowSupportPlatforms") == 1 ? "checked" : "") + "> Support Platforms </input>";
+		stringtable += "</td>";
+	stringtable += "</tr>";
+	stringtable += "<tr>";
+		stringtable += "<td>";
+			stringtable += "<input type='checkbox' onclick='" + chkShowColorRooms + GraphiqueFunction + "' id='chkShowColorRooms' " + (localStorage.getItem("ShowColorRooms") == 1 ? "checked" : "") + "> Color Rooms </input>";
+		stringtable += "</td>";
+	stringtable += "</tr>";
+	stringtable += "</table>";
+	return stringtable;
 }
 
 function BlockInfoResume(Info)

@@ -210,7 +210,6 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			LabyrinthInn: 1,
 			OpenWorld: 0,
 			SupportPlatforms: 1,
-			ShowSupportPlatforms: 0,
 			StartPointX: 0,
 			StartPointY: 0,
 			Status: "NOT",

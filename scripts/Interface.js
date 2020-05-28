@@ -16,7 +16,6 @@ function DungeonBasicConfiguration(Width,Height,Blocks)
 		LabyrinthInn: 1,
 		OpenWorld: 0,
 		SupportPlatforms: 0,
-		ShowSupportPlatforms: 1,
 		StartPointX: 0,
 		StartPointY: 0,
 		Status: "NOT",
