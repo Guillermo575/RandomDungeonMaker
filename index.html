@@ -14,6 +14,7 @@
 				<td> Blocks: </td>
 				<td> <input type="text" id="blocks" value="400" style='width:60px;'> </td>
 				<td>
+					<button type="button" onclick="ResetConfiguration();">RESET</button>
 					<button type="button" onclick="testDungeon();" style='visibility:hidden'>TEST</button>
 				</td>
 			</tr>
@@ -35,8 +36,8 @@
 				<td> Platforms: </td>
 				<td>
 					<select id="SupportPlatforms">
-						<option value="1">YES</option>
 						<option value="0">NO</option>
+						<option value="1">YES</option>
 					</select>
 				</td>
 			</tr>
@@ -60,7 +61,7 @@
 				<td> Start Y: </td>
 				<td>
 					<select id="PointY">
-						<option value="LABYRINTH">CENTER</option>
+						<option value="0">CENTER</option>
 						<option value="-1">TOP</option>
 						<option value="1">BOTTOM</option>
 					</select>	
@@ -94,6 +95,7 @@
 		<br/>
 		<div id="minimap"></div>
 		<script type="text/javascript">
+			LoadConfiguration();
 			createDungeon();
 			document.getElementById('input-file').addEventListener('change', getFile);
 			function createDungeon()
@@ -111,47 +113,7 @@
 				GameDungeon = makeDungeon(GameDungeon);
 				document.getElementById("minimap").innerHTML = GraphiqueDungeon(GameDungeon);
 				document.getElementById("jsondata").innerHTML += JSON2.stringify(GameDungeon);
-			}
-			function testDungeon()
-			{
-				testAlgorithm(100000);
-				alert("Terminado");
-			}
-			function download(filename, text)
-			{
-				var element = document.createElement('a');
-				element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-				element.setAttribute('download', filename);
-				element.style.display = 'none';
-				document.body.appendChild(element);
-				element.click();
-				document.body.removeChild(element);
-			}
-			function getFile(event)
-			{
-				const input = event.target;
-				if ('files' in input && input.files.length > 0)
-				{
-					placeFileContent(document.getElementById('jsondata'), input.files[0]);
-				}
-			}
-			function placeFileContent(target, file)
-			{
-				readFileContent(file).then(content => {
-					target.value = content;
-					GameDungeon = JSON2.parse(content);
-					document.getElementById("minimap").innerHTML = GraphiqueDungeon(GameDungeon);
-				}).catch(error => console.log(error));
-			}
-			function readFileContent(file)
-			{
-				const reader = new FileReader();
-				return new Promise((resolve, reject) =>
-				{
-					reader.onload = event => resolve(event.target.result);
-					reader.onerror = error => reject(error);
-					reader.readAsText(file);
-				});
+				saveConfiguration();
 			}
 		</script>
 	</body>

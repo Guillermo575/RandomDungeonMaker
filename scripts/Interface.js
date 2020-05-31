@@ -25,16 +25,16 @@ function DungeonBasicConfiguration(Width,Height,Blocks)
 	};
 	return GameDungeon;
 }
-function testAlgorithm(ciclos)
+function testDungeon()
 {
-	for(xxx = 0; xxx < ciclos; xxx++)
+	for(xxx = 0; xxx < 100000; xxx++)
 	{
 		var t0 = performance.now();		
 		var ss = makeDungeon(DungeonBasicConfiguration(100,100,10000));
 		var t1 = performance.now();
 		console.log(xxx + " Array took " + (t1 - t0) + " milliseconds.");
 	}
-	return 0;
+	alert("Terminado");
 }
 function AddElement(GameDungeon, Name,Total,OcuppedTolerance,NotIndoor,
 					ObligatoryBottomWall,ObligatoryTopWall,ObligatoryLeftWall,ObligatoryRightWall)
@@ -58,4 +58,77 @@ function AddElement(GameDungeon, Name,Total,OcuppedTolerance,NotIndoor,
 		GameDungeon.Elements = [];
 	}
 	GameDungeon.Elements[GameDungeon.Elements.length] = objnuevo;
+}
+function download(filename, text)
+{
+	var element = document.createElement('a');
+	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+	element.setAttribute('download', filename);
+	element.style.display = 'none';
+	document.body.appendChild(element);
+	element.click();
+	document.body.removeChild(element);
+}
+function getFile(event)
+{
+	const input = event.target;
+	if ('files' in input && input.files.length > 0)
+	{
+		placeFileContent(document.getElementById('jsondata'), input.files[0]);
+	}
+}
+function placeFileContent(target, file)
+{
+	readFileContent(file).then(content => {
+		target.value = content;
+		GameDungeon = JSON2.parse(content);
+		document.getElementById("minimap").innerHTML = GraphiqueDungeon(GameDungeon);
+	}).catch(error => console.log(error));
+}
+function readFileContent(file)
+{
+	const reader = new FileReader();
+	return new Promise((resolve, reject) =>
+	{
+		reader.onload = event => resolve(event.target.result);
+		reader.onerror = error => reject(error);
+		reader.readAsText(file);
+	});
+}
+function saveConfiguration()
+{
+	localStorage.setItem("Config_width", document.getElementById('width').value);
+	localStorage.setItem("Config_height", document.getElementById('height').value);
+	localStorage.setItem("Config_blocks", document.getElementById('blocks').value);
+	localStorage.setItem("Config_GameMode", document.getElementById('GameMode').value);
+	localStorage.setItem("Config_PointX", document.getElementById('PointX').value);
+	localStorage.setItem("Config_PointY", document.getElementById('PointY').value);
+	localStorage.setItem("Config_LabyrinthInn", document.getElementById('LabyrinthInn').value);
+	localStorage.setItem("Config_OpenWorld", document.getElementById('OpenWorld').value);
+	localStorage.setItem("Config_SupportPlatforms", document.getElementById('SupportPlatforms').value);
+}
+function LoadConfiguration()
+{
+	document.getElementById('width').value = localStorage.getItem("Config_width");
+	document.getElementById('height').value = localStorage.getItem("Config_height");
+	document.getElementById('blocks').value = localStorage.getItem("Config_blocks");
+	document.getElementById('GameMode').value = localStorage.getItem("Config_GameMode");
+	document.getElementById('PointX').value = localStorage.getItem("Config_PointX");
+	document.getElementById('PointY').value = localStorage.getItem("Config_PointY");
+	document.getElementById('LabyrinthInn').value = localStorage.getItem("Config_LabyrinthInn");
+	document.getElementById('OpenWorld').value = localStorage.getItem("Config_OpenWorld");
+	document.getElementById('SupportPlatforms').value = localStorage.getItem("Config_SupportPlatforms");
+}
+function ResetConfiguration()
+{
+	document.getElementById('width').value = "30";
+	document.getElementById('height').value = "30";
+	document.getElementById('blocks').value = "400";
+	document.getElementById('GameMode').value = "LABYRINTH";
+	document.getElementById('PointX').value = "0";
+	document.getElementById('PointY').value = "0";
+	document.getElementById('LabyrinthInn').value = "1";
+	document.getElementById('OpenWorld').value = "0";
+	document.getElementById('SupportPlatforms').value = "0";
+	saveConfiguration();
 }
