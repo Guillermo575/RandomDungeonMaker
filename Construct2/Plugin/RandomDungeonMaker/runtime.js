@@ -423,8 +423,8 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 		this.CurY = 0;
 	}
 	
-	Acts.prototype.NewDungeonElement = function (Name,Total,OcuppedTolerance,NotIndoor,
-												 ObligatoryBottomWall,ObligatoryTopWall,ObligatoryLeftWall,ObligatoryRightWall)
+	Acts.prototype.NewDungeonElement = function (Name, Total, OcuppedTolerance, NotIndoor,
+												 ObligatoryBottomWall, ObligatoryTopWall, ObligatoryLeftWall, ObligatoryRightWall, Priority)
 	{
 		var NotIndoorCombo = "NO";
 		switch (NotIndoor) {
@@ -460,7 +460,7 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			NameTag: Name,
 			Total: Total,
 			OcuppedTolerance: OcuppedTolerance,	
-			NotIndoor: (NotIndoorCombo == "YES") ? 1 : 0,			
+			NotIndoor: (NotIndoorCombo == "YES") ? 1 : 0,
 			ObligatoryBottomWall: ObligatoryBottomWallCombo,
 			ObligatoryTopWall: ObligatoryTopWallCombo,
 			ObligatoryLeftWall: ObligatoryLeftWallCombo,
@@ -468,6 +468,7 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			Objetos: [],
 			Width: 1,
 			Height: 1,
+			Priority: Priority === undefined ? 1 : Priority,
 		};
 		if(this.ConfigElements === undefined)
 		{
@@ -513,7 +514,62 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 				}
 			}
 		}
-	};	
+	};
+
+	Acts.prototype.ReviveDungeonElementsByPriority = function (Priority)
+	{
+		if(!(this.ConfigElements === undefined) && !(this.GameDungeon == null))
+		{
+			for(var x = 0; x < this.GameDungeon.Elements.length; x++)
+			{
+				var itemElement = this.GameDungeon.Elements[x];
+				for(var l = 0; l < itemElement.Objetos.length; l++)
+				{
+					if(itemElement.Objetos[l].Priority == Priority)
+					{
+						itemElement.Objetos[l].Status = 1;
+					}
+				}
+			}
+		}
+	};
+
+	Acts.prototype.ReviveDungeonElementsByNameTag = function (NameTag)
+	{
+		if(!(this.ConfigElements === undefined) && !(this.GameDungeon == null))
+		{
+			for(var x = 0; x < this.GameDungeon.Elements.length; x++)
+			{
+				var itemElement = this.GameDungeon.Elements[x];
+				for(var l = 0; l < itemElement.Objetos.length; l++)
+				{
+					if(itemElement.Objetos[l].NameTag == NameTag)
+					{
+						itemElement.Objetos[l].Status = 1;
+					}
+				}
+			}
+		}
+	};
+
+	Acts.prototype.ReviveDungeonElementsByElementId = function (ElementId)
+	{
+		if(!(this.ConfigElements === undefined) && !(this.GameDungeon == null))
+		{
+			for(var x = 0; x < this.GameDungeon.Elements.length; x++)
+			{
+				var itemElement = this.GameDungeon.Elements[x];
+				for(var l = 0; l < itemElement.Objetos.length; l++)
+				{
+					if(itemElement.Objetos[l].ElementId == ElementId)
+					{
+						itemElement.Objetos[l].Status = 1;
+						return true;
+					}
+				}
+			}
+		}
+	};
 	
     pluginProto.acts = new Acts();
 

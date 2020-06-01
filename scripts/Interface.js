@@ -52,6 +52,7 @@ function AddElement(GameDungeon, Name,Total,OcuppedTolerance,NotIndoor,
 		Objetos: [],
 		Width: 1,
 		Height: 1,
+		Priority: 1,
 	};
 	if(GameDungeon.Elements === undefined)
 	{

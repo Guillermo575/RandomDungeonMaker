@@ -2,7 +2,7 @@
     return {
         "name": "Random Dungeon Maker",				// as appears in 'insert object' dialog, can be changed as long as "id" stays the same
         "id": "random_dungeon_maker",				// this is used to identify this plugin and is saved to the project; never change it
-        "version": "1.2.1",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
+        "version": "1.2.2",					// (float in x.y format) Plugin version - C2 shows compatibility warnings based on this
         "description": "Addon that allow you make random labyrinths",
         "author": "Medina_Team",
         "help url": "",
@@ -21,7 +21,7 @@ AddCondition(0, cf_trigger, "Dungeon Maked", "Dungeon Maker", "The dungeon is cr
 AddNumberParam("Width", "Set the dungeon width","10");
 AddNumberParam("Height", "Set the dungeon height","10");
 AddNumberParam("Blocks", "Set the dungeon blocks (this length can be auto readjusted if this parameter is too long)","60");
-AddAction(0, af_none, "Create dungeon", "Actions", "Create a dungeon with the basic parameters (Width: {0}, Height: {1}, Blocks: {2})", "Create a dungeon with the basic parameters", "CreateDungeonSimple");
+AddAction(0, af_none, "Create dungeon", "Creation", "Create a dungeon with the basic parameters (Width: {0}, Height: {1}, Blocks: {2})", "Create a dungeon with the basic parameters", "CreateDungeonSimple");
 
 AddNumberParam("Width", "Set the dungeon width","10");
 AddNumberParam("Height", "Set the dungeon height","10");
@@ -32,19 +32,19 @@ AddComboParamOption("YES");
 AddComboParamOption("NO");
 AddComboParamOption("RANDOM");
 AddComboParam("LabyrinthInn", "Walls around the cells for a labyrinth design");
-AddAction(1, af_none, "Create Dungeon (Extra)", "Actions", "Create a dungeon with the basic parameters and room size configuration. (Width: {0}, Height: {1}, Blocks: {2}, MinRoom: {3}, MaxRoom: {4}, LabyrinthInn: {5})", "Create a dungeon with the basic parameters and room size configuration.", "CreateDungeonExtra");
+AddAction(1, af_none, "Create Dungeon (Extra)", "Creation", "Create a dungeon with the basic parameters and room size configuration. (Width: {0}, Height: {1}, Blocks: {2}, MinRoom: {3}, MaxRoom: {4}, LabyrinthInn: {5})", "Create a dungeon with the basic parameters and room size configuration.", "CreateDungeonExtra");
 
 AddStringParam("JSON", "Set the JSON to load");
-AddAction(2, af_none, "Load Dungeon", "Actions", "Create a dungeon using a string with JSON format({0})", "Load a dungeon with JSON", "LoadDungeonJSON");
+AddAction(2, af_none, "Load Dungeon", "Creation", "Create a dungeon using a string with JSON format({0})", "Load a dungeon with JSON", "LoadDungeonJSON");
 
-AddAction(3, af_none, "Set next block", "Actions", "Set the dungeon block current cursor (horizontally)", "Set the dungeon block current cursor (horizontally)", "SetCurrentBlockNext");
+AddAction(3, af_none, "Set next block", "Management", "Set the dungeon block current cursor (horizontally)", "Set the dungeon block current cursor (horizontally)", "SetCurrentBlockNext");
 
 AddNumberParam("Id", "The room ID");
-AddAction(4, af_none, "Set current room", "Actions", "Set the current room using his ID ({0})", "Set the current room using his ID  (and reset the room´s current block)", "SetCurrentRoom");
+AddAction(4, af_none, "Set current room", "Management", "Set the current room using his ID ({0})", "Set the current room using his ID  (and reset the room´s current block)", "SetCurrentRoom");
 
-AddAction(5, af_none, "Set next room block", "Actions", "Set the Current cursor in the current Room (horizontally)", "Set the current cursor in the current Room (horizontally)", "SetCurrentRoomBlockNext");
+AddAction(5, af_none, "Set next room block", "Management", "Set the Current cursor in the current Room (horizontally)", "Set the current cursor in the current Room (horizontally)", "SetCurrentRoomBlockNext");
 
-AddAction(6, af_none, "Reset next block", "Actions", "Reset the current cursor", "Reset the Current cursor (pos 0,0)", "SetCurrentBlockReset");
+AddAction(6, af_none, "Reset next block", "Management", "Reset the current cursor", "Reset the Current cursor (pos 0,0)", "SetCurrentBlockReset");
 
 AddStringParam("Name", "Name Tag");
 AddNumberParam("Total", "Total elements spawned (this length can be auto readjusted if this parameter is too long)","10");
@@ -68,12 +68,13 @@ AddComboParamOption("NO");
 AddComboParamOption("YES");
 AddComboParamOption("NONE");
 AddComboParam("ObligatoryRightWall", "Only spawn in cells who has Right Wall");
-AddAction(7, af_none, "New dungeon element", "Actions", "New dungeon element ({0},{1},{2},{3},{4},{5},{6},{7})", "New dungeon element", "NewDungeonElement");
+AddNumberParam("Priority", "Element priority", "1");
+AddAction(7, af_none, "New dungeon element", "Elements (Management)", "New dungeon element (Name Tag: {0}, Total: {1}, OcuppedTolerance: {2}, NotIndoor: {3}, ObligatoryBottomWall: {4}, ObligatoryTopWall: {5}, ObligatoryLeftWall: {6}, ObligatoryRightWall: {7}, Priority: {8})", "New dungeon element", "NewDungeonElement");
 
-AddAction(8, af_none, "Reset dungeon elements", "Actions", "Reset dungeon elements list", "Reset dungeon elements", "ResetDungeonElements");
+AddAction(8, af_none, "Reset dungeon elements", "Elements (Management)", "Reset dungeon elements list", "Reset dungeon elements", "ResetDungeonElements");
 
 AddNumberParam("ElementId", "Set the Element ID");
-AddAction(9, af_none, "Remove dungeon element", "Actions", "Remove dungeon element ({0})" , "Remove dungeon individual element (still exists but has a deleted tag status for element querys)", "RemoveDungeonElement");
+AddAction(9, af_none, "Remove dungeon element", "Elements (Management)", "Remove dungeon element ({0})" , "Remove dungeon individual element (still exists but has a deleted tag status for element querys)", "RemoveDungeonElement");
 
 AddNumberParam("Width", "Set the dungeon width","10");
 AddNumberParam("Height", "Set the dungeon height","10");
@@ -103,13 +104,22 @@ AddComboParamOption("NO");
 AddComboParamOption("YES");
 AddComboParamOption("RANDOM");
 AddComboParam("OpenWorld", "Post-creation process that removes most walls for a open world sensation");
-AddAction(10, af_none, "Create Dungeon (Advanced)", "Actions", 
+AddAction(10, af_none, "Create Dungeon (Advanced)", "Creation",
 					   "Create a dungeon with the advanced configuration. (Width: {0}, Height: {1}, Blocks: {2}, MinRoom: {3}, MaxRoom: {4}, Mode: {5}, StartX: {6}, StartY: {7}, LabyrinthInn: {8}, OpenWorld: {9})", 
 					   "Create a dungeon with the advanced configuration.", "CreateDungeonAdvanced");
 
-AddAction(11, af_none, "Clear Dungeon", "Actions", "Erase all dungeon data (blocks, elements, config, etc)", "Erase all dungeon data ", "ClearDungeon");
+AddAction(11, af_none, "Clear Dungeon", "Management", "Erase all dungeon data (blocks, elements, config, etc)", "Erase all dungeon data ", "ClearDungeon");
 
-AddAction(12, af_none, "Revive all dungeon elements", "Actions", "Put active again all dungeon elements", "Put active all dungeon elements", "ReviveDungeonElementsAll");
+AddAction(12, af_none, "Revive all elements", "Elements (revive)", "Put active again all elements", "Put active all dungeon elements", "ReviveDungeonElementsAll");
+
+AddNumberParam("Priority", "Element priority to revive", "1");
+AddAction(13, af_none, "Revive elements by priority", "Elements (revive)", "Put active again elements with specific priority ({0})", "Put active again dungeon elements with specific priority", "ReviveDungeonElementsByPriority");
+
+AddNumberParam("NameTag", "Name Tag to revive", "1");
+AddAction(14, af_none, "Revive elements by name tag", "Elements (revive)", "Put active again elements with specific Name Tag ({0})", "Put active again dungeon elements with specific Name Tag", "ReviveDungeonElementsByNameTag");
+
+AddNumberParam("ElementId", "Element Id to revive");
+AddAction(15, af_none, "Revive elements by id", "Elements (revive)", "Put active again dungeon with specific Element Id ({0})", "Put active again dungeon elements with specific Element Id", "ReviveDungeonElementsByElementId");
 					   
 // Expressions //////////////////////////////////////////////////////
 

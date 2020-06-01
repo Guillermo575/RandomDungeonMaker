@@ -18,6 +18,8 @@
 												Status:"OK",
 												SupportPlatformTop: "NONE", SupportPlatformCenter: "NONE", SupportPlatformBottom: "NONE",
 												Elements:[],
+												SubBlockWidth: 4,
+												SubBlockHeight: 4,
 											};
 		}
 	}	
@@ -824,37 +826,16 @@ function DistributeDungeonElements(GameDungeon)
 			{
 				var Block = GameDungeon.DungeonBlocks[l][m];
 				var valido = true;
-				if(Block.Id == 0)
-				{
-					valido = false;
-				}
-				if(itemElement.NotIndoor == 1 && (Block.ConnectTop != 0 || Block.ConnectRight != 0 || Block.ConnectBottom != 0 || Block.ConnectLeft != 0))
-				{
-					valido = false;
-				}
-				if(Block.Elements.length > itemElement.OcuppedTolerance)
-				{
-					valido = false;
-				}
-				if(itemElement.ObligatoryBottomWall != "NO")
-				{
-					valido = CheckWallElementConsideration(itemElement.ObligatoryBottomWall, Block.WallBottom, Block.RoomWallBottom, valido);
-				}
-				if(itemElement.ObligatoryTopWall != "NO")
-				{
-					valido = CheckWallElementConsideration(itemElement.ObligatoryTopWall, Block.WallTop, Block.RoomWallTop, valido);
-				}
-				if(itemElement.ObligatoryLeftWall != "NO")
-				{
-					valido = CheckWallElementConsideration(itemElement.ObligatoryLeftWall, Block.WallLeft, Block.RoomWallLeft, valido);
-				}
-				if(itemElement.ObligatoryRightWall != "NO")
-				{
-					valido = CheckWallElementConsideration(itemElement.ObligatoryRightWall, Block.WallRight, Block.RoomWallRight, valido);
-				}
+				valido = Block.Id == 0 ? false : valido;
+				valido = itemElement.NotIndoor == 1 && (Block.ConnectTop != 0 || Block.ConnectRight != 0 || Block.ConnectBottom != 0 || Block.ConnectLeft != 0) ? false : valido;
+				valido = Block.Elements.length > itemElement.OcuppedTolerance ? false : valido;
+				valido = itemElement.ObligatoryBottomWall != "NO" ? CheckWallElementConsideration(itemElement.ObligatoryBottomWall, Block.WallBottom, Block.RoomWallBottom, valido) : valido;
+				valido = itemElement.ObligatoryTopWall != "NO" ? CheckWallElementConsideration(itemElement.ObligatoryTopWall, Block.WallTop, Block.RoomWallTop, valido) : valido;
+				valido = itemElement.ObligatoryLeftWall != "NO" ? CheckWallElementConsideration(itemElement.ObligatoryLeftWall, Block.WallLeft, Block.RoomWallLeft, valido) : valido;
+				valido = itemElement.ObligatoryRightWall != "NO" ? CheckWallElementConsideration(itemElement.ObligatoryRightWall, Block.WallRight, Block.RoomWallRight, valido) : valido;
 				if(valido)
 				{
-					BloquesDisponibles[BloquesDisponibles.length] = Block;					
+					BloquesDisponibles[BloquesDisponibles.length] = Block;
 				}
 			}
 		}
@@ -862,7 +843,7 @@ function DistributeDungeonElements(GameDungeon)
 		{
 			var numseleccionado = Math.floor((Math.random() * BloquesDisponibles.length));
 			var BlockSeleccionado = BloquesDisponibles[numseleccionado];
-			var NewElement = 
+			var NewElement =
 			{
 				NameTag: itemElement.NameTag,
 				UID: itemElement.UID,
@@ -872,9 +853,12 @@ function DistributeDungeonElements(GameDungeon)
 				OtherData: "",
 				PositionX: 0,
 				PositionY: 0,
+				Width: itemElement.Width,
+				Height: itemElement.Height,
+				Priority: itemElement.Priority
 			};
 			itemElement.Objetos[itemElement.Objetos.length] = NewElement;
-			BlockSeleccionado.Elements[BlockSeleccionado.Elements.length] = NewElement; 
+			BlockSeleccionado.Elements[BlockSeleccionado.Elements.length] = NewElement;
 			ElementIdC++;			
 			BloquesDisponibles.splice(numseleccionado,1);
 		}
