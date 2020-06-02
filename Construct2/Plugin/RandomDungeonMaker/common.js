@@ -994,6 +994,13 @@ function GraphiqueDungeon(GameDungeon)
 										default: minimap += "<div class='RDM_Platforms' style='background-color: rgba(0,0,0,0); top: 80%; left: 30%;'></div>";
 									}
 								}
+								if(localStorage.getItem("ShowElements") == 1)
+								{
+									for(y = 0; y < BloqueSeleccionado.Elements.length; y++)
+									{
+										minimap += BloqueSeleccionado.Elements[y].NameTag;
+									}
+								}
 								minimap += "</div>";
 							minimap += "</td>";
 						}else
@@ -1024,6 +1031,7 @@ function MapOptionsTable()
 	var GraphiqueFunction = "document.getElementById(\"minimap\").innerHTML = GraphiqueDungeon();";
 	var chkShowSupportPlatforms = "localStorage.setItem(\"ShowSupportPlatforms\", document.getElementById(\"chkShowSupportPlatforms\").checked ? 1 : 0);";
 	var chkShowColorRooms = "localStorage.setItem(\"ShowColorRooms\", document.getElementById(\"chkShowColorRooms\").checked ? 1 : 0);";
+	var chkShowElements = "localStorage.setItem(\"ShowElements\", document.getElementById(\"chkShowElements\").checked ? 1 : 0);";
 	var stringtable = "<table>";
 	stringtable += "<tr>";
 		stringtable += "<td>";
@@ -1033,6 +1041,11 @@ function MapOptionsTable()
 	stringtable += "<tr>";
 		stringtable += "<td>";
 			stringtable += "<input type='checkbox' onclick='" + chkShowColorRooms + GraphiqueFunction + "' id='chkShowColorRooms' " + (localStorage.getItem("ShowColorRooms") == 1 ? "checked" : "") + "> Color Rooms </input>";
+		stringtable += "</td>";
+	stringtable += "</tr>";
+	stringtable += "<tr>";
+		stringtable += "<td>";
+			stringtable += "<input type='checkbox' onclick='" + chkShowElements + GraphiqueFunction + "' id='chkShowElements' " + (localStorage.getItem("ShowElements") == 1 ? "checked" : "") + "> Elements </input>";
 		stringtable += "</td>";
 	stringtable += "</tr>";
 	stringtable += "</table>";
