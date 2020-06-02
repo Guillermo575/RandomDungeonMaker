@@ -898,15 +898,19 @@ function GetRndColor2(maxLength, index)
 
 function GraphiqueDungeon(GameDungeon)
 {
-	GameDungeon = GameDungeon == null ? JSON2.parse(localStorage.getItem("objMapGraphic")) : GameDungeon;
-	localStorage.setItem("objMapGraphic", JSON2.stringify(GameDungeon));
-	if(localStorage.getItem("ShowSupportPlatforms") == null)
+	GameDungeon = GameDungeon == null ? JSON2.parse(localStorage.getItem("GraphicMap_objMapGraphic")) : GameDungeon;
+	localStorage.setItem("GraphicMap_objMapGraphic", JSON2.stringify(GameDungeon));
+	if(localStorage.getItem("GraphicMap_ShowSupportPlatforms") == null)
 	{
-		localStorage.setItem("ShowSupportPlatforms", 0);
+		localStorage.setItem("GraphicMap_ShowSupportPlatforms", 0);
 	}
-	if(localStorage.getItem("ShowColorRooms") == null)
+	if(localStorage.getItem("GraphicMap_ShowColorRooms") == null)
 	{
-		localStorage.setItem("ShowColorRooms", 0);
+		localStorage.setItem("GraphicMap_ShowColorRooms", 0);
+	}
+	if(localStorage.getItem("GraphicMap_ShowElements") == null)
+	{
+		localStorage.setItem("GraphicMap_ShowElements", 0);
 	}
 	var DungeonArray = GameDungeon.DungeonBlocks;
 	var DungeonRooms = GameDungeon.DungeonRooms;
@@ -945,7 +949,7 @@ function GraphiqueDungeon(GameDungeon)
 						if(BloqueSeleccionado.Id > 0)
 						{
 							var RndmColorBackground = ArrayRndmColorBgn[BloqueSeleccionado.Room - 1];
-							RndmColorBackground = localStorage.getItem("ShowColorRooms") == 1 ? RndmColorBackground : "#FFD700";
+							RndmColorBackground = localStorage.getItem("GraphicMap_ShowColorRooms") == 1 ? RndmColorBackground : "#FFD700";
 							var backgroundcolor = "background-color:" + ((BloqueSeleccionado.Status == "OK") ? RndmColorBackground : "#000") + ";";
 							if(BloqueSeleccionado.WallTop > 0 || BloqueSeleccionado.RoomWallTop > 0)
 							{
@@ -970,7 +974,7 @@ function GraphiqueDungeon(GameDungeon)
 							minimap += "<td style='" + backgroundcolor + border + "'>";
 								var OnClickEvent = "OnClick='document.getElementById(\"blockinfo\").innerHTML= \" " + BlockInfoResume(JSON2.stringify(BloqueSeleccionado)) + " \" '";
 								minimap += "<div " + OnClickEvent + " title='ID: "+BloqueSeleccionado.Id+" (" + BloqueSeleccionado.X + "," + BloqueSeleccionado.Y + ")' " + " class='RDM_Block'>";
-								if(localStorage.getItem("ShowSupportPlatforms") == 1)
+								if(localStorage.getItem("GraphicMap_ShowSupportPlatforms") == 1)
 								{
 									switch(BloqueSeleccionado.SupportPlatformTop)
 									{
@@ -994,7 +998,7 @@ function GraphiqueDungeon(GameDungeon)
 										default: minimap += "<div class='RDM_Platforms' style='background-color: rgba(0,0,0,0); top: 80%; left: 30%;'></div>";
 									}
 								}
-								if(localStorage.getItem("ShowElements") == 1)
+								if(localStorage.getItem("GraphicMap_ShowElements") == 1)
 								{
 									for(y = 0; y < BloqueSeleccionado.Elements.length; y++)
 									{
@@ -1029,23 +1033,23 @@ function GraphiqueDungeon(GameDungeon)
 function MapOptionsTable()
 {
 	var GraphiqueFunction = "document.getElementById(\"minimap\").innerHTML = GraphiqueDungeon();";
-	var chkShowSupportPlatforms = "localStorage.setItem(\"ShowSupportPlatforms\", document.getElementById(\"chkShowSupportPlatforms\").checked ? 1 : 0);";
-	var chkShowColorRooms = "localStorage.setItem(\"ShowColorRooms\", document.getElementById(\"chkShowColorRooms\").checked ? 1 : 0);";
-	var chkShowElements = "localStorage.setItem(\"ShowElements\", document.getElementById(\"chkShowElements\").checked ? 1 : 0);";
+	var chkShowSupportPlatforms = "localStorage.setItem(\"GraphicMap_ShowSupportPlatforms\", document.getElementById(\"chkShowSupportPlatforms\").checked ? 1 : 0);";
+	var chkShowColorRooms = "localStorage.setItem(\"GraphicMap_ShowColorRooms\", document.getElementById(\"chkShowColorRooms\").checked ? 1 : 0);";
+	var chkShowElements = "localStorage.setItem(\"GraphicMap_ShowElements\", document.getElementById(\"chkShowElements\").checked ? 1 : 0);";
 	var stringtable = "<table>";
 	stringtable += "<tr>";
 		stringtable += "<td>";
-			stringtable += "<input type='checkbox' onclick='" + chkShowSupportPlatforms + GraphiqueFunction + "' id='chkShowSupportPlatforms' " + (localStorage.getItem("ShowSupportPlatforms") == 1 ? "checked" : "") + "> Support Platforms </input>";
+			stringtable += "<input type='checkbox' onclick='" + chkShowSupportPlatforms + GraphiqueFunction + "' id='chkShowSupportPlatforms' " + (localStorage.getItem("GraphicMap_ShowSupportPlatforms") == 1 ? "checked" : "") + "> Support Platforms </input>";
 		stringtable += "</td>";
 	stringtable += "</tr>";
 	stringtable += "<tr>";
 		stringtable += "<td>";
-			stringtable += "<input type='checkbox' onclick='" + chkShowColorRooms + GraphiqueFunction + "' id='chkShowColorRooms' " + (localStorage.getItem("ShowColorRooms") == 1 ? "checked" : "") + "> Color Rooms </input>";
+			stringtable += "<input type='checkbox' onclick='" + chkShowColorRooms + GraphiqueFunction + "' id='chkShowColorRooms' " + (localStorage.getItem("GraphicMap_ShowColorRooms") == 1 ? "checked" : "") + "> Color Rooms </input>";
 		stringtable += "</td>";
 	stringtable += "</tr>";
 	stringtable += "<tr>";
 		stringtable += "<td>";
-			stringtable += "<input type='checkbox' onclick='" + chkShowElements + GraphiqueFunction + "' id='chkShowElements' " + (localStorage.getItem("ShowElements") == 1 ? "checked" : "") + "> Elements </input>";
+			stringtable += "<input type='checkbox' onclick='" + chkShowElements + GraphiqueFunction + "' id='chkShowElements' " + (localStorage.getItem("GraphicMap_ShowElements") == 1 ? "checked" : "") + "> Elements </input>";
 		stringtable += "</td>";
 	stringtable += "</tr>";
 	stringtable += "</table>";

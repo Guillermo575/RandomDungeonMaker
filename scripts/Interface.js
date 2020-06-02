@@ -110,15 +110,15 @@ function saveConfiguration()
 }
 function LoadConfiguration()
 {
-	document.getElementById('width').value = localStorage.getItem("Config_width");
-	document.getElementById('height').value = localStorage.getItem("Config_height");
-	document.getElementById('blocks').value = localStorage.getItem("Config_blocks");
-	document.getElementById('GameMode').value = localStorage.getItem("Config_GameMode");
-	document.getElementById('PointX').value = localStorage.getItem("Config_PointX");
-	document.getElementById('PointY').value = localStorage.getItem("Config_PointY");
-	document.getElementById('LabyrinthInn').value = localStorage.getItem("Config_LabyrinthInn");
-	document.getElementById('OpenWorld').value = localStorage.getItem("Config_OpenWorld");
-	document.getElementById('SupportPlatforms').value = localStorage.getItem("Config_SupportPlatforms");
+	document.getElementById('width').value = localStorage.getItem("Config_width") == null ? "30" : localStorage.getItem("Config_width");
+	document.getElementById('height').value = localStorage.getItem("Config_height") == null ? "30" : localStorage.getItem("Config_height");
+	document.getElementById('blocks').value = localStorage.getItem("Config_blocks") == null ? "400" : localStorage.getItem("Config_blocks");
+	document.getElementById('GameMode').value = localStorage.getItem("Config_GameMode") == null ? "LABYRINTH" : localStorage.getItem("Config_GameMode");
+	document.getElementById('PointX').value = localStorage.getItem("Config_PointX") == null ? "0" : localStorage.getItem("Config_PointX");
+	document.getElementById('PointY').value = localStorage.getItem("Config_PointY") == null ? "0" : localStorage.getItem("Config_PointY");
+	document.getElementById('LabyrinthInn').value = localStorage.getItem("Config_LabyrinthInn") == null ? "1" : localStorage.getItem("Config_LabyrinthInn");
+	document.getElementById('OpenWorld').value = localStorage.getItem("Config_OpenWorld") == null ? "0" : localStorage.getItem("Config_OpenWorld");
+	document.getElementById('SupportPlatforms').value = localStorage.getItem("Config_SupportPlatforms") == null ? "0" : localStorage.getItem("Config_SupportPlatforms");
 }
 function ResetConfiguration()
 {
