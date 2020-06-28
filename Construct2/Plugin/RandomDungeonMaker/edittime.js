@@ -120,7 +120,12 @@ AddAction(14, af_none, "Revive elements by name tag", "Elements (revive)", "Put 
 
 AddNumberParam("ElementId", "Element Id to revive");
 AddAction(15, af_none, "Revive elements by id", "Elements (revive)", "Put active again dungeon with specific Element Id ({0})", "Put active again dungeon elements with specific Element Id", "ReviveDungeonElementsByElementId");
-					   
+
+AddNumberParam("ElementId", "Element Id");
+AddStringParam("Name", "Variable name");
+AddStringParam("Value", "Variable value");
+AddAction(16, af_none, "add aditional value to element", "Element add value", "Add element aditional value (Id: {0}, Name: {1}, Value: {2})", "Add an aditional value to an element", "AddDungeonValueElement");
+
 // Expressions //////////////////////////////////////////////////////
 
 /*Dungeon Data*/
@@ -206,6 +211,11 @@ AddExpression(35, ef_return_number, "Adjacent Block bottom", "Block Data Adjacen
 
 /*Dungeon Data*/
 AddExpression(35, ef_return_number, "Already exists", "Dungeon Data", "AlreadyExists", "Check if a dungeon is already created (0 = NO, 1 = YES)");
+
+/*Block Elements*/
+AddNumberParam("ElementId", "Element");
+AddStringParam("Name", "Variable name");
+AddExpression(35, ef_return_string, "Get element aditional value", "Block Elements", "GetDungeonValueElement", "Get element aditional value");
 
 ACESDone();
 

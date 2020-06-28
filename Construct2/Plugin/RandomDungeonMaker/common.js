@@ -22,7 +22,7 @@
 												SubBlockHeight: 4,
 											};
 		}
-	}	
+	}
 	GameDungeon = MakeDungeonShape(GameDungeon);    
 	GameDungeon = MakeDungeonRoomShape(GameDungeon);
 	GameDungeon = MakeDungeonRoomConnections(GameDungeon);  
@@ -850,7 +850,7 @@ function DistributeDungeonElements(GameDungeon)
 				BlockId: BlockSeleccionado.Id,
 				ElementId: ElementIdC,
 				Status: 1,
-				OtherData: "",
+				Data: {},
 				PositionX: 0,
 				PositionY: 0,
 				Width: itemElement.Width,

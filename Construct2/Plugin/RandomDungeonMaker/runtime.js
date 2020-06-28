@@ -570,6 +570,25 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			}
 		}
 	};
+
+	Acts.prototype.AddDungeonValueElement = function (ElementId, Name, Value)
+	{
+		if(!(this.ConfigElements === undefined) && !(this.GameDungeon == null))
+		{
+			for(var x = 0; x < this.GameDungeon.Elements.length; x++)
+			{
+				var itemElement = this.GameDungeon.Elements[x];
+				for(var l = 0; l < itemElement.Objetos.length; l++)
+				{
+					if(itemElement.Objetos[l].ElementId == ElementId)
+					{
+						itemElement.Objetos[l].Data[Name] = Value;
+						return true;
+					}
+				}
+			}
+		}
+	};
 	
     pluginProto.acts = new Acts();
 
@@ -732,6 +751,27 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 					retorno[x] = Block.Elements[x].ElementId;
 			}
 			ret.set_string(retorno.join()); 
+		};
+	Exps.prototype.GetDungeonValueElement =
+		function (ret, ElementId, Name)
+		{
+			if(!(this.ConfigElements === undefined) && !(this.GameDungeon == null))
+			{
+				for(var x = 0; x < this.GameDungeon.Elements.length; x++)
+				{
+					var itemElement = this.GameDungeon.Elements[x];
+					for(var l = 0; l < itemElement.Objetos.length; l++)
+					{
+						if(itemElement.Objetos[l].ElementId == ElementId)
+						{
+							if(itemElement.Objetos[l].Data[Name] == null)
+								ret.set_string("");
+							else
+								ret.set_string(itemElement.Objetos[l].Data[Name]);
+						}
+					}
+				}
+			}
 		};
 	
 	/*Room Connect*/
