@@ -29,7 +29,7 @@
 						"id": "LabyrinthInn", 
 						"type": "combo", 
 						"initialValue": "YES",
-						"items":["YES","NO"]
+						"items":["YES","NO","RANDOM"]
 					}
                 ]
             },
@@ -122,34 +122,72 @@
 						"id": "Mode", 
 						"type": "combo", 
 						"initialValue": "LABYRINTH",
-						"items":["LABYRINTH","CASTLE","TOWER"]
+						"items":["LABYRINTH","CASTLE","TOWER","RANDOM"]
 					},
 					{ 
 						"id": "StartX", 
 						"type": "combo", 
 						"initialValue": "CENTER",
-						"items":["CENTER","LEFT","RIGHT"]
+						"items":["CENTER","LEFT","RIGHT","RANDOM"]
 					},
 					{ 
 						"id": "StartY", 
 						"type": "combo", 
 						"initialValue": "CENTER",
-						"items":["CENTER","TOP","BOTTOM"]
+						"items":["CENTER","TOP","BOTTOM","RANDOM"]
 					},
 					{ 
 						"id": "LabyrinthInn", 
 						"type": "combo", 
 						"initialValue": "YES",
-						"items":["YES","NO"]
+						"items":["YES","NO","RANDOM"]
 					},
 					{ 
 						"id": "OpenWorld", 
 						"type": "combo", 
 						"initialValue": "NO",
-						"items":["NO","YES"]
+						"items":["NO","YES","RANDOM"]
 					}
                 ]
-            }			
+            },
+			{
+				"id": "Clear_Dungeon",
+				"scriptName": "ClearDungeon"
+			},
+			{
+				"id": "Revive_Dungeon_Elements_All",
+				"scriptName": "ReviveDungeonElementsAll"
+			},
+			{
+				"id": "Revive_Dungeon_Elements_By_Priority",
+				"scriptName": "ReviveDungeonElementsByPriority",
+				"params": [
+                    { "id": "Priority", "type": "number", "initialValue": "1" }
+				]
+			},
+			{
+				"id": "Revive_Dungeon_Elements_By_Name_Tag",
+				"scriptName": "ReviveDungeonElementsByNameTag",
+				"params": [
+                    { "id": "NameTag", "type": "string"}
+				]
+			},
+			{
+				"id": "Revive_Dungeon_Elements_By_Element_Id",
+				"scriptName": "ReviveDungeonElementsByElementId",
+				"params": [
+                    { "id": "ElementId", "type": "number"}
+				]
+			},
+			{
+				"id": "Add_Dungeon_Value_Element",
+				"scriptName": "AddDungeonValueElement",
+				"params": [
+                    { "id": "ElementId", "type": "number" },
+					{ "id": "Name", "type": "string" },
+					{ "id": "Value", "type": "string" }
+				]
+			}
         ],
         "expressions": [
 			{
@@ -479,6 +517,24 @@
                 "returnType": "number",
 				"params": [
                     { "id": "Id", "type": "number" }
+				]
+            },
+			{
+                "id": "Already_Exists",
+                "expressionName": "AlreadyExists",
+                "scriptName": "AlreadyExists",
+                "highlight": false,
+                "returnType": "number"
+            },
+			{
+                "id": "Get_Dungeon_Value_Element",
+                "expressionName": "GetDungeonValueElement",
+                "scriptName": "GetDungeonValueElement",
+                "highlight": false,
+                "returnType": "string",
+				"params": [
+                    { "id": "ElementId", "type": "number" },
+					{ "id": "Name", "type": "string" }
 				]
             }
 		]

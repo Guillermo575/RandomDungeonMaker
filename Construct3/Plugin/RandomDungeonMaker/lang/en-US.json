@@ -47,7 +47,8 @@
 								"desc": "Walls around the cells for a labyrinth design",
 								"items":{
 										  "YES": "YES",
-										  "NO": "NO"
+										  "NO": "NO",
+										  "RANDOM": "RANDOM"
 										}
 							}
                         }
@@ -166,7 +167,8 @@
 								"items":{
 										  "LABYRINTH": "LABYRINTH",
 										  "CASTLE": "CASTLE",
-										  "TOWER": "TOWER"
+										  "TOWER": "TOWER",
+										  "RANDOM": "RANDOM"
 										}
 							},
 							"StartX": { 
@@ -175,7 +177,8 @@
 								"items":{
 										  "CENTER": "CENTER",
 										  "LEFT": "LEFT",
-										  "RIGHT": "RIGHT"
+										  "RIGHT": "RIGHT",
+										  "RANDOM": "RANDOM"
 										}
 							},
 							"StartY": { 
@@ -184,7 +187,8 @@
 								"items":{
 										  "CENTER": "CENTER",
 										  "TOP": "TOP",
-										  "BOTTOM": "BOTTOM"
+										  "BOTTOM": "BOTTOM",
+										  "RANDOM": "RANDOM"
 										}
 							},
 							"LabyrinthInn": { 
@@ -192,7 +196,8 @@
 								"desc": "Walls around the cells for a labyrinth design",
 								"items":{
 										  "YES": "YES",
-										  "NO": "NO"
+										  "NO": "NO",
+										  "RANDOM": "RANDOM"
 										}
 							},
 							"OpenWorld": { 
@@ -200,9 +205,54 @@
 								"desc": "Post-creation process that removes most walls for a open world sensation",
 								"items":{
 										  "NO": "NO",
-										  "YES": "YES"
+										  "YES": "YES",
+										  "RANDOM": "RANDOM"
 										}
 							}
+                        }
+                    },
+					"Clear_Dungeon": {
+                        "list-name": "Erase all dungeon data",
+                        "display-text": "Erase all dungeon data",
+                        "description": "Erase all dungeon data (blocks, elements, config, etc)"
+                    },
+					"Revive_Dungeon_Elements_All": {
+                        "list-name": "Revive all elements",
+                        "display-text": "Revive all elements",
+                        "description": "Put active again all elements"
+                    },
+					"Revive_Dungeon_Elements_By_Priority": {
+                        "list-name": "Revive elements by priority",
+                        "display-text": "Revive elements by priority",
+                        "description": "Put active again elements with specific priority ({0})",
+                        "params": {
+                            "Priority": { "name": "Priority", "desc": "Element priority to revive" }
+                        }
+                    },
+					"Revive_Dungeon_Elements_By_Name_Tag": {
+                        "list-name": "Revive elements by name tag",
+                        "display-text": "Revive elements by name tag",
+                        "description": "Put active again elements with specific name tag ({0})",
+                        "params": {
+                            "NameTag": { "name": "NameTag", "desc": "Name Tag to revive" }
+                        }
+                    },
+					"Revive_Dungeon_Elements_By_Element_Id": {
+                        "list-name": "Revive elements by id",
+                        "display-text": "Revive elements by id",
+                        "description": "Put active again elements with specific id({0})",
+                        "params": {
+                            "ElementId": { "name": "ElementId", "desc": "Element Id to revive" }
+                        }
+                    },
+					"Add_Dungeon_Value_Element": {
+                        "list-name": "add aditional value to element",
+                        "display-text": "Element add value",
+                        "description": "Add element aditional value (Id: {0}, Name: {1}, Value: {2})",
+                        "params": {
+                            "ElementId": { "name": "ElementId", "desc": "Element Id to revive" },
+							"Name": { "name": "Name", "desc": "Variable name" },
+							"Value": { "name": "Value", "desc": "Variable value" }
                         }
                     }
                 },
@@ -427,6 +477,18 @@
                         "translated-name": "Adjacent Block Bottom",
 						"params": {
                             "Id": { "name": "Id", "desc": "Set the ID" }
+                        }
+                    },
+					"Already_Exists": {
+                        "description": "Check if a dungeon is already created (0 = NO, 1 = YES)",
+                        "translated-name": "Already exists"
+                    },
+					"Get_Dungeon_Value_Element": {
+                        "description": "Get element aditional value",
+                        "translated-name": "Get element aditional value",
+                        "params": {
+                            "ElementId": { "name": "ElementId", "desc": "Element Id to revive" },
+							"Name": { "name": "Name", "desc": "Variable name" }
                         }
                     }
                 }

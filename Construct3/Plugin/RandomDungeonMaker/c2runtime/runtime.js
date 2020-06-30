@@ -52,7 +52,10 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 		propsections.push({
 			"title": "Labyrinth",
 			"properties": [
-				{"name": "Map", "value": GraphiqueDungeon(this.GameDungeon), "html": true, "readonly": true}
+				{"name": "Map", 
+				 "value": this.GameDungeon == null? "<b>NOT DUNGEON CREATED YET</b>" : GraphiqueDungeon(this.GameDungeon), 
+				 "html": true, 
+				 "readonly": true}
 			]
 		});
 	};
@@ -89,7 +92,7 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 	function getDungeonBlock(GameDungeon,Id)
 	{
 		var retorno = emptyDungeonBlock();
-		if(Id > 0)
+		if(Id > 0 && GameDungeon != null)
 		{
 			for(var l = 0; l < GameDungeon.DungeonHeight; l++)
 			{
@@ -109,7 +112,7 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 	function getDungeonRoom(GameDungeon,Id)
 	{
 		var retorno = emptyDungeonRoom();
-		if(Id > 0)
+		if(Id > 0 && GameDungeon != null)
 		{
 			for(var l = 0; l < GameDungeon.DungeonRooms.length; l++)
 			{
@@ -121,7 +124,7 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			}			
 		}
 		return retorno;
-	}		
+	}
 	
 	function emptyDungeonBlock()
 	{
@@ -211,6 +214,8 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			StartPointY: 0,
 			Status: "NOT",
 			Elements: [],
+			SubBlockWidth: 4,
+			SubBlockHeight: 4,
 		} 
 	}
 	
@@ -249,6 +254,11 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 		switch (LabyrinthInn) {
 			case 0: LabyrinthInnCombo = "YES"; break;
 			case 1: LabyrinthInnCombo = "NO"; break;
+			case 2: switch (Math.round(Math.random() * 1))
+					{
+						case 0: LabyrinthInnCombo = "YES"; break;
+						case 1: LabyrinthInnCombo = "NO"; break;
+					} break;
 		}
 		var LabInn = LabyrinthInnCombo == "NO" ? 0 : 1;
 		
@@ -271,6 +281,12 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			case 0: ModeCombo = "LABYRINTH"; break;
 			case 1: ModeCombo = "CASTLE"; break;
 			case 2: ModeCombo = "TOWER"; break;
+			case 3: switch (Math.round(Math.random() * 2))
+					{
+						case 0: ModeCombo = "LABYRINTH"; break;
+						case 1: ModeCombo = "CASTLE"; break;
+						case 2: ModeCombo = "TOWER"; break;
+					} break;
 		}
 
 		var StartXCombo = "CENTER";
@@ -278,6 +294,12 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			case 0: StartXCombo = "CENTER"; break;
 			case 1: StartXCombo = "LEFT"; break;
 			case 2: StartXCombo = "RIGHT"; break;
+			case 3: switch (Math.round(Math.random() * 2))
+					{
+						case 0: StartXCombo = "CENTER"; break;
+						case 1: StartXCombo = "LEFT"; break;
+						case 2: StartXCombo = "RIGHT"; break;
+					} break;
 		}		
 		var PointX = 0;
 		PointX = StartXCombo == "LEFT" ? -1: PointX;
@@ -288,6 +310,12 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			case 0: StartYCombo = "CENTER"; break;
 			case 1: StartYCombo = "TOP"; break;
 			case 2: StartYCombo = "BOTTOM"; break;
+			case 3: switch (Math.round(Math.random() * 2))
+					{
+						case 0: StartYCombo = "CENTER"; break;
+						case 1: StartYCombo = "TOP"; break;
+						case 2: StartYCombo = "BOTTOM"; break;
+					} break;
 		}				
 		var PointY = 0;
 		PointY = StartYCombo == "TOP" ? -1: PointY;
@@ -297,6 +325,11 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 		switch (LabyrinthInn) {
 			case 0: LabyrinthInnCombo = "YES"; break;
 			case 1: LabyrinthInnCombo = "NO"; break;
+			case 2: switch (Math.round(Math.random() * 1))
+					{
+						case 0: LabyrinthInnCombo = "YES"; break;
+						case 1: LabyrinthInnCombo = "NO"; break;
+					} break;
 		}
 		var LabInn = LabyrinthInnCombo == "NO" ? 0 : 1;
 
@@ -304,6 +337,11 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 		switch (OpenWorld) {
 			case 0: OpenWorldCombo = "NO"; break;
 			case 1: OpenWorldCombo = "YES"; break;
+			case 2: switch (Math.round(Math.random() * 1))
+					{
+						case 0: OpenWorldCombo = "NO"; break;
+						case 1: OpenWorldCombo = "YES"; break;
+					} break;
 		}
 		var OpWorld = OpenWorldCombo == "YES" ? 1 : 0;
 		
@@ -324,6 +362,12 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 		this.runtime.trigger(cr.plugins_.random_dungeon_maker.prototype.cnds.onDungeonCreated, this);
     };
 
+	Acts.prototype.ClearDungeon = function ()
+	{
+		this.ConfigElements = [];
+		this.GameDungeon = null;
+	};	
+	
 	Acts.prototype.SetCurrentBlockNext = function () 
 	{
 		try 
@@ -379,8 +423,8 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 		this.CurY = 0;
 	}
 	
-	Acts.prototype.NewDungeonElement = function (Name,Total,OcuppedTolerance,NotIndoor,
-												 ObligatoryBottomWall,ObligatoryTopWall,ObligatoryLeftWall,ObligatoryRightWall)
+	Acts.prototype.NewDungeonElement = function (Name, Total, OcuppedTolerance, NotIndoor,
+												 ObligatoryBottomWall, ObligatoryTopWall, ObligatoryLeftWall, ObligatoryRightWall, Priority)
 	{
 		var NotIndoorCombo = "NO";
 		switch (NotIndoor) {
@@ -416,12 +460,15 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			NameTag: Name,
 			Total: Total,
 			OcuppedTolerance: OcuppedTolerance,	
-			NotIndoor: (NotIndoorCombo == "YES") ? 1 : 0,			
+			NotIndoor: (NotIndoorCombo == "YES") ? 1 : 0,
 			ObligatoryBottomWall: ObligatoryBottomWallCombo,
 			ObligatoryTopWall: ObligatoryTopWallCombo,
 			ObligatoryLeftWall: ObligatoryLeftWallCombo,
 			ObligatoryRightWall: ObligatoryRightWallCombo,
 			Objetos: [],
+			Width: 1,
+			Height: 1,
+			Priority: Priority === undefined ? 1 : Priority,
 		};
 		if(this.ConfigElements === undefined)
 		{
@@ -437,7 +484,7 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 
 	Acts.prototype.RemoveDungeonElement = function (ElementId)
 	{
-		if(!(this.ConfigElements === undefined))
+		if(!(this.ConfigElements === undefined) && !(this.GameDungeon == null))
 		{
 			for(var x = 0; x < this.GameDungeon.Elements.length; x++)
 			{
@@ -454,6 +501,95 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 		}
     };
 	
+	Acts.prototype.ReviveDungeonElementsAll = function ()
+	{
+		if(!(this.ConfigElements === undefined) && !(this.GameDungeon == null))
+		{
+			for(var x = 0; x < this.GameDungeon.Elements.length; x++)
+			{
+				var itemElement = this.GameDungeon.Elements[x];
+				for(var l = 0; l < itemElement.Objetos.length; l++)
+				{
+					itemElement.Objetos[l].Status = 1;
+				}
+			}
+		}
+	};
+
+	Acts.prototype.ReviveDungeonElementsByPriority = function (Priority)
+	{
+		if(!(this.ConfigElements === undefined) && !(this.GameDungeon == null))
+		{
+			for(var x = 0; x < this.GameDungeon.Elements.length; x++)
+			{
+				var itemElement = this.GameDungeon.Elements[x];
+				for(var l = 0; l < itemElement.Objetos.length; l++)
+				{
+					if(itemElement.Objetos[l].Priority == Priority)
+					{
+						itemElement.Objetos[l].Status = 1;
+					}
+				}
+			}
+		}
+	};
+
+	Acts.prototype.ReviveDungeonElementsByNameTag = function (NameTag)
+	{
+		if(!(this.ConfigElements === undefined) && !(this.GameDungeon == null))
+		{
+			for(var x = 0; x < this.GameDungeon.Elements.length; x++)
+			{
+				var itemElement = this.GameDungeon.Elements[x];
+				for(var l = 0; l < itemElement.Objetos.length; l++)
+				{
+					if(itemElement.Objetos[l].NameTag == NameTag)
+					{
+						itemElement.Objetos[l].Status = 1;
+					}
+				}
+			}
+		}
+	};
+
+	Acts.prototype.ReviveDungeonElementsByElementId = function (ElementId)
+	{
+		if(!(this.ConfigElements === undefined) && !(this.GameDungeon == null))
+		{
+			for(var x = 0; x < this.GameDungeon.Elements.length; x++)
+			{
+				var itemElement = this.GameDungeon.Elements[x];
+				for(var l = 0; l < itemElement.Objetos.length; l++)
+				{
+					if(itemElement.Objetos[l].ElementId == ElementId)
+					{
+						itemElement.Objetos[l].Status = 1;
+						return true;
+					}
+				}
+			}
+		}
+	};
+
+	Acts.prototype.AddDungeonValueElement = function (ElementId, Name, Value)
+	{
+		if(!(this.ConfigElements === undefined) && !(this.GameDungeon == null))
+		{
+			for(var x = 0; x < this.GameDungeon.Elements.length; x++)
+			{
+				var itemElement = this.GameDungeon.Elements[x];
+				for(var l = 0; l < itemElement.Objetos.length; l++)
+				{
+					if(itemElement.Objetos[l].ElementId == ElementId)
+					{
+						itemElement.Objetos[l].Data[Name] = Value;
+						return true;
+					}
+				}
+			}
+		}
+	};
+	
     pluginProto.acts = new Acts();
 
 	// Expressions
@@ -468,7 +604,9 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 		function (ret){ ret.set_int(this.GameDungeon.TotalBloquesDungeon); };
 	Exps.prototype.DungeonDataJSON = 
 		function (ret){ ret.set_string(JSON2.stringify(this.GameDungeon)); };
-	
+	Exps.prototype.AlreadyExists = 
+		function (ret){ ret.set_int(this.GameDungeon == null ? 0 : 1); };
+		
 	/*Current Block Data*/
 	Exps.prototype.BlockCurrentID = 
 		function (ret) { ret.set_int(this.DungeonBlockCurrent.Id); };
@@ -614,6 +752,27 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 			}
 			ret.set_string(retorno.join()); 
 		};
+	Exps.prototype.GetDungeonValueElement =
+		function (ret, ElementId, Name)
+		{
+			if(!(this.ConfigElements === undefined) && !(this.GameDungeon == null))
+			{
+				for(var x = 0; x < this.GameDungeon.Elements.length; x++)
+				{
+					var itemElement = this.GameDungeon.Elements[x];
+					for(var l = 0; l < itemElement.Objetos.length; l++)
+					{
+						if(itemElement.Objetos[l].ElementId == ElementId)
+						{
+							if(itemElement.Objetos[l].Data[Name] == null)
+								ret.set_string("");
+							else
+								ret.set_string(itemElement.Objetos[l].Data[Name]);
+						}
+					}
+				}
+			}
+		};
 	
 	/*Room Connect*/
 	Exps.prototype.AdjacentBlockTop = 
@@ -664,7 +823,6 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
     pluginProto.exps = new Exps();
 
 }());
-
 function makeDungeon(GameDungeon)
 {	
 	GameDungeon.TotalBloquesDungeon = (GameDungeon.DungeonWidth*GameDungeon.DungeonHeight)<= GameDungeon.TotalBloquesDungeon ? (GameDungeon.DungeonWidth*GameDungeon.DungeonHeight) : GameDungeon.TotalBloquesDungeon;
@@ -685,9 +843,11 @@ function makeDungeon(GameDungeon)
 												Status:"OK",
 												SupportPlatformTop: "NONE", SupportPlatformCenter: "NONE", SupportPlatformBottom: "NONE",
 												Elements:[],
+												SubBlockWidth: 4,
+												SubBlockHeight: 4,
 											};
 		}
-	}	
+	}
 	GameDungeon = MakeDungeonShape(GameDungeon);    
 	GameDungeon = MakeDungeonRoomShape(GameDungeon);
 	GameDungeon = MakeDungeonRoomConnections(GameDungeon);  
@@ -732,42 +892,44 @@ function MakeDungeonShape(GameDungeon)
 			}
 			CuadrosDisponibles.splice(randomNumber,1);	
 		}
-		if(GameDungeon.DungeonMode == "TOWER")
+		switch(GameDungeon.DungeonMode)
 		{
-			if((CuadroSeleccionadoX - 1) >= 0 && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX - 1].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX - 1]);
-			}
-			if((CuadroSeleccionadoX + 1) < GameDungeon.DungeonWidth && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX + 1].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX + 1]);
-			}
-			if((CuadroSeleccionadoY - 1) >= 0 && DungeonArray[CuadroSeleccionadoY - 1][CuadroSeleccionadoX].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY - 1, CuadroSeleccionadoX]);
-			}
-			if((CuadroSeleccionadoY + 1) < GameDungeon.DungeonHeight && DungeonArray[CuadroSeleccionadoY + 1][CuadroSeleccionadoX].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY + 1, CuadroSeleccionadoX]);
-			}			
-		}else
-		{
-			if((CuadroSeleccionadoY - 1) >= 0 && DungeonArray[CuadroSeleccionadoY - 1][CuadroSeleccionadoX].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY - 1, CuadroSeleccionadoX]);
-			}
-			if((CuadroSeleccionadoY + 1) < GameDungeon.DungeonHeight && DungeonArray[CuadroSeleccionadoY + 1][CuadroSeleccionadoX].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY + 1, CuadroSeleccionadoX]);
-			}				
-			if((CuadroSeleccionadoX - 1) >= 0 && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX - 1].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX - 1]);
-			}
-			if((CuadroSeleccionadoX + 1) < GameDungeon.DungeonWidth && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX + 1].Id == 0)
-			{
-				CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX + 1]);
-			}
+			case "TOWER":
+				if((CuadroSeleccionadoX - 1) >= 0 && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX - 1].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX - 1]);
+				}
+				if((CuadroSeleccionadoX + 1) < GameDungeon.DungeonWidth && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX + 1].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX + 1]);
+				}
+				if((CuadroSeleccionadoY - 1) >= 0 && DungeonArray[CuadroSeleccionadoY - 1][CuadroSeleccionadoX].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY - 1, CuadroSeleccionadoX]);
+				}
+				if((CuadroSeleccionadoY + 1) < GameDungeon.DungeonHeight && DungeonArray[CuadroSeleccionadoY + 1][CuadroSeleccionadoX].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY + 1, CuadroSeleccionadoX]);
+				}
+			break;
+			default:
+				if((CuadroSeleccionadoY - 1) >= 0 && DungeonArray[CuadroSeleccionadoY - 1][CuadroSeleccionadoX].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY - 1, CuadroSeleccionadoX]);
+				}
+				if((CuadroSeleccionadoY + 1) < GameDungeon.DungeonHeight && DungeonArray[CuadroSeleccionadoY + 1][CuadroSeleccionadoX].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY + 1, CuadroSeleccionadoX]);
+				}
+				if((CuadroSeleccionadoX - 1) >= 0 && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX - 1].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX - 1]);
+				}
+				if((CuadroSeleccionadoX + 1) < GameDungeon.DungeonWidth && DungeonArray[CuadroSeleccionadoY][CuadroSeleccionadoX + 1].Id == 0)
+				{
+					CuadrosDisponibles.push([CuadroSeleccionadoY, CuadroSeleccionadoX + 1]);
+				}
+			break;
 		}
 	}
 	for(var l = 0; l < GameDungeon.DungeonHeight; l++)
@@ -1466,7 +1628,7 @@ function MakeDungeonSupportPlatform(GameDungeon)
 						}
 						if(BloqueSeleccionado.ConnectTop!= "")
 						{
-							BloqueSeleccionado.SupportPlatformTop = "CENTER";
+							//BloqueSeleccionado.SupportPlatformTop = "CENTER";
 						}
 					}
 				}
@@ -1489,37 +1651,16 @@ function DistributeDungeonElements(GameDungeon)
 			{
 				var Block = GameDungeon.DungeonBlocks[l][m];
 				var valido = true;
-				if(Block.Id == 0)
-				{
-					valido = false;
-				}
-				if(itemElement.NotIndoor == 1 && (Block.ConnectTop != 0 || Block.ConnectRight != 0 || Block.ConnectBottom != 0 || Block.ConnectLeft != 0))
-				{
-					valido = false;
-				}
-				if(Block.Elements.length > itemElement.OcuppedTolerance)
-				{
-					valido = false;
-				}
-				if(itemElement.ObligatoryBottomWall != "NO")
-				{
-					valido = CheckWallElementConsideration(itemElement.ObligatoryBottomWall, Block.WallBottom, Block.RoomWallBottom, valido);
-				}
-				if(itemElement.ObligatoryTopWall != "NO")
-				{
-					valido = CheckWallElementConsideration(itemElement.ObligatoryTopWall, Block.WallTop, Block.RoomWallTop, valido);
-				}
-				if(itemElement.ObligatoryLeftWall != "NO")
-				{
-					valido = CheckWallElementConsideration(itemElement.ObligatoryLeftWall, Block.WallLeft, Block.RoomWallLeft, valido);
-				}
-				if(itemElement.ObligatoryRightWall != "NO")
-				{
-					valido = CheckWallElementConsideration(itemElement.ObligatoryRightWall, Block.WallRight, Block.RoomWallRight, valido);
-				}
+				valido = Block.Id == 0 ? false : valido;
+				valido = itemElement.NotIndoor == 1 && (Block.ConnectTop != 0 || Block.ConnectRight != 0 || Block.ConnectBottom != 0 || Block.ConnectLeft != 0) ? false : valido;
+				valido = Block.Elements.length > itemElement.OcuppedTolerance ? false : valido;
+				valido = itemElement.ObligatoryBottomWall != "NO" ? CheckWallElementConsideration(itemElement.ObligatoryBottomWall, Block.WallBottom, Block.RoomWallBottom, valido) : valido;
+				valido = itemElement.ObligatoryTopWall != "NO" ? CheckWallElementConsideration(itemElement.ObligatoryTopWall, Block.WallTop, Block.RoomWallTop, valido) : valido;
+				valido = itemElement.ObligatoryLeftWall != "NO" ? CheckWallElementConsideration(itemElement.ObligatoryLeftWall, Block.WallLeft, Block.RoomWallLeft, valido) : valido;
+				valido = itemElement.ObligatoryRightWall != "NO" ? CheckWallElementConsideration(itemElement.ObligatoryRightWall, Block.WallRight, Block.RoomWallRight, valido) : valido;
 				if(valido)
 				{
-					BloquesDisponibles[BloquesDisponibles.length] = Block;					
+					BloquesDisponibles[BloquesDisponibles.length] = Block;
 				}
 			}
 		}
@@ -1527,18 +1668,23 @@ function DistributeDungeonElements(GameDungeon)
 		{
 			var numseleccionado = Math.floor((Math.random() * BloquesDisponibles.length));
 			var BlockSeleccionado = BloquesDisponibles[numseleccionado];
-			var NewElement = 
+			var NewElement =
 			{
 				NameTag: itemElement.NameTag,
 				UID: itemElement.UID,
 				BlockId: BlockSeleccionado.Id,
 				ElementId: ElementIdC,
 				Status: 1,
-				OtherData: "",
+				Data: {},
+				PositionX: 0,
+				PositionY: 0,
+				Width: itemElement.Width,
+				Height: itemElement.Height,
+				Priority: itemElement.Priority
 			};
 			itemElement.Objetos[itemElement.Objetos.length] = NewElement;
-			BlockSeleccionado.Elements[BlockSeleccionado.Elements.length] = NewElement; 
-			ElementIdC++;			
+			BlockSeleccionado.Elements[BlockSeleccionado.Elements.length] = NewElement;
+			ElementIdC++;
 			BloquesDisponibles.splice(numseleccionado,1);
 		}
 		itemElement.Total = itemElement.Objetos.length;
@@ -1557,95 +1703,182 @@ function CheckWallElementConsideration(Conditional,Wall,RoomWall,valido)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+function GetRndColor()
+{
+	var rndColor = ('000000' + Math.floor(Math.random()*16777215).toString(16)).slice(-6);
+	var redColor = Math.floor(Math.random()*(170)+40).toString(16);
+	var GreenColor = Math.floor(Math.random()*(170)+40).toString(16);
+	var BlueColor = Math.floor(Math.random()*(170)+40).toString(16);
+	rndColor = redColor + "" + GreenColor + "" + BlueColor;
+	return "#" + rndColor;
+}
+
+function GetRndColor2(maxLength, index)
+{
+	maxLength = maxLength + 1;
+	index = index + 1;
+	var rndColor = ('000000' + Math.floor((16777215/maxLength) * index).toString(16)).slice(-6);
+	return "#" + rndColor;
+}
 
 function GraphiqueDungeon(GameDungeon)
 {
+	GameDungeon = GameDungeon == null ? JSON2.parse(localStorage.getItem("GraphicMap_objMapGraphic")) : GameDungeon;
+	localStorage.setItem("GraphicMap_objMapGraphic", JSON2.stringify(GameDungeon));
+	if(localStorage.getItem("GraphicMap_ShowSupportPlatforms") == null)
+	{
+		localStorage.setItem("GraphicMap_ShowSupportPlatforms", 0);
+	}
+	if(localStorage.getItem("GraphicMap_ShowColorRooms") == null)
+	{
+		localStorage.setItem("GraphicMap_ShowColorRooms", 0);
+	}
+	if(localStorage.getItem("GraphicMap_ShowElements") == null)
+	{
+		localStorage.setItem("GraphicMap_ShowElements", 0);
+	}
 	var DungeonArray = GameDungeon.DungeonBlocks;
 	var DungeonRooms = GameDungeon.DungeonRooms;
-	
 	var ArrayRndmColorBgn = [];
 	for(r = 0; r < DungeonRooms.length; r++)
 	{
-		var rndColor = ('000000' + Math.floor(Math.random()*16777215).toString(16)).slice(-6);
-		var redColor = Math.floor(Math.random()*(170)+40).toString(16);
-		var GreenColor = Math.floor(Math.random()*(170)+40).toString(16);
-		var BlueColor = Math.floor(Math.random()*(170)+40).toString(16);
-		rndColor = redColor + "" + GreenColor + "" + BlueColor;
-		ArrayRndmColorBgn[ArrayRndmColorBgn.length] = '#' + rndColor;
-		//console.log(DungeonRooms[r].Connections);
-	}		
-	
+		ArrayRndmColorBgn[ArrayRndmColorBgn.length] = GetRndColor2(DungeonRooms.length, r);
+	}
 	var perSize = "15px";
-	
 	var minimap = "";
 	minimap += "<style> .RDM_blank { width:" + perSize + "; height:" + perSize + "; font-size:10px; background-color:#FFF; border-style:solid; border-width:1px; border-color:#EEE; } </style>";
-	minimap += "<style> .RDM_Block:active { background-color:#AAA; } </style>";
+	minimap += "<style> .RDM_Block { width:100%; height:100% } .RDM_Block:active { background-color:#AAA; } </style>";
+	minimap += "<style> .RDM_Table { text-align:center; width:100%; font-size: 15px; } .RDM_Table td{text-align:center;} .RDM_Table th{ border-bottom:solid 1px; font-weight: bold;} </style>";
+	minimap += "<style> .RDM_MAP {text-align:center; border-spacing:0px; " + ( "width:" + GameDungeon.DungeonWidth * 20 +"px;") + ( "height:" + GameDungeon.DungeonHeight * 20 +"px;") + " } .RDM_MAP td{ width:" + perSize + "; height:" + perSize + "; font-size: 10px; padding: 0px; } </style>";
+	minimap += "<style> .RDM_Platforms { width: 40%; height: 10%; position: relative; } </style>";
 	
 	minimap += "<table>";
-	minimap += "<tr style='vertical-align:top'> <td>";
-	
-		minimap += "<table style = 'text-align:center; border-spacing:0px; " + ( "width:" + GameDungeon.DungeonWidth*20 +"px;") + ( "height:" + GameDungeon.DungeonHeight*20 +"px;") + "' >\n";
-		for(l = 0; l < GameDungeon.DungeonHeight; l++)
-		{
-			minimap += "<tr>\n";
-			for(m = 0; m < GameDungeon.DungeonWidth; m++)
-			{
-				var BloqueSeleccionado = DungeonArray[l][m];
-				var border = "border-style:solid;border-width:0px;";
-				if(BloqueSeleccionado.Id > 0)
+		minimap += "<tr style='vertical-align:top'>";
+			minimap += "<td rowspan='2'>";
+				minimap += "<table class='RDM_MAP'>\n";
+				minimap += "<tr>";
+				minimap += "<td>X</td>";
+				for(m = 0; m < GameDungeon.DungeonWidth; m++)
 				{
-					var RndmColorBackground = ArrayRndmColorBgn[BloqueSeleccionado.Room - 1];
-					RndmColorBackground = "#FFD700";			
-					var backgroundcolor = "background-color:" + ((BloqueSeleccionado.Status =="OK") ? RndmColorBackground : "#000") + ";";
-					if(BloqueSeleccionado.WallTop > 0 || BloqueSeleccionado.RoomWallTop > 0)
-					{
-						border += "border-top: solid " + (l > 0 && DungeonArray[l - 1][m] != null && DungeonArray[l - 1][m].Id == 0 ? "2" :(DungeonArray[l - 1] == null) ? "2" : "1") + "px;";
-					}
-					if(BloqueSeleccionado.WallRight > 0 || BloqueSeleccionado.RoomWallRight > 0)
-					{
-						border += "border-right: solid " + ((m <= GameDungeon.DungeonWidth - 1) && DungeonArray[l][m + 1] != null && DungeonArray[l][m + 1].Id == 0 ? "2" : DungeonArray[l][m + 1] == null ? "2" : "1") + "px;";					
-					}
-					if(BloqueSeleccionado.WallBottom > 0 || BloqueSeleccionado.RoomWallBottom > 0)
-					{
-						border += "border-bottom: solid " + ((l < GameDungeon.DungeonHeight - 1) && DungeonArray[l + 1][m] != null && DungeonArray[l + 1][m].Id == 0 ? "2" : (DungeonArray[l + 1] == null) ? "2" : "1") + "px;"
-					}
-					if(BloqueSeleccionado.WallLeft > 0 || BloqueSeleccionado.RoomWallLeft > 0)
-					{
-						border += "border-left: solid " + (m >= 0 && DungeonArray[l][m - 1] != null && DungeonArray[l][m - 1].Id == 0 ? "2" : DungeonArray[l][m - 1] == null ? "2" : "1") + "px;";
-					}
-					border += (BloqueSeleccionado.ConnectTop != "")? "border-top: dotted 1px #FFF;" : "";
-					border += (BloqueSeleccionado.ConnectRight != "")? "border-right: dotted 1px #FFF;" : "";
-					border += (BloqueSeleccionado.ConnectBottom != "")? "border-bottom: dotted 1px #FFF;" : "";
-					border += (BloqueSeleccionado.ConnectLeft != "")? "border-left: dotted 1px #FFF;" : "";
-					minimap += "<td style='width:" + perSize + ";height:" + perSize + ";font-size: 10px;padding: 0px;"+ backgroundcolor + border+"'>";
-				}else
-				{
-					border = "border-style:solid;border-width:1px;border-color:#EEE";
-					minimap += "<td class='RDM_blank'>";
+					minimap += "<td>" + m + "</td>";
 				}
-				if(BloqueSeleccionado.Id > 0)
+				minimap += "</tr>";
+				for(l = 0; l < GameDungeon.DungeonHeight; l++)
 				{
-					var BlockResume = BlockInfoResume(JSON2.stringify(BloqueSeleccionado));
-					var OnClickEvent = "OnClick='document.getElementById(\"blockinfo\").innerHTML=(\"" + BlockResume + "\")'";
-					minimap += "<div Style='width:100%; height:100%' "+OnClickEvent+" class='RDM_Block'>";
-					/*for(y = 0; y < BloqueSeleccionado.Elements.length; y++)
+					minimap += "<tr>";
+					for(m = 0; m < GameDungeon.DungeonWidth; m++)
 					{
-						minimap += BloqueSeleccionado.Elements[y].NameTag;
-					}*/
-					minimap += "</div>";				
+						minimap += m == 0 ? "<td>" + l + "</td>" : "";
+						var BloqueSeleccionado = DungeonArray[l][m];
+						var border = "border-style:solid;border-width:0px;";
+						if(BloqueSeleccionado.Id > 0)
+						{
+							var RndmColorBackground = ArrayRndmColorBgn[BloqueSeleccionado.Room - 1];
+							RndmColorBackground = localStorage.getItem("GraphicMap_ShowColorRooms") == 1 ? RndmColorBackground : "#FFD700";
+							var backgroundcolor = "background-color:" + ((BloqueSeleccionado.Status == "OK") ? RndmColorBackground : "#000") + ";";
+							if(BloqueSeleccionado.WallTop > 0 || BloqueSeleccionado.RoomWallTop > 0)
+							{
+								border += "border-top: solid " + (l > 0 && DungeonArray[l - 1][m] != null && DungeonArray[l - 1][m].Id == 0 ? "2" :(DungeonArray[l - 1] == null) ? "2" : "1") + "px;";
+							}
+							if(BloqueSeleccionado.WallRight > 0 || BloqueSeleccionado.RoomWallRight > 0)
+							{
+								border += "border-right: solid " + ((m <= GameDungeon.DungeonWidth - 1) && DungeonArray[l][m + 1] != null && DungeonArray[l][m + 1].Id == 0 ? "2" : DungeonArray[l][m + 1] == null ? "2" : "1") + "px;";					
+							}
+							if(BloqueSeleccionado.WallBottom > 0 || BloqueSeleccionado.RoomWallBottom > 0)
+							{
+								border += "border-bottom: solid " + ((l < GameDungeon.DungeonHeight - 1) && DungeonArray[l + 1][m] != null && DungeonArray[l + 1][m].Id == 0 ? "2" : (DungeonArray[l + 1] == null) ? "2" : "1") + "px;"
+							}
+							if(BloqueSeleccionado.WallLeft > 0 || BloqueSeleccionado.RoomWallLeft > 0)
+							{
+								border += "border-left: solid " + (m >= 0 && DungeonArray[l][m - 1] != null && DungeonArray[l][m - 1].Id == 0 ? "2" : DungeonArray[l][m - 1] == null ? "2" : "1") + "px;";
+							}
+							border += (BloqueSeleccionado.ConnectTop != "")? "border-top: dotted 1px #FFF;" : "";
+							border += (BloqueSeleccionado.ConnectRight != "")? "border-right: dotted 1px #FFF;" : "";
+							border += (BloqueSeleccionado.ConnectBottom != "")? "border-bottom: dotted 1px #FFF;" : "";
+							border += (BloqueSeleccionado.ConnectLeft != "")? "border-left: dotted 1px #FFF;" : "";
+							minimap += "<td style='" + backgroundcolor + border + "'>";
+								var OnClickEvent = "OnClick='document.getElementById(\"blockinfo\").innerHTML= \" " + BlockInfoResume(JSON2.stringify(BloqueSeleccionado)) + " \" '";
+								minimap += "<div " + OnClickEvent + " title='ID: "+BloqueSeleccionado.Id+" (" + BloqueSeleccionado.X + "," + BloqueSeleccionado.Y + ")' " + " class='RDM_Block'>";
+								if(localStorage.getItem("GraphicMap_ShowSupportPlatforms") == 1)
+								{
+									switch(BloqueSeleccionado.SupportPlatformTop)
+									{
+										case "LEFT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 10%; left: 0%;'></div>"; break;
+										case "CENTER": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 10%; left: 30%;'></div>"; break;
+										case "RIGHT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 10%; left: 60%;'></div>"; break;
+										default: minimap += "<div class='RDM_Platforms' style='background-color: rgba(0,0,0,0); top: 10%; left: 30%;'></div>";
+									}
+									switch(BloqueSeleccionado.SupportPlatformCenter)
+									{
+										case "LEFT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 50%; left: 0%;'></div>"; break;
+										case "CENTER": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 50%; left: 30%;'></div>"; break;
+										case "RIGHT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 50%; left: 60%;'></div>"; break;
+										default: minimap += "<div class='RDM_Platforms' style='background-color: rgba(0,0,0,0); top: 50%; left: 30%;'></div>";
+									}
+									switch(BloqueSeleccionado.SupportPlatformBottom)
+									{
+										case "LEFT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 80%; left: 0%;'></div>"; break;
+										case "CENTER": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 80%; left: 30%;'></div>"; break;
+										case "RIGHT": minimap += "<div class='RDM_Platforms' style='background-color: #000; top: 80%; left: 60%;'></div>"; break;
+										default: minimap += "<div class='RDM_Platforms' style='background-color: rgba(0,0,0,0); top: 80%; left: 30%;'></div>";
+									}
+								}
+								if(localStorage.getItem("GraphicMap_ShowElements") == 1)
+								{
+									for(y = 0; y < BloqueSeleccionado.Elements.length; y++)
+									{
+										minimap += BloqueSeleccionado.Elements[y].NameTag;
+									}
+								}
+								minimap += "</div>";
+							minimap += "</td>";
+						}else
+						{
+							border = "border-style:solid;border-width:1px;border-color:#EEE";
+							minimap += "<td class='RDM_blank'>";
+							minimap += "<div title='ID: " + BloqueSeleccionado.Id + " (" + BloqueSeleccionado.X + "," + BloqueSeleccionado.Y + ")' " + "> &nbsp </div>";
+							minimap += "</td>";
+						}
+					}
+					minimap += "</tr>";
 				}
-				else
-				{
-					minimap += "<div style=''> &nbsp </div>";
-				}
-				minimap += "</td>\n";
-			}
-			minimap += "</tr>\n";
-		}
-		minimap += "</table>";
-	minimap += "<td style='vertical-align:middle;'><div id='blockinfo' style='width:250px;'></div></td></tr>";
+				minimap += "</table>";
+			minimap += "</td>";
+			minimap += "<td>";
+				minimap += MapOptionsTable();
+			minimap += "</td>";
+		minimap += "</tr>";
+		minimap += "<tr>";
+			minimap += "<td style='vertical-align:middle;'><div id='blockinfo' style='width:300px;'></div></td>";
+		minimap += "</tr>";
 	minimap += "</table>";
 	return minimap;
+}
+
+function MapOptionsTable()
+{
+	var GraphiqueFunction = "document.getElementById(\"minimap\").innerHTML = GraphiqueDungeon();";
+	var chkShowSupportPlatforms = "localStorage.setItem(\"GraphicMap_ShowSupportPlatforms\", document.getElementById(\"chkShowSupportPlatforms\").checked ? 1 : 0);";
+	var chkShowColorRooms = "localStorage.setItem(\"GraphicMap_ShowColorRooms\", document.getElementById(\"chkShowColorRooms\").checked ? 1 : 0);";
+	var chkShowElements = "localStorage.setItem(\"GraphicMap_ShowElements\", document.getElementById(\"chkShowElements\").checked ? 1 : 0);";
+	var stringtable = "<table>";
+	stringtable += "<tr>";
+		stringtable += "<td>";
+			stringtable += "<input type='checkbox' onclick='" + chkShowSupportPlatforms + GraphiqueFunction + "' id='chkShowSupportPlatforms' " + (localStorage.getItem("GraphicMap_ShowSupportPlatforms") == 1 ? "checked" : "") + "> Support Platforms </input>";
+		stringtable += "</td>";
+	stringtable += "</tr>";
+	stringtable += "<tr>";
+		stringtable += "<td>";
+			stringtable += "<input type='checkbox' onclick='" + chkShowColorRooms + GraphiqueFunction + "' id='chkShowColorRooms' " + (localStorage.getItem("GraphicMap_ShowColorRooms") == 1 ? "checked" : "") + "> Color Rooms </input>";
+		stringtable += "</td>";
+	stringtable += "</tr>";
+	stringtable += "<tr>";
+		stringtable += "<td>";
+			stringtable += "<input type='checkbox' onclick='" + chkShowElements + GraphiqueFunction + "' id='chkShowElements' " + (localStorage.getItem("GraphicMap_ShowElements") == 1 ? "checked" : "") + "> Elements </input>";
+		stringtable += "</td>";
+	stringtable += "</tr>";
+	stringtable += "</table>";
+	return stringtable;
 }
 
 function BlockInfoResume(Info)
@@ -1656,29 +1889,95 @@ function BlockInfoResume(Info)
 	var TypeWallLeft = (blockInfo.WallLeft > 0)? "BORDER" : ((blockInfo.RoomWallLeft > 0)? "ROOM" : "NONE");
 	var TypeWallRight = (blockInfo.WallRight > 0)? "BORDER" : ((blockInfo.RoomWallRight > 0)? "ROOM" : "NONE");
 
-	var ResumeInfo = "<u><b>Block Info</b></u><br/>";
-	ResumeInfo += "<b>Id:</b> " + blockInfo.Id + "<br/>"; 
-	ResumeInfo += "<b>Room:</b> " + blockInfo.Room + "<br/>";
-	ResumeInfo += "<b>Position (Global):</b> " + "(" + blockInfo.X + "," + blockInfo.Y + ")" + "<br/>";
-	ResumeInfo += "<b>Position (Room):</b> " + "(" + blockInfo.RoomX + "," + blockInfo.RoomY + ")" + "<br/>";
-	ResumeInfo += "<b>Wall Top:</b> " + TypeWallTop + "<br/>";
-	ResumeInfo += "<b>Wall Bottom:</b> " + TypeWallBottom + "<br/>";
-	ResumeInfo += "<b>Wall Left:</b> " + TypeWallLeft + "<br/>";
-	ResumeInfo += "<b>Wall Right:</b> " + TypeWallRight + "<br/>";
-	ResumeInfo += "<b>Connect Top:</b> " + (blockInfo.ConnectTop == 0? 0: blockInfo.ConnectTop.Id) + "<br/>";
-	ResumeInfo += "<b>Connect Bottom:</b> " + (blockInfo.ConnectBottom == 0? 0: blockInfo.ConnectBottom.Id) + "<br/>";
-	ResumeInfo += "<b>Connect Left:</b> " + (blockInfo.ConnectLeft == 0? 0: blockInfo.ConnectLeft.Id) + "<br/>";
-	ResumeInfo += "<b>Connect Right:</b> " + (blockInfo.ConnectRight == 0? 0: blockInfo.ConnectRight.Id) + "<br/>";
-	ResumeInfo += "<b>Platform Top:</b> " + blockInfo.SupportPlatformTop + "<br/>";
-	ResumeInfo += "<b>Platform Center:</b> " + blockInfo.SupportPlatformCenter + "<br/>";	
-	ResumeInfo += "<b>Platform Bottom:</b> " + blockInfo.SupportPlatformBottom + "<br/>";
+	var ResumeInfo = "";
 	
-	ResumeInfo += blockInfo.Elements.length > 0 ? "<b>Elements</b><br/>" : "";
-	for(var x = 0; x < blockInfo.Elements.length; x++)
+	ResumeInfo += "<table class=RDM_Table>";
+		ResumeInfo += "<tr>";
+			ResumeInfo += "<th colspan=2 style=border:none><u>Block Info</u></th>";
+		ResumeInfo += "</tr>";
+		ResumeInfo += "<tr style=text-align:left;>";
+			ResumeInfo += "<td>" + "<b>Id:</b> " + blockInfo.Id + "</td>";
+			ResumeInfo += "<td>" + "<b>Room:</b> " + blockInfo.Room + "</td>";
+		ResumeInfo += "</tr>";
+		ResumeInfo += "<tr style=text-align:left;>";
+			ResumeInfo += "<td>" +"<b>Pos. Global:</b> " +  blockInfo.X + "," + blockInfo.Y + "</td>";
+			ResumeInfo += "<td>" +"<b>Pos. Room:</b> " +  blockInfo.RoomX + "," + blockInfo.RoomY + "</td>";			
+		ResumeInfo += "</tr>";
+	ResumeInfo += "</table>";
+	ResumeInfo += "<hr class=RDM_Table/>";
+	
+	ResumeInfo += "<table class=RDM_Table>";//#FFA
+		ResumeInfo += "<tr>";
+			ResumeInfo += "<th style=text-align:left;> Walls: </th>";
+			ResumeInfo += "<th>Top</th>";
+			ResumeInfo += "<th>Bottom</th>";
+			ResumeInfo += "<th>Left</th>";
+			ResumeInfo += "<th>Right</th>";
+		ResumeInfo += "</tr>";
+		ResumeInfo += "<tr>";
+			ResumeInfo += "<td style=text-align:left;> Value: </td>";
+			ResumeInfo += "<td>" + TypeWallTop + "</td>";
+			ResumeInfo += "<td>" + TypeWallBottom + "</td>";
+			ResumeInfo += "<td>" + TypeWallLeft + "</td>";
+			ResumeInfo += "<td>" + TypeWallRight + "</td>";
+		ResumeInfo += "</tr>";
+	ResumeInfo += "</table>";
+	ResumeInfo += "<hr class=RDM_Table/>";
+	
+	ResumeInfo += "<table class=RDM_Table>";//#AFA
+		ResumeInfo += "<tr>";
+			ResumeInfo += "<th style=text-align:left;> Connect: </th>";
+			ResumeInfo += "<th>Top</th>";
+			ResumeInfo += "<th>Bottom</th>";
+			ResumeInfo += "<th>Left</th>";
+			ResumeInfo += "<th>Right</th>";
+		ResumeInfo += "</tr>";
+		ResumeInfo += "<tr>";
+			ResumeInfo += "<td style=text-align:left;>Value: </td>";
+			ResumeInfo += "<td>" + (blockInfo.ConnectTop == 0? 0: blockInfo.ConnectTop.Id) + "</td>";
+			ResumeInfo += "<td>" + (blockInfo.ConnectBottom == 0? 0: blockInfo.ConnectBottom.Id) + "</td>";
+			ResumeInfo += "<td>" + (blockInfo.ConnectLeft == 0? 0: blockInfo.ConnectLeft.Id) + "</td>";
+			ResumeInfo += "<td>" + (blockInfo.ConnectRight == 0? 0: blockInfo.ConnectRight.Id) + "</td>";
+		ResumeInfo += "</tr>";
+	ResumeInfo += "</table>";
+	ResumeInfo += "<hr class=RDM_Table/>";
+	
+	ResumeInfo += "<table class=RDM_Table>";//#FAA
+		ResumeInfo += "<tr>";
+			ResumeInfo += "<th style=text-align:left;>Platform: </td>";
+			ResumeInfo += "<th>Top</th>";
+			ResumeInfo += "<th>Center</th>";
+			ResumeInfo += "<th>Bottom</th>";
+		ResumeInfo += "</tr>";
+		ResumeInfo += "<tr>";
+			ResumeInfo += "<td style=text-align:left;>Value: </td>";
+			ResumeInfo += "<td>" + blockInfo.SupportPlatformTop + "</td>";
+			ResumeInfo += "<td>" + blockInfo.SupportPlatformCenter + "</td>";
+			ResumeInfo += "<td>" + blockInfo.SupportPlatformBottom + "</td>";
+		ResumeInfo += "</tr>";
+	ResumeInfo += "</table>";
+	
+	if(blockInfo.Elements.length > 0)
 	{
-		if(blockInfo.Elements[x].Status == 1)
-			ResumeInfo += blockInfo.Elements[x].NameTag + " : " + blockInfo.Elements[x].ElementId;
+		ResumeInfo += "<hr class=RDM_Table/>";
+		ResumeInfo += "<b>Elements</b><br/>";
+		ResumeInfo += "<table class=RDM_Table>";
+		ResumeInfo += "<tr>";
+			ResumeInfo += "<th>Name</td>";
+			ResumeInfo += "<th>Id</th>";
+			ResumeInfo += "<th>Active</th>";
+		ResumeInfo += "</tr>";
+			for(var x = 0; x < blockInfo.Elements.length; x++)
+			{
+				ResumeInfo += "<tr>";
+					ResumeInfo += "<td>" + blockInfo.Elements[x].NameTag + "</td>";
+					ResumeInfo += "<td>" + blockInfo.Elements[x].ElementId + "</td>";
+					ResumeInfo += "<td>" + (blockInfo.Elements[x].Status == 1 ? "YES" : "NO") + "</td>";
+				ResumeInfo += "</tr>";
+			}
+		ResumeInfo += "</table>";		
 	}
+
 	return ResumeInfo;
 }
 

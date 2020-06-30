@@ -2,7 +2,7 @@
 {
     const PLUGIN_ID = "random_dungeon_maker";
 
-    const PLUGIN_VERSION = "1.1";
+    const PLUGIN_VERSION = "1.2";
     const PLUGIN_CATEGORY = "other";
 
     let app = null;
