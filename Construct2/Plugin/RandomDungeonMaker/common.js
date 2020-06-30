@@ -859,7 +859,7 @@ function DistributeDungeonElements(GameDungeon)
 			};
 			itemElement.Objetos[itemElement.Objetos.length] = NewElement;
 			BlockSeleccionado.Elements[BlockSeleccionado.Elements.length] = NewElement;
-			ElementIdC++;			
+			ElementIdC++;
 			BloquesDisponibles.splice(numseleccionado,1);
 		}
 		itemElement.Total = itemElement.Objetos.length;

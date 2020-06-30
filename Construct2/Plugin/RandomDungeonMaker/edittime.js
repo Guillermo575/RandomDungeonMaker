@@ -115,7 +115,7 @@ AddAction(12, af_none, "Revive all elements", "Elements (revive)", "Put active a
 AddNumberParam("Priority", "Element priority to revive", "1");
 AddAction(13, af_none, "Revive elements by priority", "Elements (revive)", "Put active again elements with specific priority ({0})", "Put active again dungeon elements with specific priority", "ReviveDungeonElementsByPriority");
 
-AddNumberParam("NameTag", "Name Tag to revive", "1");
+AddNumberParam("NameTag", "Name Tag to revive");
 AddAction(14, af_none, "Revive elements by name tag", "Elements (revive)", "Put active again elements with specific Name Tag ({0})", "Put active again dungeon elements with specific Name Tag", "ReviveDungeonElementsByNameTag");
 
 AddNumberParam("ElementId", "Element Id to revive");
