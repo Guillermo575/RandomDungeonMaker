@@ -915,7 +915,7 @@ function GraphiqueDungeon(GameDungeon)
 	var DungeonArray = GameDungeon.DungeonBlocks;
 	var DungeonRooms = GameDungeon.DungeonRooms;
 	var ArrayRndmColorBgn = [];
-	for(r = 0; r < DungeonRooms.length; r++)
+	for(var r = 0; r < DungeonRooms.length; r++)
 	{
 		ArrayRndmColorBgn[ArrayRndmColorBgn.length] = GetRndColor2(DungeonRooms.length, r);
 	}
@@ -933,15 +933,15 @@ function GraphiqueDungeon(GameDungeon)
 				minimap += "<table class='RDM_MAP'>\n";
 				minimap += "<tr>";
 				minimap += "<td>X</td>";
-				for(m = 0; m < GameDungeon.DungeonWidth; m++)
+				for(var m = 0; m < GameDungeon.DungeonWidth; m++)
 				{
 					minimap += "<td>" + m + "</td>";
 				}
 				minimap += "</tr>";
-				for(l = 0; l < GameDungeon.DungeonHeight; l++)
+				for(var l = 0; l < GameDungeon.DungeonHeight; l++)
 				{
 					minimap += "<tr>";
-					for(m = 0; m < GameDungeon.DungeonWidth; m++)
+					for(var m = 0; m < GameDungeon.DungeonWidth; m++)
 					{
 						minimap += m == 0 ? "<td>" + l + "</td>" : "";
 						var BloqueSeleccionado = DungeonArray[l][m];
@@ -1000,7 +1000,7 @@ function GraphiqueDungeon(GameDungeon)
 								}
 								if(localStorage.getItem("GraphicMap_ShowElements") == 1)
 								{
-									for(y = 0; y < BloqueSeleccionado.Elements.length; y++)
+									for(var y = 0; y < BloqueSeleccionado.Elements.length; y++)
 									{
 										minimap += BloqueSeleccionado.Elements[y].NameTag;
 									}
