@@ -1,98 +1,92 @@
 "use strict";
-
 {
-	function getDungeonBlockPos(GameDungeon,X,Y)
+function getDungeonBlockPos(GameDungeon,X,Y)
+{
+	if(GameDungeon.DungeonBlocks[Y] != null && GameDungeon.DungeonBlocks[Y][X] != null)
 	{
-		if(GameDungeon.DungeonBlocks[Y] != null && GameDungeon.DungeonBlocks[Y][X] != null)
-		{
-			return GameDungeon.DungeonBlocks[Y][X];			
-		}else
-		{
-			var error = emptyDungeonBlock();
-			return error;
-		}
-	}		
-	
-	function getDungeonBlockPosRoom(GameDungeon,Room,X,Y)
+		return GameDungeon.DungeonBlocks[Y][X];
+	}else
 	{
-		var dungeonroom = getDungeonRoom(GameDungeon,Room);
-		if(dungeonroom.Blocks[Y] != null && dungeonroom.Blocks[Y][X] != null)
-		{
-			return dungeonroom.Blocks[Y][X].Block;			
-		}else
-		{
-			var error = emptyDungeonBlock();
-			return error;
-		}
+		var error = emptyDungeonBlock();
+		return error;
 	}
-	
-	function getDungeonBlock(GameDungeon,Id)
+}
+function getDungeonBlockPosRoom(GameDungeon,Room,X,Y)
+{
+	var dungeonroom = getDungeonRoom(GameDungeon,Room);
+	if(dungeonroom.Blocks[Y] != null && dungeonroom.Blocks[Y][X] != null)
 	{
-		var retorno = emptyDungeonBlock();
-		if(Id > 0 && GameDungeon != null)
-		{
-			for(var l = 0; l < GameDungeon.DungeonHeight; l++)
-			{
-				for(var m = 0; m < GameDungeon.DungeonWidth; m++)
-				{
-					if(GameDungeon.DungeonBlocks[l][m].Id == Id)
-					{
-						retorno = GameDungeon.DungeonBlocks[l][m];
-						return retorno;
-					}
-				}
-			}			
-		}
-		return retorno;
+		return dungeonroom.Blocks[Y][X].Block;
+	}else
+	{
+		var error = emptyDungeonBlock();
+		return error;
 	}
-
-	function getDungeonRoom(GameDungeon,Id)
+}
+function getDungeonBlock(GameDungeon,Id)
+{
+	var retorno = emptyDungeonBlock();
+	if(Id > 0 && GameDungeon != null)
 	{
-		var retorno = emptyDungeonRoom();
-		if(Id > 0 && GameDungeon != null)
+		for(var l = 0; l < GameDungeon.DungeonHeight; l++)
 		{
-			for(var l = 0; l < GameDungeon.DungeonRooms.length; l++)
+			for(var m = 0; m < GameDungeon.DungeonWidth; m++)
 			{
-				if(GameDungeon.DungeonRooms[l].Id == Id)
+				if(GameDungeon.DungeonBlocks[l][m].Id == Id)
 				{
-					retorno = GameDungeon.DungeonRooms[l];
+					retorno = GameDungeon.DungeonBlocks[l][m];
 					return retorno;
-				}			
-			}			
+				}
+			}
 		}
-		return retorno;
 	}
-	
-	function emptyDungeonBlock()
+	return retorno;
+}
+function getDungeonRoom(GameDungeon,Id)
+{
+	var retorno = emptyDungeonRoom();
+	if(Id > 0 && GameDungeon != null)
 	{
-		var retorno = 
-		{ 
-			Id: 0,
-			X: -1, Y: -1,
-			RoomX: 0, RoomY: 0, Room: -1,
-			WallTop: 0, WallRight: 0, WallBottom: 0, WallLeft: 0,
-			RoomWallTop: 0, RoomWallRight: 0, RoomWallBottom: 0, RoomWallLeft: 0,
-			ConnectTop: 0, ConnectRight: 0, ConnectBottom: 0, ConnectLeft: 0,
-			Status: "ERROR",
-			SupportPlatformTop: "NONE", SupportPlatformCenter: "NONE", SupportPlatformBottom: "NONE",
-		};	
-		return retorno;
+		for(var l = 0; l < GameDungeon.DungeonRooms.length; l++)
+		{
+			if(GameDungeon.DungeonRooms[l].Id == Id)
+			{
+				retorno = GameDungeon.DungeonRooms[l];
+				return retorno;
+			}
+		}
 	}
-
-	function emptyDungeonRoom()
+	return retorno;
+}
+function emptyDungeonBlock()
+{
+	var retorno =
 	{
-		var retorno = 
-		{ 
-			Id: -1,
-			index: -1,
-			Blocks: [], Connections: [],
-			Width: 0, Height: 0,
-			Status: "ERROR",
-		};	
-		return retorno;
-	}
-  C3.Plugins.random_dungeon_maker.Exps =
-  {
+		Id: 0,
+		X: -1, Y: -1,
+		RoomX: 0, RoomY: 0, Room: -1,
+		WallTop: 0, WallRight: 0, WallBottom: 0, WallLeft: 0,
+		RoomWallTop: 0, RoomWallRight: 0, RoomWallBottom: 0, RoomWallLeft: 0,
+		ConnectTop: 0, ConnectRight: 0, ConnectBottom: 0, ConnectLeft: 0,
+		Status: "ERROR",
+		SupportPlatformTop: "NONE", SupportPlatformCenter: "NONE", SupportPlatformBottom: "NONE",
+	};
+	return retorno;
+}
+function emptyDungeonRoom()
+{
+	var retorno =
+	{
+		Id: -1,
+		index: -1,
+		Blocks: [], Connections: [],
+		Width: 0, Height: 0,
+		Status: "ERROR",
+	};
+	return retorno;
+}
+C3.Plugins.random_dungeon_maker.Exps =
+{
     DungeonWidth(){ return(C3.Plugins.random_dungeon_maker.GameDungeon.DungeonWidth); },
 	DungeonHeight(){ return(C3.Plugins.random_dungeon_maker.GameDungeon.DungeonHeight); },
 	DungeonBlocks(){ return(C3.Plugins.random_dungeon_maker.GameDungeon.TotalBloquesDungeon); },
@@ -228,7 +222,6 @@
 			}
 		}
 	},
-	
 	AdjacentBlockTop(Id)
 	{ 
 		var adjacentBlock = emptyDungeonBlock();
@@ -269,5 +262,5 @@
 		}
 		return(adjacentBlock.Id);
 	},	
-  };
+};
 }

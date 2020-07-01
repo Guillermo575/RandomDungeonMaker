@@ -1,160 +1,145 @@
 "use strict";
 {
-	function getDungeonBlockPos(GameDungeon,X,Y)
+function getDungeonBlockPos(GameDungeon,X,Y)
+{
+	if(GameDungeon.DungeonBlocks[Y] != null && GameDungeon.DungeonBlocks[Y][X] != null)
 	{
-		if(GameDungeon.DungeonBlocks[Y] != null && GameDungeon.DungeonBlocks[Y][X] != null)
-		{
-			return GameDungeon.DungeonBlocks[Y][X];			
-		}else
-		{
-			var error = emptyDungeonBlock();
-			return error;
-		}
-	}		
-	
-	function getDungeonBlockPosRoom(GameDungeon,Room,X,Y)
+		return GameDungeon.DungeonBlocks[Y][X];
+	}else
 	{
-		var dungeonroom = getDungeonRoom(GameDungeon,Room);
-		if(dungeonroom.Blocks[Y] != null && dungeonroom.Blocks[Y][X] != null)
-		{
-			return dungeonroom.Blocks[Y][X].Block;
-		}else
-		{
-			var error = emptyDungeonBlock();
-			return error;
-		}
+		var error = emptyDungeonBlock();
+		return error;
 	}
-	
-	function getDungeonBlock(GameDungeon,Id)
+}
+function getDungeonBlockPosRoom(GameDungeon,Room,X,Y)
+{
+	var dungeonroom = getDungeonRoom(GameDungeon,Room);
+	if(dungeonroom.Blocks[Y] != null && dungeonroom.Blocks[Y][X] != null)
 	{
-		var retorno = emptyDungeonBlock();
-		if(Id > 0 && GameDungeon != null)
-		{
-			for(var l = 0; l < GameDungeon.DungeonHeight; l++)
-			{
-				for(var m = 0; m < GameDungeon.DungeonWidth; m++)
-				{
-					if(GameDungeon.DungeonBlocks[l][m].Id == Id)
-					{
-						retorno = GameDungeon.DungeonBlocks[l][m];
-						return retorno;
-					}
-				}
-			}			
-		}
-		return retorno;
+		return dungeonroom.Blocks[Y][X].Block;
+	}else
+	{
+		var error = emptyDungeonBlock();
+		return error;
 	}
-
-	function getDungeonRoom(GameDungeon,Id)
+}
+function getDungeonBlock(GameDungeon,Id)
+{
+	var retorno = emptyDungeonBlock();
+	if(Id > 0 && GameDungeon != null)
 	{
-		var retorno = emptyDungeonRoom();
-		if(Id > 0 && GameDungeon != null)
+		for(var l = 0; l < GameDungeon.DungeonHeight; l++)
 		{
-			for(var l = 0; l < GameDungeon.DungeonRooms.length; l++)
+			for(var m = 0; m < GameDungeon.DungeonWidth; m++)
 			{
-				if(GameDungeon.DungeonRooms[l].Id == Id)
+				if(GameDungeon.DungeonBlocks[l][m].Id == Id)
 				{
-					retorno = GameDungeon.DungeonRooms[l];
+					retorno = GameDungeon.DungeonBlocks[l][m];
 					return retorno;
-				}			
-			}			
+				}
+			}
 		}
-		return retorno;
 	}
-	
-	function emptyDungeonBlock()
+	return retorno;
+}
+function getDungeonRoom(GameDungeon,Id)
+{
+	var retorno = emptyDungeonRoom();
+	if(Id > 0 && GameDungeon != null)
 	{
-		var retorno = 
-		{ 
-			Id: 0,
-			X: -1, Y: -1,
-			RoomX: 0, RoomY: 0, Room: -1,
-			WallTop: 0, WallRight: 0, WallBottom: 0, WallLeft: 0,
-			RoomWallTop: 0, RoomWallRight: 0, RoomWallBottom: 0, RoomWallLeft: 0,
-			ConnectTop: 0, ConnectRight: 0, ConnectBottom: 0, ConnectLeft: 0,
-			Status: "ERROR",
-			SupportPlatformTop: "NONE", SupportPlatformCenter: "NONE", SupportPlatformBottom: "NONE",
-		};	
-		return retorno;
-	}
-
-	function emptyDungeonRoom()
-	{
-		var retorno = 
-		{ 
-			Id: -1,
-			index: -1,
-			Blocks: [], Connections: [],
-			Width: 0, Height: 0,
-			Status: "ERROR",
-		};	
-		return retorno;
-	}
-	
-	function DungeonBasicConfiguration(Width,Height,Blocks)
-	{
-		var GameDungeon = DefaultDungeonConfiguration();
-		
-		GameDungeon.DungeonWidth = Width;
-		GameDungeon.DungeonHeight = Height;
-		GameDungeon.TotalBloquesDungeon = Blocks;
-		
-		return GameDungeon;
-	}
-
-	function DungeonExtraConfiguration(Width,Height,Blocks,MinRoom,MaxRoom,LabyrinthDesign)
-	{	
-		var GameDungeon = DungeonBasicConfiguration(Width,Height,Blocks);
-		
-		GameDungeon.DungeonRoomsWidthMin = MinRoom;
-		GameDungeon.DungeonRoomsWidthMax = MaxRoom;
-		GameDungeon.DungeonRoomsHeightMin = MinRoom;
-		GameDungeon.DungeonRoomsHeightMax = MaxRoom;
-		GameDungeon.LabyrinthInn = LabyrinthDesign;
-		
-		return GameDungeon;
-	}
-
-	function DungeonAdvancedConfiguration(Width,Height,Blocks,MinRoom,MaxRoom,Mode,StartX,StartY,LabyrinthDesign,OpenWorldDesign)
-	{
-		var GameDungeon = DungeonExtraConfiguration(Width,Height,Blocks,MinRoom,MaxRoom,LabyrinthDesign);
-		
-		GameDungeon.DungeonMode = Mode;
-		GameDungeon.StartPointX = StartX;
-		GameDungeon.StartPointY = StartY;
-		GameDungeon.OpenWorld = OpenWorldDesign;
-		
-		return GameDungeon;
-	}	
-	
-	function DefaultDungeonConfiguration()
-	{
-		var GameDungeon = 	
+		for(var l = 0; l < GameDungeon.DungeonRooms.length; l++)
 		{
-			DungeonBlocks: [],
-			DungeonRooms: [],
-			DungeonRegions: [],
-			DungeonHeight: 30,
-			DungeonWidth: 30,
-			TotalBloquesDungeon: 600,
-			DungeonRoomsWidthMin: 2,
-			DungeonRoomsWidthMax: 5,
-			DungeonRoomsHeightMin: 2,
-			DungeonRoomsHeightMax: 5,
-			DungeonRoomsSizeAmbivalence: 1,
-			DungeonMode: "LABYRINTH",//"LABYRINTH","CASTLE","TOWER"
-			LabyrinthInn: 1,
-			OpenWorld: 0,
-			SupportPlatforms: 1,
-			StartPointX: 0,
-			StartPointY: 0,
-			Status: "NOT",
-			Elements: [],
-			SubBlockWidth: 4,
-			SubBlockHeight: 4,
-		};
-		return GameDungeon;
+			if(GameDungeon.DungeonRooms[l].Id == Id)
+			{
+				retorno = GameDungeon.DungeonRooms[l];
+				return retorno;
+			}
+		}
 	}
+	return retorno;
+}
+function emptyDungeonBlock()
+{
+	var retorno =
+	{
+		Id: 0,
+		X: -1, Y: -1,
+		RoomX: 0, RoomY: 0, Room: -1,
+		WallTop: 0, WallRight: 0, WallBottom: 0, WallLeft: 0,
+		RoomWallTop: 0, RoomWallRight: 0, RoomWallBottom: 0, RoomWallLeft: 0,
+		ConnectTop: 0, ConnectRight: 0, ConnectBottom: 0, ConnectLeft: 0,
+		Status: "ERROR",
+		SupportPlatformTop: "NONE", SupportPlatformCenter: "NONE", SupportPlatformBottom: "NONE",
+	};
+	return retorno;
+}
+function emptyDungeonRoom()
+{
+	var retorno =
+	{
+		Id: -1,
+		index: -1,
+		Blocks: [], Connections: [],
+		Width: 0, Height: 0,
+		Status: "ERROR",
+	};
+	return retorno;
+}
+function DungeonBasicConfiguration(Width,Height,Blocks)
+{
+	var GameDungeon = DefaultDungeonConfiguration();
+	GameDungeon.DungeonWidth = Width;
+	GameDungeon.DungeonHeight = Height;
+	GameDungeon.TotalBloquesDungeon = Blocks;
+	return GameDungeon;
+}
+function DungeonExtraConfiguration(Width,Height,Blocks,MinRoom,MaxRoom,LabyrinthDesign)
+{
+	var GameDungeon = DungeonBasicConfiguration(Width,Height,Blocks);
+	GameDungeon.DungeonRoomsWidthMin = MinRoom;
+	GameDungeon.DungeonRoomsWidthMax = MaxRoom;
+	GameDungeon.DungeonRoomsHeightMin = MinRoom;
+	GameDungeon.DungeonRoomsHeightMax = MaxRoom;
+	GameDungeon.LabyrinthInn = LabyrinthDesign;
+	return GameDungeon;
+}
+function DungeonAdvancedConfiguration(Width,Height,Blocks,MinRoom,MaxRoom,Mode,StartX,StartY,LabyrinthDesign,OpenWorldDesign)
+{
+	var GameDungeon = DungeonExtraConfiguration(Width,Height,Blocks,MinRoom,MaxRoom,LabyrinthDesign);
+	GameDungeon.DungeonMode = Mode;
+	GameDungeon.StartPointX = StartX;
+	GameDungeon.StartPointY = StartY;
+	GameDungeon.OpenWorld = OpenWorldDesign;
+	return GameDungeon;
+}
+function DefaultDungeonConfiguration()
+{
+	var GameDungeon =
+	{
+		DungeonBlocks: [],
+		DungeonRooms: [],
+		DungeonRegions: [],
+		DungeonHeight: 30,
+		DungeonWidth: 30,
+		TotalBloquesDungeon: 600,
+		DungeonRoomsWidthMin: 2,
+		DungeonRoomsWidthMax: 5,
+		DungeonRoomsHeightMin: 2,
+		DungeonRoomsHeightMax: 5,
+		DungeonRoomsSizeAmbivalence: 1,
+		DungeonMode: "LABYRINTH",//"LABYRINTH","CASTLE","TOWER"
+		LabyrinthInn: 1,
+		OpenWorld: 0,
+		SupportPlatforms: 1,
+		StartPointX: 0,
+		StartPointY: 0,
+		Status: "NOT",
+		Elements: [],
+		SubBlockWidth: 4,
+		SubBlockHeight: 4,
+	};
+	return GameDungeon;
+}
 function makeDungeon(GameDungeon)
 {	
 	GameDungeon.TotalBloquesDungeon = (GameDungeon.DungeonWidth*GameDungeon.DungeonHeight)<= GameDungeon.TotalBloquesDungeon ? (GameDungeon.DungeonWidth*GameDungeon.DungeonHeight) : GameDungeon.TotalBloquesDungeon;
