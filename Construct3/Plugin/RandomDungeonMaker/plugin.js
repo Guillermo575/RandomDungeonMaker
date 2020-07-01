@@ -20,7 +20,7 @@
             this._info.SetAuthor("El_Guille");
             this._info.SetHelpUrl(lang(".help-url"));
             this._info.SetIsSingleGlobal(true);
-
+			this._info.SetSupportedRuntimes(["c2", "c3"]);
             SDK.Lang.PushContext(".properties");
 
             this._info.SetProperties([ ]);

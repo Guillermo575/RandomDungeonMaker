@@ -428,8 +428,8 @@ cr.plugins_.random_dungeon_maker = function (runtime) {this.runtime = runtime;};
 	{
 		var NotIndoorCombo = "NO";
 		switch (NotIndoor) {
-			case 0: StartYCombo = "NO"; break;
-			case 1: StartYCombo = "YES"; break;
+			case 0: NotIndoorCombo = "NO"; break;
+			case 1: NotIndoorCombo = "YES"; break;
 		}
 		var ObligatoryBottomWallCombo = "NO";
 		switch (ObligatoryBottomWall) {
