@@ -1,45 +1,95 @@
 {
-    "custom": {
-		"conditions": [
-				{
-					"id": "on_Dungeon_Created",
-					"scriptName": "onDungeonCreated"
-				}
-			],
-        "actions": [
-            {
-                "id": "Create_Dungeon_Simple",
-                "scriptName": "CreateDungeonSimple",
-                "params": [
-                    { "id": "Width", "type": "number", "initialValue": "10" },
+	"creation":
+	{
+		"conditions":
+		[
+			{
+				"id": "on_Dungeon_Created",
+				"scriptName": "onDungeonCreated"
+			}
+		],
+		"actions":
+		[
+			{
+				"id": "Create_Dungeon_Simple",
+				"scriptName": "CreateDungeonSimple",
+				"params": [
+					{ "id": "Width", "type": "number", "initialValue": "10" },
 					{ "id": "Height", "type": "number", "initialValue": "10" },
 					{ "id": "Blocks", "type": "number", "initialValue": "60" }
-                ]
-            },
+				]
+			},
 			{
-                "id": "Create_Dungeon_Extra",
-                "scriptName": "CreateDungeonExtra",
-                "params": [
-                    { "id": "Width", "type": "number", "initialValue": "10" },
+				"id": "Create_Dungeon_Extra",
+				"scriptName": "CreateDungeonExtra",
+				"params": [
+					{ "id": "Width", "type": "number", "initialValue": "10" },
 					{ "id": "Height", "type": "number", "initialValue": "10" },
 					{ "id": "Blocks", "type": "number", "initialValue": "60" },
 					{ "id": "MinRoom", "type": "number", "initialValue": "2" },
 					{ "id": "MaxRoom", "type": "number", "initialValue": "5" },
 					{ 
-						"id": "LabyrinthInn", 
+						"id": "LabyrinthInn",
 						"type": "combo", 
 						"initialValue": "YES",
 						"items":["YES","NO","RANDOM"]
 					}
-                ]
-            },
+				]
+			},
 			{
-                "id": "Load_Dungeon_JSON",
-                "scriptName": "LoadDungeonJSON",
-                "params": [
-                    { "id": "JSON", "type": "string" }
-                ]
-            },
+				"id": "Load_Dungeon_JSON",
+				"scriptName": "LoadDungeonJSON",
+				"params": [
+					{ "id": "JSON", "type": "string" }
+				]
+			},
+			{
+				"id": "Create_Dungeon_Advanced",
+				"scriptName": "CreateDungeonAdvanced",
+				"params": [
+					{ "id": "Width", "type": "number", "initialValue": "10" },
+					{ "id": "Height", "type": "number", "initialValue": "10" },
+					{ "id": "Blocks", "type": "number", "initialValue": "60" },
+					{ "id": "MinRoom", "type": "number", "initialValue": "2" },
+					{ "id": "MaxRoom", "type": "number", "initialValue": "5" },
+					{
+						"id": "Mode",
+						"type": "combo",
+						"initialValue": "LABYRINTH",
+						"items":["LABYRINTH","CASTLE","TOWER","RANDOM"]
+					},
+					{
+						"id": "StartX",
+						"type": "combo",
+						"initialValue": "CENTER",
+						"items":["CENTER","LEFT","RIGHT","RANDOM"]
+					},
+					{
+						"id": "StartY",
+						"type": "combo",
+						"initialValue": "CENTER",
+						"items":["CENTER","TOP","BOTTOM","RANDOM"]
+					},
+					{
+						"id": "LabyrinthInn",
+						"type": "combo",
+						"initialValue": "YES",
+						"items":["YES","NO","RANDOM"]
+					},
+					{
+						"id": "OpenWorld",
+						"type": "combo",
+						"initialValue": "NO",
+						"items":["NO","YES","RANDOM"]
+					}
+				]
+			}
+		]
+	},
+	"management":
+	{
+		"actions":
+		[
 			{
                 "id": "Set_Current_Block_Next",
                 "scriptName": "SetCurrentBlockNext"
@@ -60,6 +110,16 @@
                 "scriptName": "SetCurrentBlockReset"
             },
 			{
+				"id": "Clear_Dungeon",
+				"scriptName": "ClearDungeon"
+			}
+		]
+	},
+	"elements_management":
+	{
+		"actions":
+		[
+			{
                 "id": "New_Dungeon_Element",
                 "scriptName": "NewDungeonElement",
                 "params": [
@@ -73,7 +133,7 @@
 						"items":["NO","YES"]
 					},
 					{ 
-						"id": "ObligatoryBottomWall", 
+						"id": "ObligatoryBottomWall",
 						"type": "combo", 
 						"initialValue": "NO",
 						"items":["NO","YES","NONE"]
@@ -110,50 +170,20 @@
                 ]
             },
 			{
-                "id": "Create_Dungeon_Advanced",
-                "scriptName": "CreateDungeonAdvanced",
-                "params": [
-                    { "id": "Width", "type": "number", "initialValue": "10" },
-					{ "id": "Height", "type": "number", "initialValue": "10" },
-					{ "id": "Blocks", "type": "number", "initialValue": "60" },
-					{ "id": "MinRoom", "type": "number", "initialValue": "2" },
-					{ "id": "MaxRoom", "type": "number", "initialValue": "5" },
-					{ 
-						"id": "Mode", 
-						"type": "combo", 
-						"initialValue": "LABYRINTH",
-						"items":["LABYRINTH","CASTLE","TOWER","RANDOM"]
-					},
-					{ 
-						"id": "StartX", 
-						"type": "combo", 
-						"initialValue": "CENTER",
-						"items":["CENTER","LEFT","RIGHT","RANDOM"]
-					},
-					{ 
-						"id": "StartY", 
-						"type": "combo", 
-						"initialValue": "CENTER",
-						"items":["CENTER","TOP","BOTTOM","RANDOM"]
-					},
-					{ 
-						"id": "LabyrinthInn", 
-						"type": "combo", 
-						"initialValue": "YES",
-						"items":["YES","NO","RANDOM"]
-					},
-					{ 
-						"id": "OpenWorld", 
-						"type": "combo", 
-						"initialValue": "NO",
-						"items":["NO","YES","RANDOM"]
-					}
-                ]
-            },
-			{
-				"id": "Clear_Dungeon",
-				"scriptName": "ClearDungeon"
-			},
+				"id": "Add_Dungeon_Value_Element",
+				"scriptName": "AddDungeonValueElement",
+				"params": [
+                    { "id": "ElementId", "type": "number" },
+					{ "id": "Name", "type": "string" },
+					{ "id": "Value", "type": "string" }
+				]
+			}
+		]
+	},
+	"elements_revive":
+	{
+        "actions":
+		[
 			{
 				"id": "Revive_Dungeon_Elements_All",
 				"scriptName": "ReviveDungeonElementsAll"
@@ -178,18 +208,13 @@
 				"params": [
                     { "id": "ElementId", "type": "number"}
 				]
-			},
-			{
-				"id": "Add_Dungeon_Value_Element",
-				"scriptName": "AddDungeonValueElement",
-				"params": [
-                    { "id": "ElementId", "type": "number" },
-					{ "id": "Name", "type": "string" },
-					{ "id": "Value", "type": "string" }
-				]
 			}
-        ],
-        "expressions": [
+        ]
+	},
+	"dungeon_data":
+	{
+		"expressions":
+		[
 			{
                 "id": "Dungeon_Width",
                 "expressionName": "DungeonWidth",
@@ -219,6 +244,19 @@
                 "returnType": "number"
             },
 			{
+                "id": "Already_Exists",
+                "expressionName": "AlreadyExists",
+                "scriptName": "AlreadyExists",
+                "highlight": false,
+                "returnType": "number"
+            }
+		]
+	},
+	"current_block_data":
+	{
+		"expressions":
+		[
+			{
                 "id": "Block_Current_ID",
                 "expressionName": "BlockCurrentID",
                 "scriptName": "BlockCurrentID",
@@ -245,7 +283,13 @@
                 "scriptName": "BlockCurrentRoom",
                 "highlight": false,
                 "returnType": "number"
-            },
+            }
+		]
+	},
+	"block_data":
+	{
+		"expressions":
+		[
 			{
                 "id": "Block_ID",
                 "expressionName": "BlockID",
@@ -296,7 +340,13 @@
 				"params": [
                     { "id": "Id", "type": "number" }
 				]
-            },
+            }
+		]
+	},
+	"block_wall":
+	{
+		"expressions":
+		[
 			{
                 "id": "Wall_Top",
                 "expressionName": "WallTop",
@@ -336,7 +386,13 @@
 				"params": [
                     { "id": "Id", "type": "number" }
 				]
-            },
+            }
+		]
+	},
+	"support_platform":
+	{
+		"expressions":
+		[
 			{
                 "id": "Platform_Top",
                 "expressionName": "PlatformTop",
@@ -366,7 +422,13 @@
 				"params": [
                     { "id": "Id", "type": "number" }
 				]
-            },
+            }
+		]
+	},
+	"room_connect":
+	{
+		"expressions":
+		[
 			{
                 "id": "Room_Connect_Top",
                 "expressionName": "RoomConnectTop",
@@ -386,7 +448,7 @@
 				"params": [
                     { "id": "Id", "type": "number" }
 				]
-            },	
+            },
 			{
                 "id": "Room_Connect_Right",
                 "expressionName": "RoomConnectRight",
@@ -396,7 +458,7 @@
 				"params": [
                     { "id": "Id", "type": "number" }
 				]
-            },	
+            },
 			{
                 "id": "Room_Connect_Bottom",
                 "expressionName": "RoomConnectBottom",
@@ -406,7 +468,13 @@
 				"params": [
                     { "id": "Id", "type": "number" }
 				]
-            },
+            }
+		]
+	},
+	"room_data":
+	{
+		"expressions":
+		[
 			{
                 "id": "Room_Current_ID",
                 "expressionName": "RoomCurrentID",
@@ -435,6 +503,23 @@
 				]
             },
 			{
+                "id": "Room_Block_ID",
+                "expressionName": "RoomBlockID",
+                "scriptName": "RoomBlockID",
+                "highlight": false,
+                "returnType": "number",
+				"params":  [
+                    { "id": "X", "type": "number" },
+					{ "id": "Y", "type": "number" }
+				]
+            }
+		]
+	},
+	"room_current_block":
+	{
+		"expressions":
+		[
+			{
                 "id": "Room_Block_Current_X",
                 "expressionName": "RoomBlockCurrentX",
                 "scriptName": "RoomBlockCurrentX",
@@ -447,18 +532,13 @@
                 "scriptName": "RoomBlockCurrentY",
                 "highlight": false,
                 "returnType": "number"
-            },
-			{
-                "id": "Room_Block_ID",
-                "expressionName": "RoomBlockID",
-                "scriptName": "RoomBlockID",
-                "highlight": false,
-                "returnType": "number",
-				"params":  [
-                    { "id": "X", "type": "number" },
-					{ "id": "Y", "type": "number" }
-				]
-            },
+            }
+		]
+	},
+	"block_elements":
+	{
+		"expressions":
+		[
 			{
                 "id": "Block_Elements_NameTag",
                 "expressionName": "BlockElementsNameTag",
@@ -480,6 +560,23 @@
 				]
             },
 			{
+                "id": "Get_Dungeon_Value_Element",
+                "expressionName": "GetDungeonValueElement",
+                "scriptName": "GetDungeonValueElement",
+                "highlight": false,
+                "returnType": "string",
+				"params": [
+                    { "id": "ElementId", "type": "number" },
+					{ "id": "Name", "type": "string" }
+				]
+            }
+		]
+	},
+    "block_data_adjacent":
+	{
+        "expressions":
+		[
+			{
                 "id": "Adjacent_Block_Top",
                 "expressionName": "AdjacentBlockTop",
                 "scriptName": "AdjacentBlockTop",
@@ -498,7 +595,7 @@
 				"params": [
                     { "id": "Id", "type": "number" }
 				]
-            },	
+            },
 			{
                 "id": "Adjacent_Block_Right",
                 "expressionName": "AdjacentBlockRight",
@@ -508,7 +605,7 @@
 				"params": [
                     { "id": "Id", "type": "number" }
 				]
-            },	
+            },
 			{
                 "id": "Adjacent_Block_Bottom",
                 "expressionName": "AdjacentBlockBottom",
@@ -517,24 +614,6 @@
                 "returnType": "number",
 				"params": [
                     { "id": "Id", "type": "number" }
-				]
-            },
-			{
-                "id": "Already_Exists",
-                "expressionName": "AlreadyExists",
-                "scriptName": "AlreadyExists",
-                "highlight": false,
-                "returnType": "number"
-            },
-			{
-                "id": "Get_Dungeon_Value_Element",
-                "expressionName": "GetDungeonValueElement",
-                "scriptName": "GetDungeonValueElement",
-                "highlight": false,
-                "returnType": "string",
-				"params": [
-                    { "id": "ElementId", "type": "number" },
-					{ "id": "Name", "type": "string" }
 				]
             }
 		]

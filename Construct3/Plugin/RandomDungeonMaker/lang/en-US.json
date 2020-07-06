@@ -9,15 +9,28 @@
                 "help-url": "",
                 "properties": { },
                 "aceCategories": 
-				{ 
-					"custom": "Custom" 
+				{
+					"creation": "Creation",
+					"management": "Management",
+					"elements_management": "Elements (Management)",
+					"elements_revive": "Elements (Revive)",
+					"dungeon_data": "Dungeon Data",
+					"current_block_data": "Current Block Data",
+					"block_data": "Block Data",
+					"block_wall": "Block Wall",
+					"support_platform": "Support Platform",
+					"room_connect": "Room Connect",
+					"room_data": "Room Data",
+					"room_current_block": "Room Current Block",
+					"block_elements": "Block Elements",
+					"block_data_adjacent": "Block Data Adjacent"
 				},
 				"conditions": 
 				{
 					"on_Dungeon_Created":{
                         "list-name": "The dungeon is created",
                         "display-text": "The dungeon is created",
-                        "description": "The dungeon is created"					
+                        "description": "The dungeon is created"
 					}
 				},
                 "actions": 
