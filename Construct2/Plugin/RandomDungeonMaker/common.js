@@ -691,7 +691,7 @@ function ConfigureOpenWorld(GameDungeon)
 				DungeonSelectedBlock.ConnectRight = 0;
 				DungeonSelectedBlock.ConnectBottom = 0;
 				DungeonSelectedBlock.ConnectLeft = 0;
-				var randNum = Math.floor((GetRandom() * 2));
+				var randNum = GameDungeon.OpenWorld == 2 ? Math.floor((GetRandom() * 3)) : Math.floor((GetRandom() * 2));
 				//randNum = 1;
 				if(randNum != 0)
 				{

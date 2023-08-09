@@ -32,7 +32,7 @@ function DungeonBasicConfiguration(Width,Height,Blocks,RNGSeed)
 }
 function testDungeon()
 {
-	for(xxx = 0; xxx < 100000; xxx++)
+	for(xxx = 0; xxx < 1000; xxx++)
 	{
 		var t0 = performance.now();		
 		var ss = makeDungeon(DungeonBasicConfiguration(100,100,10000));
@@ -40,6 +40,14 @@ function testDungeon()
 		console.log(xxx + " Array took " + (t1 - t0) + " milliseconds.");
 	}
 	alert("Terminado");
+}
+function testRandom()
+{
+	for(xxx = 0; xxx < 100; xxx++)
+	{
+
+		console.log(xxx + ": " + Math.floor(GetRandom() * 10));
+	}
 }
 function AddElement(GameDungeon, Name,Total,OcuppedTolerance,NotIndoor,
 					ObligatoryBottomWall,ObligatoryTopWall,ObligatoryLeftWall,ObligatoryRightWall)
