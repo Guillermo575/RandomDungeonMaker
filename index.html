@@ -5,35 +5,35 @@
 		<script src="scripts/Interface.js"> </script>
 	</head>
 	<body>
-		<table style='width:800px;'>
+		<table style='width:1000px;'>
 			<tr>
-				<td> Width: </td>
+				<td> <b>Width:</b> </td>
 				<td> <input type="text" id="width" value="30" style='width:60px;'> </td>
-				<td> Height: </td>
+				<td> <b>Height:</b> </td>
 				<td> <input type="text" id="height" value="30" style='width:60px;'> </td>
-				<td> Blocks: </td>
+				<td> <b>Blocks:</b> </td>
 				<td> <input type="text" id="blocks" value="400" style='width:60px;'> </td>
-				<td>
-					<button type="button" onclick="ResetConfiguration();">RESET</button>
-					<button type="button" onclick="testDungeon();" style='visibility:hidden'>TEST</button>
-				</td>
+				<td> <b>Seed:</b> </td>
+				<td> <input type="text" id="RNGSeed" value="1000" style='width:90px;'> </td>
+				<td> <b>Random Seed:</b> <input type="checkbox" id="RandomSeed" checked="true"></td>
 			</tr>
 			<tr>
-				<td> Labyrinth Inn: </td>
+				<td> <b>Labyrinth Inn:</b> </td>
 				<td>
 					<select id="LabyrinthInn">
 						<option value="1">YES</option>
 						<option value="0">NO</option>
 					</select>
 				</td>
-				<td> Open World: </td>
+				<td> <b>Open World:</b> </td>
 				<td>
 					<select id="OpenWorld">
 						<option value="0">NO</option>
-						<option value="1">YES</option>
+						<option value="1">SEMI</option>
+						<option value="2">YES</option>
 					</select>
 				</td>
-				<td> Platforms: </td>
+				<td> <b>Platforms:</b> </td>
 				<td>
 					<select id="SupportPlatforms">
 						<option value="1">YES</option>
@@ -42,7 +42,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td> Shape: </td>
+				<td> <b>Shape:</b></td>
 				<td>
 					<select id="GameMode">
 						<option value="LABYRINTH">LABYRINTH</option>
@@ -50,7 +50,7 @@
 						<option value="TOWER">TOWER</option>
 					</select>	
 				</td>
-				<td> Start X: </td>
+				<td> <b>Start X: </b></td>
 				<td>
 					<select id="PointX">
 						<option value="0">CENTER</option>
@@ -58,7 +58,7 @@
 						<option value="1">RIGHT</option>
 					</select>	
 				</td>
-				<td> Start Y: </td>
+				<td> <b>Start Y:</b> </td>
 				<td>
 					<select id="PointY">
 						<option value="0">CENTER</option>
@@ -66,14 +66,22 @@
 						<option value="1">BOTTOM</option>
 					</select>	
 				</td>
-				<td>
-					<button type="button" onclick="createDungeon();">GENERATE</button>
+				<td colspan="3">
+					<button type="button" onclick="ResetConfiguration();">RESET CONFIGURATION</button>
+					<button type="button" onclick="testDungeon();" style='visibility:hidden'>TEST</button>
 				</td>
 			</tr>
 		</table>
 		<br/>
 		<table>
-			<tr>
+			<tr style="vertical-align:top;">
+				<td>
+					<div>
+						<b>Load:</b>
+						<input type="file" id="input-file">
+					</div>
+				</td>
+				<td></td>
 				<td>
 					<form onsubmit="download(this['name'].value, this['text'].value)">
 						<input type="text" name="name" value="example.json">
@@ -82,17 +90,16 @@
 						<textarea name="text" id="jsondata" style="display:none;"></textarea>
 						<br/>
 					</form>
-				</td>
+				</td>			
 			</tr>
 			<tr>
+				<td></td>
 				<td>
-					<div>
-						<input type="file" id="input-file">
-					</div>
+					<button type="button" onclick="createDungeon();">GENERATE DUNGEON</button>				
 				</td>
 			</tr>
 		</table>
-		<br/>
+		<br/><br/>
 		<div id="minimap"></div>
 		<script type="text/javascript">
 			LoadConfiguration();
@@ -100,9 +107,14 @@
 			document.getElementById('input-file').addEventListener('change', getFile);
 			function createDungeon()
 			{
+				if (document.getElementById("RandomSeed").checked)
+				{
+					document.getElementById('RNGSeed').value = Math.floor(Math.random() * 999999999);
+				}
 				var GameDungeon = DungeonBasicConfiguration(document.getElementById('width').value,
 															document.getElementById('height').value,
-															document.getElementById('blocks').value);
+															document.getElementById('blocks').value,
+															document.getElementById('RNGSeed').value);
 			    GameDungeon.DungeonMode = document.getElementById('GameMode').value;
 				GameDungeon.StartPointX = document.getElementById('PointX').value;
 				GameDungeon.StartPointY = document.getElementById('PointY').value;

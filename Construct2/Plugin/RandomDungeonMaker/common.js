@@ -1,5 +1,32 @@
-﻿function makeDungeon(GameDungeon)
+﻿var RNGSeed = 100;
+var RNGNext = 0;
+function GetRandom(MinValue, MaxValue)
+{
+	if(arguments.length == 1)
+	{
+		MaxValue = MinValue;
+		MinValue = 0;
+	}
+	var SeedModify = RNGSeed;
+	SeedModify = RNGNext % 3 == 0 ? RNGSeed * 0.0001 : SeedModify;
+	SeedModify = RNGNext % 3 == 1 ? RNGSeed * 0.0000001 : SeedModify;
+	SeedModify = RNGNext % 3 == 2 ? RNGSeed * 0.000000001 : SeedModify;
+	var Catalist = Math.sin(RNGNext + SeedModify);
+	RNGNext++;
+	var initialValue = (Catalist + 1) / 2;
+	if (arguments.length == 0)
+	{
+		return initialValue;
+	}else
+	{
+		var PseudoRandom = (initialValue * (MaxValue - MinValue)) + MinValue;
+		return  PseudoRandom;
+	}
+}
+function makeDungeon(GameDungeon)
 {	
+	RNGSeed = GameDungeon.Seed;
+	RNGNext = 0;
 	GameDungeon.TotalBloquesDungeon = (GameDungeon.DungeonWidth*GameDungeon.DungeonHeight)<= GameDungeon.TotalBloquesDungeon ? (GameDungeon.DungeonWidth*GameDungeon.DungeonHeight) : GameDungeon.TotalBloquesDungeon;
 	for(var l = 0; l < GameDungeon.DungeonHeight; l++)
 	{
@@ -23,12 +50,12 @@
 											};
 		}
 	}
-	GameDungeon = MakeDungeonShape(GameDungeon);    
+	GameDungeon = MakeDungeonShape(GameDungeon);
 	GameDungeon = MakeDungeonRoomShape(GameDungeon);
-	GameDungeon = MakeDungeonRoomConnections(GameDungeon);  
+	GameDungeon = MakeDungeonRoomConnections(GameDungeon);
 	GameDungeon = (GameDungeon.LabyrinthInn == 1) ? MakeDungeonRoomInner(GameDungeon) : GameDungeon;
 	GameDungeon = (GameDungeon.SupportPlatforms == 1) ? MakeDungeonSupportPlatform(GameDungeon) : GameDungeon;
-	GameDungeon = (GameDungeon.OpenWorld == 1) ? ConfigureOpenWorld(GameDungeon) : GameDungeon;	
+	GameDungeon = (GameDungeon.OpenWorld != 0) ? ConfigureOpenWorld(GameDungeon) : GameDungeon;
 	GameDungeon = (!(GameDungeon.Elements === undefined)) ? DistributeDungeonElements(GameDungeon) : GameDungeon;
 	GameDungeon.Status = "LOADED";
 	return GameDungeon;
@@ -52,10 +79,10 @@ function MakeDungeonShape(GameDungeon)
 		var comprobado = 0;
 		while(comprobado == 0)
 		{
-			var randomNumber =  Math.floor((Math.random() * CuadrosDisponibles.length));
+			var randomNumber =  Math.floor((GetRandom() * CuadrosDisponibles.length));
 			if(GameDungeon.DungeonMode == "CASTLE" || GameDungeon.DungeonMode == "TOWER")
 			{
-				randomNumber = Math.floor((Math.random() * 3)) != 1 ? (CuadrosDisponibles.length - 1): randomNumber;
+				randomNumber = Math.floor((GetRandom() * 3)) != 1 ? (CuadrosDisponibles.length - 1): randomNumber;
 			}	
 			var CuadroSeleccionado = CuadrosDisponibles[randomNumber];
 			var CuadroSeleccionadoY = CuadroSeleccionado[0];			
@@ -150,8 +177,8 @@ function MakeDungeonRoomShape(GameDungeon)
 		{
 			if(DungeonArray[y][x].Status == "NOT")
 			{
-				var randomWidth =  Math.floor((Math.random() * ((GameDungeon.DungeonRoomsWidthMax + 1) - GameDungeon.DungeonRoomsWidthMin)) + GameDungeon.DungeonRoomsWidthMin);
-				var randomHeight =  Math.floor((Math.random() * ((GameDungeon.DungeonRoomsHeightMax + 1) - GameDungeon.DungeonRoomsHeightMin)) + GameDungeon.DungeonRoomsHeightMin);
+				var randomWidth =  Math.floor((GetRandom() * ((GameDungeon.DungeonRoomsWidthMax + 1) - GameDungeon.DungeonRoomsWidthMin)) + GameDungeon.DungeonRoomsWidthMin);
+				var randomHeight =  Math.floor((GetRandom() * ((GameDungeon.DungeonRoomsHeightMax + 1) - GameDungeon.DungeonRoomsHeightMin)) + GameDungeon.DungeonRoomsHeightMin);
 				randomHeight = GameDungeon.DungeonRoomsSizeAmbivalence == 1 ? randomWidth : randomHeight;
 				var encontradoX = x;
 				var encontradoY = y;
@@ -244,7 +271,7 @@ function MakeDungeonRoomShape(GameDungeon)
 					}		
 					if(BloquesDisponibles.length > 0)
 					{
-						var numseleccionado = Math.floor((Math.random() * BloquesDisponibles.length));
+						var numseleccionado = Math.floor((GetRandom() * BloquesDisponibles.length));
 						var nuevoBloque = BloquesDisponibles[numseleccionado];
 						switch(DireccionesDisponibles[numseleccionado])
 						{
@@ -333,8 +360,8 @@ function MakeDungeonRoomConnections(GameDungeon)
 		}
 		while(DungeonRoomBlocksLotery.length > 0 && puertaColocada == 0)
 		{
-			var randomNumber = Math.floor((Math.random() * DungeonRoomBlocksLotery.length)); 
-			var randomConnection = Math.floor(Math.random() * 2);
+			var randomNumber = Math.floor((GetRandom() * DungeonRoomBlocksLotery.length)); 
+			var randomConnection = Math.floor(GetRandom() * 2);
 			randomNumber = randomConnection == 1 ? 0 : randomNumber;
 			randomNumber = randomConnection == 2 ? DungeonRoomBlocksLotery.length - 1 : randomNumber;
 			var DungeonSelected = DungeonRoomBlocksLotery[randomNumber];
@@ -586,7 +613,7 @@ function MakeDungeonRoomInner(GameDungeon)
 						
 						if(BloquesDisponibles.length > 0)
 						{
-							var numseleccionado = Math.floor((Math.random() * BloquesDisponibles.length));
+							var numseleccionado = Math.floor((GetRandom() * BloquesDisponibles.length));
 							var nuevoBloque = BloquesDisponibles[numseleccionado];
 							switch(DireccionesDisponibles[numseleccionado])
 							{
@@ -664,37 +691,49 @@ function ConfigureOpenWorld(GameDungeon)
 				DungeonSelectedBlock.ConnectRight = 0;
 				DungeonSelectedBlock.ConnectBottom = 0;
 				DungeonSelectedBlock.ConnectLeft = 0;
-				var randNum = Math.floor((Math.random() * 2));
+				var randNum = Math.floor((GetRandom() * 2));
 				//randNum = 1;
 				if(randNum != 0)
 				{
 					if((l - 1) >= 0 && DungeonArray[l - 1][m].Id > 0)
 					{
-						DungeonSelectedBlock.WallTop = 0;
-						DungeonSelectedBlock.RoomWallTop = 0;
-						DungeonArray[l - 1][m].WallBottom = 0;
-						DungeonArray[l - 1][m].RoomWallBottom = 0;
+						if (GameDungeon.OpenWorld == 2 || DungeonSelectedBlock.WallTop == 0)
+						{
+							DungeonSelectedBlock.WallTop = 0;
+							DungeonSelectedBlock.RoomWallTop = 0;
+							DungeonArray[l - 1][m].WallBottom = 0;
+							DungeonArray[l - 1][m].RoomWallBottom = 0;
+						}
 					}
 					if((l + 1) < GameDungeon.DungeonHeight && DungeonArray[l + 1][m].Id > 0)
 					{
-						DungeonSelectedBlock.WallBottom = 0;
-						DungeonSelectedBlock.RoomWallBottom = 0;
-						DungeonArray[l + 1][m].WallTop = 0;
-						DungeonArray[l + 1][m].RoomWallTop = 0;
+						if (GameDungeon.OpenWorld == 2 || DungeonSelectedBlock.WallBottom == 0)
+						{
+							DungeonSelectedBlock.WallBottom = 0;
+							DungeonSelectedBlock.RoomWallBottom = 0;
+							DungeonArray[l + 1][m].WallTop = 0;
+							DungeonArray[l + 1][m].RoomWallTop = 0;
+						}
 					}
 					if((m - 1) >= 0 && DungeonArray[l][m - 1].Id > 0)
 					{
-						DungeonSelectedBlock.WallLeft = 0;
-						DungeonSelectedBlock.RoomWallLeft = 0;
-						DungeonArray[l][m - 1].WallRight = 0;
-						DungeonArray[l][m - 1].RoomWallRight = 0;
+						if (GameDungeon.OpenWorld == 2 || DungeonSelectedBlock.WallLeft == 0)
+						{
+							DungeonSelectedBlock.WallLeft = 0;
+							DungeonSelectedBlock.RoomWallLeft = 0;
+							DungeonArray[l][m - 1].WallRight = 0;
+							DungeonArray[l][m - 1].RoomWallRight = 0;
+						}
 					}
 					if((m + 1) < GameDungeon.DungeonWidth && DungeonArray[l][m + 1].Id > 0)
 					{
-						DungeonSelectedBlock.WallRight = 0;
-						DungeonSelectedBlock.RoomWallRight = 0;
-						DungeonArray[l][m + 1].WallLeft = 0;
-						DungeonArray[l][m + 1].RoomWallLeft = 0;
+						if (GameDungeon.OpenWorld == 2 || DungeonSelectedBlock.WallRight == 0)
+						{
+							DungeonSelectedBlock.WallRight = 0;
+							DungeonSelectedBlock.RoomWallRight = 0;
+							DungeonArray[l][m + 1].WallLeft = 0;
+							DungeonArray[l][m + 1].RoomWallLeft = 0;
+						}
 					}
 				}
 			}
@@ -841,7 +880,7 @@ function DistributeDungeonElements(GameDungeon)
 		}
 		for(var l = 0; l < itemElement.Total && BloquesDisponibles.length > 0; l++)
 		{
-			var numseleccionado = Math.floor((Math.random() * BloquesDisponibles.length));
+			var numseleccionado = Math.floor((GetRandom() * BloquesDisponibles.length));
 			var BlockSeleccionado = BloquesDisponibles[numseleccionado];
 			var NewElement =
 			{
@@ -880,10 +919,10 @@ function CheckWallElementConsideration(Conditional,Wall,RoomWall,valido)
 
 function GetRndColor()
 {
-	var rndColor = ('000000' + Math.floor(Math.random()*16777215).toString(16)).slice(-6);
-	var redColor = Math.floor(Math.random()*(170)+40).toString(16);
-	var GreenColor = Math.floor(Math.random()*(170)+40).toString(16);
-	var BlueColor = Math.floor(Math.random()*(170)+40).toString(16);
+	var rndColor = ('000000' + Math.floor(GetRandom()*16777215).toString(16)).slice(-6);
+	var redColor = Math.floor(GetRandom()*(170)+40).toString(16);
+	var GreenColor = Math.floor(GetRandom()*(170)+40).toString(16);
+	var BlueColor = Math.floor(GetRandom()*(170)+40).toString(16);
 	rndColor = redColor + "" + GreenColor + "" + BlueColor;
 	return "#" + rndColor;
 }
