@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28c42df8bd4d2c74eb836d05556cc7cd, type: 3}
+  m_Name: DungeonEditorWindowConfig
+  m_EditorClassIdentifier: 
+  dungeonConfig:
+    RNGSeed: 100
+    RNGSeedInn: 100
+    RNGSeedElement: 100
+    DungeonWidth: 10
+    DungeonHeight: 10
+    TotalBloquesDungeon: 80
+    DungeonRoomsWidthMin: 3
+    DungeonRoomsWidthMax: 5
+    DungeonRoomsHeightMin: 3
+    DungeonRoomsHeightMax: 5
+    DungeonPathLongMin: 1
+    DungeonPathLongMax: 3
+    DungeonPathSizeMin: 1
+    DungeonPathSizeMax: 1
+    FillDungeonRoomGap: 0
+    DungeonRoomsSizeAmbivalence: 0
+    DungeonMode: 0
+    LabyrinthInn: 1
+    LabyrinthPathInn: 0
+    StartPointX: 0
+    StartPointY: 0
+    OpenWorld: 0
+    SupportPlatforms: 0
+    lstEntities: []
+    TileSize: 10
+    ScaleWallY: 3
+    ScaleWallZ: 1
+    Tile: {fileID: 3645774511513256206, guid: a3c5ee6579e1e194e86b21fb4cbfccb4, type: 3}
+    Wall: {fileID: 7416426969856047139, guid: 9dbefc4335de9d942a38dada11bc708b, type: 3}
+    stretchWallType: 0
+  GenerateRandomSeedAfterUse: 1
+  GenerateRandomSeedInnAfterUse: 1
+  GenerateRandomSeedElementAfterUse: 1
+  StartingPoint: {x: 0, y: 0, z: 0}
