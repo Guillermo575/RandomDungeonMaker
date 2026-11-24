@@ -17,6 +17,7 @@
 /Unity/RandomDungeonMaker/[Rr]esults/
 /Unity/RandomDungeonMaker/[Aa]ssets/[Mm][Ll]-Agents/
 /Unity/RandomDungeonMaker/**/*.demo
+/Unity/RandomDungeonMaker/Assets/TextMesh Pro/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -80,3 +81,4 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+/Unity/RandomDungeonMaker/Assets/TextMesh Pro.meta
